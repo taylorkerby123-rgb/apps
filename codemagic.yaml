@@ -12,12 +12,9 @@ workflows:
       app_store_connect: AYH App Store Connect
     working_directory: tempo
     environment:
-      ios_signing:
-        # Reference names from Codemagic > Settings > Code signing identities
-        provisioning_profiles:
-          - tempo_app_store
-        certificates:
-          - ayh_distribution
+      groups:
+        # App > Environment variables: CERTIFICATE_PRIVATE_KEY (secret) in group "ios_signing_keys"
+        - ios_signing_keys
       node: 22
       xcode: latest
     scripts:
@@ -27,6 +24,16 @@ workflows:
         script: npx esbuild src/ads.js --bundle --format=iife --minify --outfile=www/ads.bundle.js
       - name: Copy web app into iOS project
         script: npx cap sync ios
+      - name: Set up keychain
+        script: keychain initialize
+      - name: Fetch signing files from Apple
+        script: |
+          app-store-connect fetch-signing-files "com.ateyourhomework.tempo" \
+            --type IOS_APP_STORE \
+            --certificate-key=@env:CERTIFICATE_PRIVATE_KEY \
+            --create
+      - name: Add certificates to keychain
+        script: keychain add-certificates
       - name: Apply signing profiles
         script: xcode-project use-profiles
       - name: Set build number
