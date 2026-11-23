@@ -13,8 +13,11 @@ workflows:
     working_directory: tempo
     environment:
       ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.ateyourhomework.tempo
+        # Reference names from Codemagic > Settings > Code signing identities
+        provisioning_profiles:
+          - Tempo Chess
+        certificates:
+          - ayh_distribution
       node: 22
       xcode: latest
     scripts:
