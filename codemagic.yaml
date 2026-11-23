@@ -15,7 +15,7 @@ workflows:
       ios_signing:
         # Reference names from Codemagic > Settings > Code signing identities
         provisioning_profiles:
-          - Tempo Chess
+          - tempo_app_store
         certificates:
           - ayh_distribution
       node: 22
