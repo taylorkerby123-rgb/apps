@@ -50,7 +50,7 @@ definitions:
   ios_publish: &ios_publish
     app_store_connect:
       auth: integration
-      submit_to_testflight: true
+      submit_to_testflight: false  # build still lands in TestFlight for internal testers
 
 workflows:
   ios-testflight:
