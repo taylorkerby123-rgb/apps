@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Abe</string>
+    <string name="title_activity_main">Abe</string>
+    <string name="package_name">com.ateyourhomework.disappointedabe</string>
+    <string name="custom_url_scheme">com.ateyourhomework.disappointedabe</string>
+</resources>

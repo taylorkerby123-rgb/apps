@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070b1a">
+<title>Power Scan</title>
+<style>
+:root{
+  --bg:#070b1a; --panel:#0f1630; --ink:#e9f1ff; --dim:#8a9bc4; --cyan:#3df2ff; --pink:#ff3d9a; --gold:#ffd23d;
+  --hero:#3df2ff; --hero2:#ff3d9a;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden}
+body{background:radial-gradient(120% 80% at 50% 0%,#14204a 0%,var(--bg) 60%)}
+.screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));text-align:center}
+.screen.on{display:flex}
+h1{font-size:clamp(34px,10vw,56px);margin:0;line-height:.95;letter-spacing:.02em;font-weight:900;text-transform:uppercase;
+  background:linear-gradient(90deg,var(--cyan),#fff,var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 18px #3df2ff55)}
+.sub{color:var(--dim);margin:14px auto 28px;max-width:340px;line-height:1.45}
+.btn{appearance:none;border:0;border-radius:999px;padding:16px 28px;font-size:18px;font-weight:800;letter-spacing:.04em;cursor:pointer;color:#05101f;
+  background:linear-gradient(90deg,var(--cyan),#8affd8);box-shadow:0 0 24px #3df2ff66, inset 0 -3px 0 #0003;text-transform:uppercase}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px #ffffff33;font-weight:700;font-size:15px;padding:12px 20px}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.small{font-size:12px;color:var(--dim);margin-top:18px;max-width:320px;line-height:1.4}
+.emblem-big{width:120px;height:120px;margin-bottom:22px;animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+
+/* scanner */
+#scan{padding:0;background:#000}
+#stage{position:relative;width:100%;height:100%;overflow:hidden}
+#video,#still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+#still{display:none}
+#fx{position:absolute;inset:0;width:100%;height:100%}
+.hud{position:absolute;left:0;right:0;padding:0 16px;pointer-events:none;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--cyan);text-shadow:0 0 8px #3df2ff}
+.hud.top{top:max(14px,env(safe-area-inset-top));display:flex;justify-content:space-between;font-size:12px;letter-spacing:.12em}
+.hud.bot{bottom:max(20px,env(safe-area-inset-bottom));text-align:center}
+#status{font-size:15px;font-weight:700;letter-spacing:.06em;min-height:22px}
+.bar{height:6px;background:#3df2ff22;border-radius:6px;margin:10px auto 0;max-width:320px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--pink));box-shadow:0 0 12px var(--cyan)}
+#go{pointer-events:auto;margin-top:14px}
+.rec{display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff3d5a;margin-right:6px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+
+/* result */
+#result{justify-content:flex-start;overflow-y:auto;padding-top:max(18px,env(safe-area-inset-top))}
+.card{width:100%;max-width:400px;border-radius:24px;padding:20px 18px 18px;position:relative;overflow:hidden;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--hero) 30%,#0b1230) 0%,#0b1230 55%,color-mix(in srgb,var(--hero2) 28%,#0b1230) 100%);
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--hero) 60%,transparent),0 20px 60px #0008, 0 0 40px color-mix(in srgb,var(--hero) 35%,transparent);
+  animation:pop .6s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.7) rotate(-4deg);opacity:0}}
+.card:before{content:"";position:absolute;inset:-50%;background:repeating-conic-gradient(from 0deg,#ffffff08 0 8deg,transparent 8deg 16deg);animation:spin 40s linear infinite;pointer-events:none}
+@keyframes spin{to{transform:rotate(1turn)}}
+.card>*{position:relative}
+.kicker{font-size:11px;letter-spacing:.3em;color:var(--dim);text-transform:uppercase}
+.portrait{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0 6px}
+.selfie{width:104px;height:104px;border-radius:50%;object-fit:cover;border:3px solid var(--hero);box-shadow:0 0 20px var(--hero)}
+.emb{width:96px;height:96px}
+.hname{font-size:clamp(28px,8.5vw,38px);font-weight:900;text-transform:uppercase;line-height:1;margin:8px 0 4px;color:#fff;text-shadow:0 0 18px var(--hero),0 3px 0 color-mix(in srgb,var(--hero2) 70%,#000)}
+.tag{font-style:italic;color:color-mix(in srgb,var(--hero) 60%,#fff);margin-bottom:12px}
+.power{display:inline-block;background:#0006;border:1px solid color-mix(in srgb,var(--hero) 50%,transparent);border-radius:999px;padding:6px 12px;font-size:13px;margin-bottom:14px}
+.why{text-align:left;background:#0005;border-radius:14px;padding:12px 14px;margin:0 0 14px}
+.why h3{margin:0 0 6px;font-size:12px;letter-spacing:.2em;color:var(--hero);text-transform:uppercase}
+.why ul{margin:0;padding-left:18px;line-height:1.45;font-size:14.5px}
+.why li{margin:4px 0}
+.stats{display:grid;grid-template-columns:auto 1fr auto;gap:6px 10px;align-items:center;font-size:12px;text-align:left}
+.stats b{font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.stats .m{height:8px;border-radius:8px;background:#ffffff14;overflow:hidden}
+.stats .m i{display:block;height:100%;background:linear-gradient(90deg,var(--hero),var(--hero2));width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.stats span{font-variant-numeric:tabular-nums;font-weight:700}
+.match{margin-top:12px;font-size:12px;color:var(--dim)}
+.actions{margin:18px 0 8px;display:flex;flex-direction:column;gap:10px;width:100%;max-width:400px}
+.actions .btn{width:100%}
+.disc{font-size:11px;color:#6d7ca3;margin:4px 0 16px}
+#err .sub{margin-bottom:20px}
+</style>
+<style>
+
+html.in-app body{box-sizing:border-box;padding-top:calc(env(safe-area-inset-top) + var(--ad-top,0px));-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}
+html.in-app input,html.in-app textarea{-webkit-user-select:text;user-select:text}
+</style>
+</head>
+<body>
+
+<!-- INTRO -->
+<section class="screen on" id="intro">
+  <svg class="emblem-big" viewBox="0 0 100 100" aria-hidden="true">
+    <defs><linearGradient id="g0" x1="0" x2="1"><stop offset="0" stop-color="#3df2ff"/><stop offset="1" stop-color="#ff3d9a"/></linearGradient></defs>
+    <path d="M50 4 90 20 84 64 50 96 16 64 10 20Z" fill="none" stroke="url(#g0)" stroke-width="5"/>
+    <path d="M30 48c6-14 34-14 40 0-6 14-34 14-40 0Z" fill="none" stroke="#fff" stroke-width="4"/>
+    <circle cx="50" cy="48" r="7" fill="#3df2ff"/>
+  </svg>
+  <h1>Power<br>Scan</h1>
+  <p class="sub">Point your face at the camera. Our extremely scientific* scanner will reveal which superpower you secretly have, and why.</p>
+  <div class="row"><button class="btn" id="start">Scan my face</button></div>
+  <div class="row" style="margin-top:12px"><button class="btn ghost" id="photoBtn">Use a selfie photo instead</button></div>
+  <p class="small">*Not scientific at all. Everything happens on your phone. No image ever leaves the device.</p>
+</section>
+
+<!-- SCANNER -->
+<section class="screen" id="scan">
+  <div id="stage">
+    <video id="video" playsinline muted autoplay></video>
+    <img id="still" alt="">
+    <canvas id="fx"></canvas>
+    <div id="flash"></div>
+    <div class="hud top"><span><span class="rec"></span>P-SCAN v9.000</span><span id="readout">BIO-SYNC 0%</span></div>
+    <div class="hud bot">
+      <div id="status">Center your face in the frame</div>
+      <div class="bar"><i id="prog"></i></div>
+      <button class="btn" id="go">Begin scan</button>
+    </div>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section class="screen" id="result">
+  <div class="card" id="card">
+    <div class="kicker">Superpower detected</div>
+    <div class="portrait"><img class="selfie" id="rSelfie" alt="Your scan"><div id="rEmb"></div></div>
+    <div class="hname" id="rName"></div>
+    <div class="tag" id="rTag"></div>
+    <div class="power" id="rPower"></div>
+    <div class="why"><h3>Why this power</h3><ul id="rWhy"></ul></div>
+    <div class="stats" id="rStats"></div>
+    <div class="match" id="rMatch"></div>
+  </div>
+  <div class="actions">
+    <button class="btn" id="share">Share my power card</button>
+    <button class="btn ghost" id="retry">Scan again</button>
+  </div>
+  <p class="disc">For fun only. Results come from light, color and framing, not real face analysis.</p>
+</section>
+
+<!-- ERROR -->
+<section class="screen" id="err">
+  <h1 style="font-size:36px">Camera<br>offline</h1>
+  <p class="sub" id="errMsg"></p>
+  <div class="row"><button class="btn" id="photoBtn2">Use a selfie photo</button></div>
+  <div class="row" style="margin-top:12px"><button class="btn ghost" id="tryAgain">Try camera again</button><button class="btn ghost" id="demo">Demo scan</button></div>
+</section>
+
+<input type="file" id="file" accept="image/*" capture="user" hidden>
+
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const screens=['intro','scan','result','err'];
+function show(id){screens.forEach(s=>$(s).classList.toggle('on',s===id));}
+
+/* ---------------- Hero roster (all original) ---------------- */
+// trait axes: bright, warm, cool, vivid, contrast, texture, offX(left/right), offY(high/low), close(fill), sym
+const HEROES=[
+ {name:"Light Manipulation", tag:"You bend light, flash-blind villains and never need a nightlight.", power:"Best for: dramatic glow-ups",
+  c1:"#ffd23d", c2:"#ff7a1a", shape:"sun", w:{bright:2.2,warm:.8,vivid:.4,dark:-1.5}},
+ {name:"Shadow Walking", tag:"You step into any shadow and step out of another one across town.", power:"Best for: skipping traffic",
+  c1:"#7a6bff", c2:"#1b1440", shape:"moon", w:{dark:2.4,contrast:.6,cool:.5,bright:-1.4}},
+ {name:"Pyrokinesis", tag:"You summon and control fire with a snap of your fingers.", power:"Best for: perfect campfire s'mores",
+  c1:"#ff4b2b", c2:"#ffb03d", shape:"flame", w:{warm:2.3,vivid:1,red:1.2}},
+ {name:"Cryokinesis", tag:"You freeze anything you touch, starting with awkward silences.", power:"Best for: instantly cold drinks",
+  c1:"#7fe7ff", c2:"#3a7bff", shape:"crystal", w:{cool:2.3,sym:1,texture:-.6}},
+ {name:"Electrokinesis", tag:"You throw lightning and charge a phone just by holding it.", power:"Best for: never hitting 1% battery",
+  c1:"#e8ff3d", c2:"#3df2ff", shape:"bolt", w:{texture:2.2,contrast:1,close:.4}},
+ {name:"Plant Control", tag:"Vines, trees and flowers grow and move on your command.", power:"Best for: reviving neglected houseplants",
+  c1:"#3dff8a", c2:"#0e7a4a", shape:"leaf", w:{green:2.5,calm:.8}},
+ {name:"Teleportation", tag:"You blink from place to place without ever taking the direct route.", power:"Best for: never being late",
+  c1:"#ff3d9a", c2:"#7a2bff", shape:"swirl", w:{side:2.4,asym:1,texture:.4}},
+ {name:"Flight", tag:"You soar above everything and see the whole picture from up high.", power:"Best for: skipping airport security",
+  c1:"#3dc8ff", c2:"#ffffff", shape:"eye", w:{high:2.3,far:.8,sym:.4}},
+ {name:"Super Strength", tag:"You lift cars, hold up bridges and open every jar on the first try.", power:"Best for: moving day",
+  c1:"#c08a4a", c2:"#ffd9a0", shape:"mountain", w:{low:2.2,calm:1,warm:.4}},
+ {name:"Force Field", tag:"You project an unbreakable shield around yourself and your crew.", power:"Best for: crowded concerts",
+  c1:"#ff6b3d", c2:"#ff3d9a", shape:"fist", w:{close:2.6,vivid:.5}},
+ {name:"Super Speed", tag:"You cross a city in seconds and still arrive right on cue.", power:"Best for: dramatic entrances",
+  c1:"#ff9ad5", c2:"#ffd23d", shape:"star", w:{far:2.5,bright:.4,calm:.3}},
+ {name:"Shapeshifting", tag:"You can become anyone or anything, in any color you like.", power:"Best for: never repeating an outfit",
+  c1:"#ff3dd0", c2:"#3dffd0", shape:"prism", w:{vivid:2.4,contrast:.6,texture:.3}},
+ {name:"Invisibility", tag:"You vanish completely and nobody hears you coming.", power:"Best for: leaving parties early",
+  c1:"#a0a8c0", c2:"#5a6380", shape:"hush", w:{calm:2.2,dull:1.2,sym:.5}},
+ {name:"Telekinesis", tag:"You move objects with your mind, with perfect calm control.", power:"Best for: grabbing the remote from the couch",
+  c1:"#3dffd0", c2:"#3d8aff", shape:"scale", w:{center:1.8,sym:1.1}},
+];
+
+/* ---------------- Emblems ---------------- */
+function emblem(h,size=96){
+  const g='e'+Math.random().toString(36).slice(2,7);
+  const P={
+   sun:`<circle cx="50" cy="50" r="18" fill="url(#${g})"/>`+Array.from({length:10},(_,i)=>{const a=i*36*Math.PI/180;return `<path d="M${50+26*Math.cos(a)} ${50+26*Math.sin(a)}L${50+40*Math.cos(a+.15)} ${50+40*Math.sin(a+.15)}L${50+40*Math.cos(a-.15)} ${50+40*Math.sin(a-.15)}Z" fill="url(#${g})"/>`}).join(''),
+   moon:`<path d="M62 14a38 38 0 1 0 24 58A30 30 0 0 1 62 14Z" fill="url(#${g})"/><circle cx="70" cy="34" r="3" fill="#fff"/><circle cx="80" cy="50" r="2" fill="#fff"/>`,
+   flame:`<path d="M50 6c6 18 28 26 28 52a28 28 0 0 1-56 0c0-14 8-20 12-30 2 10 8 14 10 14 0-14 2-24 6-36Z" fill="url(#${g})"/><path d="M50 52c3 8 12 12 12 22a12 12 0 0 1-24 0c0-8 8-12 12-22Z" fill="#fff9"/>`,
+   crystal:`<path d="M50 6 74 30 62 92H38L26 30Z" fill="url(#${g})"/><path d="M50 6 50 92M26 30h48M38 92l12-62 12 62" stroke="#fff8" stroke-width="2" fill="none"/>`,
+   bolt:`<path d="M58 4 22 56h22l-8 40 40-56H52Z" fill="url(#${g})" stroke="#fff" stroke-width="2"/>`,
+   leaf:`<path d="M20 82C14 40 44 12 86 14c2 42-24 72-66 68Z" fill="url(#${g})"/><path d="M20 82 70 30M44 58l-2-16M56 46l12 2" stroke="#fff9" stroke-width="3" fill="none" stroke-linecap="round"/>`,
+   swirl:`<path d="M50 50m-4 0a4 4 0 1 1 8 0 10 10 0 1 1-20 0 18 18 0 1 1 36 0 26 26 0 1 1-52 0 34 34 0 1 1 68 0" stroke="url(#${g})" stroke-width="7" fill="none" stroke-linecap="round"/>`,
+   eye:`<path d="M6 50C24 20 76 20 94 50 76 80 24 80 6 50Z" fill="url(#${g})"/><circle cx="50" cy="50" r="14" fill="#0b1230"/><circle cx="50" cy="50" r="6" fill="#fff"/>`,
+   mountain:`<path d="M4 88 36 30l14 22 12-18 34 54Z" fill="url(#${g})"/><path d="M36 30l8 14-8-4-6 6Z" fill="#fff"/>`,
+   fist:`<rect x="22" y="30" width="56" height="44" rx="12" fill="url(#${g})"/><path d="M36 30v20M50 30v20M64 30v20" stroke="#0b123088" stroke-width="3"/><rect x="34" y="72" width="32" height="20" rx="5" fill="url(#${g})"/>`,
+   star:`<path d="M50 4l12 30 32 2-25 20 9 32-28-18-28 18 9-32L6 36l32-2Z" fill="url(#${g})"/>`,
+   prism:`<path d="M50 8 90 84H10Z" fill="url(#${g})"/><path d="M50 8 50 84M30 46h40" stroke="#fff7" stroke-width="2"/>`,
+   hush:`<circle cx="50" cy="50" r="40" fill="url(#${g})"/><path d="M30 58q20 10 40 0" stroke="#0b1230" stroke-width="5" fill="none" stroke-linecap="round"/><rect x="46" y="22" width="8" height="40" rx="4" fill="#fff"/>`,
+   scale:`<path d="M50 12v72M20 30h60M14 60l6-30 6 30ZM74 60l6-30 6 30Z" stroke="url(#${g})" stroke-width="5" fill="none" stroke-linejoin="round"/><path d="M12 60h16a8 8 0 0 1-16 0ZM72 60h16a8 8 0 0 1-16 0ZM32 88h36" stroke="url(#${g})" stroke-width="5" fill="none"/>`
+  };
+  return `<svg class="emb" width="${size}" height="${size}" viewBox="0 0 100 100"><defs><linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${h.c1}"/><stop offset="1" stop-color="${h.c2}"/></linearGradient></defs><path d="M50 2 96 20 88 70 50 98 12 70 4 20Z" fill="#0b1230aa" stroke="${h.c1}" stroke-width="2"/><g transform="translate(15 15) scale(.7)">${P[h.shape]}</g></svg>`;
+}
+
+/* ---------------- Camera ---------------- */
+const video=$('video'), still=$('still'), fx=$('fx'), ctx=fx.getContext('2d');
+let stream=null, source=null /* 'cam' | 'img' | 'demo' */, raf=0, scanning=false, phase='aim';
+const work=document.createElement('canvas'); work.width=96; work.height=128;
+const wctx=work.getContext('2d',{willReadFrequently:true});
+let lastSnap=null, samples=[], prevLum=null, motion=0;
+
+async function startCamera(){
+  stopCamera();
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+    return fail(location.protocol==='file:'||!window.isSecureContext
+      ? "Your browser blocks the camera on this page (it needs a secure https link). No worries: snap a selfie with your camera app instead."
+      : "This browser doesn't support live camera access. You can use a selfie photo instead.");
+  }
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:720},height:{ideal:960}},audio:false});
+    video.srcObject=stream; await video.play().catch(()=>{});
+    source='cam'; video.style.display='block'; still.style.display='none';
+    enterScanner();
+  }catch(e){
+    const n=e&&e.name;
+    fail(n==='NotAllowedError'||n==='SecurityError'
+      ? "Camera permission was denied. To allow it, tap the site settings (the icon by the address bar) and enable the camera, then try again. Or just use a selfie photo."
+      : n==='NotFoundError'||n==='OverconstrainedError' ? "We couldn't find a front camera on this device. Try a selfie photo instead."
+      : n==='NotReadableError' ? "Another app is using the camera. Close it and try again, or use a selfie photo."
+      : "The camera didn't start ("+(n||'unknown error')+"). You can use a selfie photo instead.");
+  }
+}
+function stopCamera(){ if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;} }
+function fail(msg){ $('errMsg').textContent=msg; show('err'); }
+
+function enterScanner(){
+  show('scan'); phase='aim'; scanning=false; samples=[]; prevLum=null; motion=0;
+  $('go').style.display=''; $('status').textContent= source==='cam'?'Center your face in the frame':'Photo loaded. Ready to scan';
+  $('prog').style.width='0%'; $('readout').textContent='BIO-SYNC 0%';
+  resize(); cancelAnimationFrame(raf); raf=requestAnimationFrame(loop);
+}
+function resize(){ const r=fx.getBoundingClientRect(), d=Math.min(devicePixelRatio||1,2); fx.width=r.width*d; fx.height=r.height*d; ctx.setTransform(d,0,0,d,0,0); }
+addEventListener('resize',()=>{ if($('scan').classList.contains('on')) resize(); });
+
+/* draw current source (cover-fit, mirrored) into a canvas of given size */
+function drawSource(c,w,h){
+  const el= source==='cam'?video:still;
+  const sw= source==='cam'?video.videoWidth:still.naturalWidth, sh= source==='cam'?video.videoHeight:still.naturalHeight;
+  if(!sw||!sh) return false;
+  const s=Math.max(w/sw,h/sh), dw=sw*s, dh=sh*s;
+  c.save(); c.translate(w,0); c.scale(-1,1); c.drawImage(el,(w-dw)/2,(h-dh)/2,dw,dh); c.restore(); return true;
+}
+
+/* ---------------- Analysis of a tiny frame ---------------- */
+function analyze(){
+  if(source==='demo') return demoSample();
+  if(!drawSource(wctx,work.width,work.height)) return null;
+  const {data}=wctx.getImageData(0,0,work.width,work.height), W=work.width, H=work.height;
+  let R=0,G=0,B=0,L=0,L2=0,sat=0,n=0, sx=0,sy=0,sw=0, tex=0, symD=0, hash=2166136261;
+  const lum=new Float32Array(W*H);
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const i=(y*W+x)*4, r=data[i],g=data[i+1],b=data[i+2];
+    const l=.299*r+.587*g+.114*b; lum[y*W+x]=l;
+    R+=r;G+=g;B+=b;L+=l;L2+=l*l;n++;
+    const mx=Math.max(r,g,b),mn=Math.min(r,g,b); sat+= mx?(mx-mn)/mx:0;
+    // skin-ish pixels -> face centroid
+    if(r>60&&g>30&&b>15&&r>g&&r>b&&(r-Math.min(g,b))>12&&Math.abs(r-g)>8){ const wgt=1; sx+=x*wgt;sy+=y*wgt;sw+=wgt; }
+    if((x&3)===0&&(y&3)===0) hash=Math.imul(hash^(l>>4),16777619)>>>0;
+  }
+  for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){ const k=y*W+x; tex+=Math.abs(lum[k]-lum[k+1])+Math.abs(lum[k]-lum[k+W]); }
+  for(let y=0;y<H;y++)for(let x=0;x<W/2;x++) symD+=Math.abs(lum[y*W+x]-lum[y*W+W-1-x]);
+  let mot=0; if(prevLum){ for(let k=0;k<lum.length;k+=7) mot+=Math.abs(lum[k]-prevLum[k]); mot/= (lum.length/7);} prevLum=lum;
+  const mean=L/n;
+  return {
+    r:R/n,g:G/n,b:B/n, bright:mean/255, contrast:Math.sqrt(Math.max(0,L2/n-mean*mean))/128,
+    sat:sat/n, tex:tex/((W-2)*(H-2))/40, sym:1-Math.min(1,symD/(W/2*H)/60),
+    fx: sw>20? sx/sw/W : .5+(((hash>>>3)&255)/255-.5)*.3, fy: sw>20? sy/sw/H : .45+(((hash>>>11)&255)/255-.5)*.3, fill: sw>20? sw/n : ((hash>>>19)&255)/255*.5, motion:mot/30, hash
+  };
+}
+let demoSeed=Date.now()>>>0;
+function rnd(){ demoSeed=Math.imul(demoSeed^demoSeed>>>15,2246822507)>>>0; demoSeed^=demoSeed>>>13; return (demoSeed>>>0)/4294967296; }
+function demoSample(){ // plausible selfie-like signals
+  const L=.2+rnd()*.6, wr=-.02+rnd()*.26, gr=-.06+rnd()*.1, base=L*255*3/(1+0);
+  const r=base*(1/3+wr/2), b=base*(1/3-wr/2), g=base-r-b+gr*base; 
+  return {r,g,b,bright:L,contrast:.15+rnd()*.5,sat:.08+rnd()*.42,tex:.2+rnd()*1.1,sym:.6+rnd()*.35,
+    fx:.5+(rnd()-.5)*.3,fy:.45+(rnd()-.5)*.3,fill:.05+rnd()*.55,motion:rnd()*.2,hash:(rnd()*4294967296)>>>0}; }
+
+function aggregate(list){
+  const k=Object.keys(list[0]), o={};
+  k.forEach(key=>{ if(key!=='hash') o[key]=list.reduce((s,v)=>s+v[key],0)/list.length; });
+  o.hash=list.reduce((h,v)=>Math.imul(h^v.hash,16777619)>>>0,2166136261);
+  return o;
+}
+
+/* turn raw signals into 0..1 traits */
+function traits(s){
+  const tot=s.r+s.g+s.b+1, c=v=>Math.max(0,Math.min(1,v));
+  const wb=(s.r-s.b)/tot, warm=c((wb-.1)*7), cool=c((.06-wb)*8);
+  return {
+    bright:c((s.bright-.3)*2.2), dark:c((.5-s.bright)*2.4), warm, cool,
+    red:c(((s.r-(s.g+s.b)/2)/tot-.07)*8), green:c(((s.g-(s.r+s.b)/2)/tot+.005)*14),
+    vivid:c((s.sat-.15)*3), dull:c((.3-s.sat)*3.5), contrast:c(s.contrast*1.6-.2), texture:c(s.tex-.15),
+    side:c(Math.abs(s.fx-.5)*5), center:c(1-Math.abs(s.fx-.5)*6-Math.abs(s.fy-.45)*3),
+    high:c((.45-s.fy)*5), low:c((s.fy-.5)*5), close:c((s.fill-.25)*2.5), far:c((.2-s.fill)*5),
+    sym:c((s.sym-.7)*3.3), asym:c((.85-s.sym)*3.3), calm:c(1-s.motion*6)
+  };
+}
+
+const REASONS={
+  bright:t=>`Your scan registered a ${pct(t)} brightness aura. You literally light up a room.`,
+  dark:t=>`You came in ${pct(t)} shadow-cloaked. Mysterious. Very on brand.`,
+  warm:t=>`Your color signature runs ${pct(t)} warm. That's main-character heat.`,
+  cool:t=>`Cool-tone readings hit ${pct(t)}. Ice in the veins, in a good way.`,
+  red:t=>`Detected red-spectrum energy at ${pct(t)}, the official color of "I've got this."`,
+  green:t=>`Green levels at ${pct(t)}. Plants trust you. That's rare.`,
+  vivid:t=>`Saturation off the charts (${pct(t)}). You are not a "neutral palette" person.`,
+  dull:t=>`Muted tones detected (${pct(t)} subtle). Understated heroes win long games.`,
+  contrast:t=>`Contrast index ${pct(t)}: sharp edges, strong opinions.`,
+  texture:t=>`High detail density (${pct(t)}). Your face has a lot going on, and we mean that as a compliment.`,
+  side:t=>`You framed yourself ${pct(t)} off-center. Rules are suggestions to you.`,
+  center:t=>`Dead-center framing at ${pct(t)} precision. You crave balance.`,
+  high:t=>`Your face rode high in the frame (${pct(t)}). Natural lookout instincts.`,
+  low:t=>`You sat low in the frame (${pct(t)}). Grounded. Unshakeable. Probably has a good chair.`,
+  close:t=>`You filled ${pct(t)} of the scanner. Bold. Zero hesitation.`,
+  far:t=>`You kept a ${pct(t)} safe distance. Classic dramatic-entrance energy.`,
+  sym:t=>`Facial-frame symmetry clocked ${pct(t)}. Suspiciously well-balanced.`,
+  asym:t=>`Asymmetry reading ${pct(t)}. Unpredictable, which villains hate.`,
+  calm:t=>`Stillness during scan: ${pct(t)}. Nerves of titanium.`
+};
+function pct(v){return Math.round(40+v*59)+'%';}
+
+function rawScore(h,t){ let sc=0; for(const k in h.w) sc+=h.w[k]*(t[k]||0); return sc; }
+// calibrate: normalize each hero's score against typical selfies so every hero is reachable
+const CAL=(()=>{ const keep=demoSeed; demoSeed=12345; const N=1500, acc=HEROES.map(()=>[0,0]);
+  for(let i=0;i<N;i++){ const t=traits(demoSample()); HEROES.forEach((h,j)=>{const v=rawScore(h,t); acc[j][0]+=v; acc[j][1]+=v*v;}); }
+  demoSeed=keep; return acc.map(([a,b])=>{const m=a/N; return {m, sd:Math.sqrt(Math.max(1e-6,b/N-m*m))};}); })();
+function pick(s){
+  const t=traits(s);
+  const scored=HEROES.map((h,i)=>{
+    let sc=(rawScore(h,t)-CAL[i].m)/CAL[i].sd;
+    sc+=((s.hash>>>(i%24))&7)/20; // tiny frame-hash nudge for variety
+    return {h,sc};
+  }).sort((a,b)=>b.sc-a.sc);
+  const hero=scored[0].h;
+  const contrib=Object.keys(hero.w).filter(k=>hero.w[k]>0&&t[k]>.3).map(k=>({k,v:t[k]*hero.w[k],t:t[k]})).sort((a,b)=>b.v-a.v);
+  const why=contrib.slice(0,2).map(c=>REASONS[c.k](c.t));
+  // a third reason: strongest trait overall not already used
+  const used=new Set(contrib.slice(0,2).map(c=>c.k));
+  while(why.length<3){ const e=Object.entries(t).filter(([k])=>!used.has(k)&&REASONS[k]).sort((a,b)=>b[1]-a[1])[0]; if(!e) break; used.add(e[0]); why.push(REASONS[e[0]](e[1])); }
+  const st=x=>Math.round(30+Math.max(0,Math.min(1,x))*69);
+  const stats=[
+    ['Courage', st(t.close*.6+t.contrast*.4+.15)],
+    ['Charisma',st(t.bright*.5+t.vivid*.5+.1)],
+    ['Mystery', st(t.dark*.6+t.asym*.3+.1)],
+    ['Focus',   st(t.center*.5+t.calm*.5)],
+    ['Chaos',   st(t.texture*.5+t.side*.5)],
+  ];
+  const second=scored[1].h;
+  const match=Math.round(82+Math.min(17,(scored[0].sc-scored[1].sc)*12+(s.hash%5)));
+  return {hero,why,stats,second,match};
+}
+
+/* ---------------- Scan FX loop ---------------- */
+const LINES=["Locating heroic jawline…","Measuring latent energy…","Calibrating power levels…","Scanning for secret origin…","Cross-checking power registry…","Analyzing dramatic squint…","Unlocking ability…"];
+let t0=0, dur=4600, lineIdx=0;
+const pts=Array.from({length:46},()=>({a:Math.random()*Math.PI*2,r:Math.random(),j:Math.random()}));
+function loop(ts){
+  raf=requestAnimationFrame(loop);
+  const w=fx.clientWidth,h=fx.clientHeight; ctx.clearRect(0,0,w,h);
+  if(source==='demo'){ ctx.fillStyle='#0b1230'; ctx.fillRect(0,0,w,h); }
+  const cx=w/2, cy=h*.44, rx=Math.min(w*.36,190), ry=rx*1.32;
+  // vignette outside oval
+  ctx.save(); ctx.fillStyle='rgba(3,6,18,.55)'; ctx.beginPath(); ctx.rect(0,0,w,h); ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2); ctx.fill('evenodd'); ctx.restore();
+  // oval guide
+  const p= scanning? Math.min(1,(ts-t0)/dur):0;
+  ctx.lineWidth=3; ctx.strokeStyle= scanning? `hsl(${185+p*140},100%,62%)`:'rgba(61,242,255,.85)';
+  ctx.setLineDash(scanning?[]:[10,8]); ctx.lineDashOffset=-ts/40;
+  ctx.shadowColor=ctx.strokeStyle; ctx.shadowBlur=14;
+  ctx.beginPath(); ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2); ctx.stroke(); ctx.setLineDash([]);
+  // corner brackets
+  const bx=rx+18,by=ry+18,L=26; ctx.lineWidth=4;
+  [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx,sy])=>{ctx.beginPath();ctx.moveTo(cx+sx*bx,cy+sy*(by-L));ctx.lineTo(cx+sx*bx,cy+sy*by);ctx.lineTo(cx+sx*(bx-L),cy+sy*by);ctx.stroke();});
+  ctx.shadowBlur=0;
+  if(scanning){
+    // clip to oval for inner FX
+    ctx.save(); ctx.beginPath(); ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2); ctx.clip();
+    // grid
+    ctx.strokeStyle='rgba(61,242,255,.18)'; ctx.lineWidth=1;
+    for(let x=cx-rx;x<cx+rx;x+=18){ctx.beginPath();ctx.moveTo(x,cy-ry);ctx.lineTo(x,cy+ry);ctx.stroke();}
+    for(let y=cy-ry;y<cy+ry;y+=18){ctx.beginPath();ctx.moveTo(cx-rx,y);ctx.lineTo(cx+rx,y);ctx.stroke();}
+    // sweep line
+    const sweep=cy-ry+((Math.sin((ts-t0)/520-Math.PI/2)+1)/2)*ry*2;
+    const gr=ctx.createLinearGradient(0,sweep-60,0,sweep+4); gr.addColorStop(0,'rgba(61,242,255,0)'); gr.addColorStop(1,'rgba(61,242,255,.45)');
+    ctx.fillStyle=gr; ctx.fillRect(cx-rx,sweep-60,rx*2,64);
+    ctx.fillStyle='#fff'; ctx.shadowColor='#3df2ff'; ctx.shadowBlur=20; ctx.fillRect(cx-rx,sweep-1.5,rx*2,3); ctx.shadowBlur=0;
+    // mesh points
+    const shown=Math.floor(pts.length*Math.min(1,p*1.4));
+    ctx.fillStyle='#ff3d9a'; ctx.strokeStyle='rgba(255,61,154,.35)';
+    const P=pts.slice(0,shown).map(q=>[cx+Math.cos(q.a)*q.r*rx*.85+Math.sin(ts/300+q.j*9)*1.5, cy+Math.sin(q.a)*q.r*ry*.85]);
+    ctx.beginPath(); for(let i=1;i<P.length;i++){const a=P[i],b=P[(i*7)%i]; ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]);} ctx.stroke();
+    P.forEach(a=>{ctx.beginPath();ctx.arc(a[0],a[1],2.4,0,7);ctx.fill();});
+    ctx.restore();
+    // progress
+    $('prog').style.width=(p*100).toFixed(1)+'%';
+    $('readout').textContent='BIO-SYNC '+Math.round(p*100)+'%';
+    const li=Math.min(LINES.length-1,Math.floor(p*LINES.length)); if(li!==lineIdx){lineIdx=li;$('status').textContent=LINES[li];}
+    // sample frames
+    if(samples.length<40 && (ts-t0)>samples.length*110){ const s=analyze(); if(s) samples.push(s); }
+    if(p>=1) finish();
+  }
+}
+
+function beginScan(){
+  if(scanning) return;
+  scanning=true; t0=performance.now(); lineIdx=-1; samples=[]; $('go').style.display='none';
+  if(navigator.vibrate) try{navigator.vibrate(30);}catch(e){}
+}
+
+function snapshot(){
+  const c=document.createElement('canvas'); c.width=480; c.height=480; const x=c.getContext('2d');
+  if(source==='demo'){ const g=x.createLinearGradient(0,0,480,480); g.addColorStop(0,'#3df2ff'); g.addColorStop(1,'#ff3d9a'); x.fillStyle=g; x.fillRect(0,0,480,480);
+    x.fillStyle='#0b1230'; x.beginPath(); x.arc(240,200,90,0,7); x.fill(); x.beginPath(); x.ellipse(240,470,170,150,0,0,7); x.fill(); }
+  else { // crop a square centered on the face oval
+    const w=fx.clientWidth,h=fx.clientHeight, cy=h*.44, side=Math.min(w*.8,380);
+    const full=document.createElement('canvas'); full.width=w; full.height=h; drawSource(full.getContext('2d'),w,h);
+    x.drawImage(full,w/2-side/2,Math.max(0,cy-side/2),side,side,0,0,480,480);
+  }
+  return c;
+}
+
+function finish(){
+  scanning=false;
+  const fl=$('flash'); fl.style.transition='none'; fl.style.opacity='1'; requestAnimationFrame(()=>{fl.style.transition='opacity .6s'; fl.style.opacity='0';});
+  if(!samples.length){ const s=analyze(); if(s) samples.push(s); }
+  const s= samples.length? aggregate(samples) : demoSample();
+  lastSnap=snapshot();
+  const res=pick(s);
+  setTimeout(()=>{ cancelAnimationFrame(raf); stopCamera(); renderResult(res); },350);
+}
+
+/* ---------------- Result ---------------- */
+let lastRes=null;
+function renderResult(r){try{window.AYHAds&&window.AYHAds.gameOver()}catch(_e){}
+  lastRes=r; const h=r.hero, root=document.documentElement;
+  root.style.setProperty('--hero',h.c1); root.style.setProperty('--hero2',h.c2);
+  $('rSelfie').src=lastSnap.toDataURL('image/jpeg',.85);
+  $('rEmb').innerHTML=emblem(h);
+  $('rName').textContent=h.name; $('rTag').textContent=h.tag; $('rPower').textContent='⚡ '+h.power;
+  $('rWhy').innerHTML=''; r.why.forEach(t=>{const li=document.createElement('li'); li.textContent=t; $('rWhy').appendChild(li);});
+  $('rStats').innerHTML=r.stats.map(([k,v])=>`<b>${k}</b><div class="m"><i data-v="${v}"></i></div><span>${v}</span>`).join('');
+  $('rMatch').textContent=`${r.match}% match · Runner-up: ${r.second.name}`;
+  show('result'); $('result').scrollTop=0;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelectorAll('#rStats i').forEach(i=>i.style.width=i.dataset.v+'%')));
+}
+
+/* share card rendered to canvas (screenshot-friendly) */
+function wrap(c,text,x,y,maxW,lh){ const words=text.split(' '); let line='', yy=y;
+  for(const w of words){ const t=line?line+' '+w:w; if(c.measureText(t).width>maxW&&line){ c.fillText(line,x,yy); line=w; yy+=lh; } else line=t; }
+  if(line){c.fillText(line,x,yy); yy+=lh;} return yy; }
+function svgToImg(svg){ return new Promise(res=>{ const i=new Image(); i.onload=()=>res(i); i.onerror=()=>res(null); i.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg.replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" ')); }); }
+async function buildCard(){
+  const r=lastRes,h=r.hero, W=1080;
+  const m=document.createElement('canvas').getContext('2d'); m.font='400 31px system-ui,sans-serif';
+  const lines=(t,maxW)=>{let n=1,line='';for(const w of t.split(' ')){const tt=line?line+' '+w:w;if(m.measureText(tt).width>maxW&&line){n++;line=w;}else line=tt;}return n;};
+  const whyH=100+r.why.reduce((s,t)=>s+lines(t,W-240)*40+14,0);
+  m.font='italic 500 36px system-ui,sans-serif'; const tagH=lines(h.tag,W-160)*46;
+  const H=680+tagH+100+whyH+40+r.stats.length*52+130, c=document.createElement('canvas'); c.width=W;c.height=H; const x=c.getContext('2d');
+  const g=x.createLinearGradient(0,0,W,H); g.addColorStop(0,h.c1); g.addColorStop(.35,'#0b1230'); g.addColorStop(.7,'#0b1230'); g.addColorStop(1,h.c2);
+  x.fillStyle=g; x.fillRect(0,0,W,H);
+  x.save(); x.translate(W/2,520); x.fillStyle='rgba(255,255,255,.05)'; for(let i=0;i<24;i++){x.rotate(Math.PI/12); x.beginPath(); x.moveTo(0,0); x.lineTo(-60,-1400); x.lineTo(60,-1400); x.fill();} x.restore();
+  x.strokeStyle=h.c1; x.lineWidth=8; x.strokeRect(30,30,W-60,H-60);
+  x.textAlign='center'; x.fillStyle='rgba(255,255,255,.7)'; x.font='600 30px system-ui,sans-serif'; x.fillText('S U P E R P O W E R   D E T E C T E D',W/2,110);
+  // selfie circle
+  x.save(); x.beginPath(); x.arc(W/2-110,330,170,0,7); x.closePath(); x.shadowColor=h.c1; x.shadowBlur=50; x.fillStyle=h.c1; x.fill(); x.restore();
+  x.save(); x.beginPath(); x.arc(W/2-110,330,160,0,7); x.clip(); x.drawImage(lastSnap,W/2-270,170,320,320); x.restore();
+  const em=await svgToImg(emblem(h,260)); if(em) x.drawImage(em,W/2+70,220,240,240);
+  x.fillStyle='#fff'; x.shadowColor=h.c1; x.shadowBlur=30; x.font='900 96px system-ui,sans-serif';
+  let fs=96; while(x.measureText(h.name.toUpperCase()).width>W-120&&fs>50){fs-=4;x.font=`900 ${fs}px system-ui,sans-serif`;}
+  x.fillText(h.name.toUpperCase(),W/2,620); x.shadowBlur=0;
+  x.fillStyle=h.c1; x.font='italic 500 36px system-ui,sans-serif'; let y=wrap(x,h.tag,W/2,680,W-160,46);
+  x.fillStyle='#fff'; x.font='700 34px system-ui,sans-serif'; x.fillText('⚡ '+h.power,W/2,y+20); y+=80;
+  x.fillStyle='rgba(0,0,0,.35)'; x.fillRect(70,y,W-140,whyH); x.textAlign='left';
+  x.fillStyle=h.c1; x.font='800 28px system-ui,sans-serif'; x.fillText('WHY THIS POWER',100,y+50);
+  x.fillStyle='#fff'; x.font='400 31px system-ui,sans-serif'; let yy=y+100;
+  r.why.forEach(t=>{ x.fillText('•',100,yy); yy=wrap(x,t,130,yy,W-240,40)+14; });
+  y+=whyH+50;
+  r.stats.forEach(([k,v],i)=>{ const yy=y+i*52; x.fillStyle='rgba(255,255,255,.7)'; x.font='700 26px system-ui,sans-serif'; x.fillText(k.toUpperCase(),100,yy+18);
+    x.fillStyle='rgba(255,255,255,.12)'; x.fillRect(300,yy,560,20); const gg=x.createLinearGradient(300,0,860,0); gg.addColorStop(0,h.c1); gg.addColorStop(1,h.c2); x.fillStyle=gg; x.fillRect(300,yy,560*v/100,20);
+    x.fillStyle='#fff'; x.fillText(String(v),890,yy+20); });
+  x.textAlign='center'; x.fillStyle='rgba(255,255,255,.6)'; x.font='500 26px system-ui,sans-serif'; x.fillText(`${r.match}% match · Scanned with POWER SCAN`,W/2,H-60);
+  return c;
+}
+async function share(){
+  const b=$('share'); b.disabled=true; const old=b.textContent; b.textContent='Making card…';
+  try{
+    const c=await buildCard(); const blob=await new Promise(r=>c.toBlob(r,'image/png'));
+    const file=new File([blob],'my-superpower.png',{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],title:'My superpower',text:`Power Scan says my superpower is ${lastRes.hero.name}!`}).catch(()=>{});
+    } else {
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='my-superpower.png'; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+      b.textContent='Saved! (or screenshot this)'; setTimeout(()=>{b.textContent=old;b.disabled=false;},1800); return;
+    }
+  }catch(e){ console.error(e); }
+  b.textContent=old; b.disabled=false;
+}
+
+/* ---------------- Photo fallback ---------------- */
+function pickPhoto(){ $('file').value=''; $('file').click(); }
+$('file').addEventListener('change',e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f) return;
+  const url=URL.createObjectURL(f);
+  still.onload=()=>{ stopCamera(); source='img'; video.style.display='none'; still.style.display='block'; enterScanner(); setTimeout(beginScan,500); };
+  still.src=url;
+});
+
+/* ---------------- Wire up ---------------- */
+$('start').onclick=startCamera; $('tryAgain').onclick=startCamera;
+$('photoBtn').onclick=pickPhoto; $('photoBtn2').onclick=pickPhoto;
+$('demo').onclick=()=>{ stopCamera(); source='demo'; video.style.display='none'; still.style.display='none'; enterScanner(); };
+$('go').onclick=beginScan;
+window.__heroSim=n=>{const c={};for(let i=0;i<n;i++){const k=pick(demoSample()).hero.name;c[k]=(c[k]||0)+1;}return c;};
+$('share').onclick=share;
+$('retry').onclick=()=>{ document.documentElement.style.removeProperty('--hero'); document.documentElement.style.removeProperty('--hero2');
+  if(source==='img') pickPhoto(); else if(source==='demo') $('demo').onclick(); else startCamera(); };
+document.addEventListener('visibilitychange',()=>{ if(document.hidden&&!$('scan').classList.contains('on')) stopCamera(); });
+})();
+</script>
+<script src="ads.bundle.js"></script>
+</body>
+</html>

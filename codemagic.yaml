@@ -1,51 +1,174 @@
-# Codemagic cloud builds for Ate Your Homework apps. Each app lives in its own folder.
-# Tempo (iOS): Builds on Codemagic's Macs and uploads to TestFlight.
-# Requires, in Codemagic: Team settings > Integrations > Developer Portal,
-# an App Store Connect API key saved under the name "AYH App Store Connect".
+# Codemagic cloud builds for Ate Your Homework apps. Each app lives in its own folder
+# and has its own workflow below. Every workflow builds on Codemagic's Macs, signs the app
+# with files fetched from Apple, and uploads it to TestFlight.
+#
+# Shared setup (done once, used by all apps):
+#   - Codemagic Settings > Integrations > Developer Portal: API key named "AYH App Store Connect"
+#   - App > Environment variables: CERTIFICATE_PRIVATE_KEY (secret) in group "ios_signing_keys"
+# Each app also needs its bundle ID registered at developer.apple.com and an app record
+# in App Store Connect before its first build.
 
-workflows:
-  ios-testflight:
-    name: Tempo iOS to TestFlight
+definitions:
+  ios_base: &ios_base
     max_build_duration: 60
     instance_type: mac_mini_m2
     integrations:
       app_store_connect: AYH App Store Connect
+  ios_env: &ios_env
+    groups:
+      - ios_signing_keys
+    node: 22
+    xcode: latest
+  ios_scripts: &ios_scripts
+    - name: Install packages
+      script: npm ci
+    - name: Build ads bundle
+      script: npx esbuild src/ads.js --bundle --format=iife --minify --outfile=www/ads.bundle.js
+    - name: Copy web app into iOS project
+      script: npx cap sync ios
+    - name: Set up keychain
+      script: keychain initialize
+    - name: Fetch signing files from Apple
+      script: |
+        app-store-connect fetch-signing-files "$BUNDLE_ID" \
+          --type IOS_APP_STORE \
+          --certificate-key=@env:CERTIFICATE_PRIVATE_KEY \
+          --create
+    - name: Add certificates to keychain
+      script: keychain add-certificates
+    - name: Apply signing profiles
+      script: xcode-project use-profiles
+    - name: Set build number
+      script: |
+        cd ios/App
+        agvtool new-version -all $BUILD_NUMBER
+    - name: Build IPA
+      script: xcode-project build-ipa --project "ios/App/App.xcodeproj" --scheme "App"
+  ios_artifacts: &ios_artifacts
+    - build/ios/ipa/*.ipa
+    - "*/build/ios/ipa/*.ipa"
+  ios_publish: &ios_publish
+    app_store_connect:
+      auth: integration
+      submit_to_testflight: true
+
+workflows:
+  ios-testflight:
+    name: Tempo iOS to TestFlight
+    <<: *ios_base
     working_directory: tempo
     environment:
-      groups:
-        # App > Environment variables: CERTIFICATE_PRIVATE_KEY (secret) in group "ios_signing_keys"
-        - ios_signing_keys
-      node: 22
-      xcode: latest
-    scripts:
-      - name: Install packages
-        script: npm ci
-      - name: Build ads bundle
-        script: npx esbuild src/ads.js --bundle --format=iife --minify --outfile=www/ads.bundle.js
-      - name: Copy web app into iOS project
-        script: npx cap sync ios
-      - name: Set up keychain
-        script: keychain initialize
-      - name: Fetch signing files from Apple
-        script: |
-          app-store-connect fetch-signing-files "com.ateyourhomework.tempo" \
-            --type IOS_APP_STORE \
-            --certificate-key=@env:CERTIFICATE_PRIVATE_KEY \
-            --create
-      - name: Add certificates to keychain
-        script: keychain add-certificates
-      - name: Apply signing profiles
-        script: xcode-project use-profiles
-      - name: Set build number
-        script: |
-          cd ios/App
-          agvtool new-version -all $BUILD_NUMBER
-      - name: Build IPA
-        script: xcode-project build-ipa --project "ios/App/App.xcodeproj" --scheme "App"
-    artifacts:
-      - tempo/build/ios/ipa/*.ipa
-      - build/ios/ipa/*.ipa
-    publishing:
-      app_store_connect:
-        auth: integration
-        submit_to_testflight: true
+      <<: *ios_env
+      vars:
+        BUNDLE_ID: com.ateyourhomework.tempo
+    scripts: *ios_scripts
+    artifacts: *ios_artifacts
+    publishing: *ios_publish
+
+  checkers-ios:
+    name: Checkers iOS to TestFlight
+    <<: *ios_base
+    working_directory: checkers
+    environment:
+      <<: *ios_env
+      vars:
+        BUNDLE_ID: com.ateyourhomework.checkers
+    scripts: *ios_scripts
+    artifacts: *ios_artifacts
+    publishing: *ios_publish
+
+  codebreaker-ios:
+    name: Codebreaker iOS to TestFlight
+    <<: *ios_base
+    working_directory: codebreaker
+    environment:
+      <<: *ios_env
+      vars:
+        BUNDLE_ID: com.ateyourhomework.codebreaker
+    scripts: *ios_scripts
+    artifacts: *ios_artifacts
+    publishing: *ios_publish
+
+  labyrinth-run-ios:
+    name: Labyrinth Run iOS to TestFlight
+    <<: *ios_base
+    working_directory: labyrinth-run
+    environment:
+      <<: *ios_env
+      vars:
+        BUNDLE_ID: com.ateyourhomework.labyrinthrun
+    scripts: *ios_scripts
+    artifacts: *ios_artifacts
+    publishing: *ios_publish
+
+  marble-drop-ios:
+    name: Marble Drop iOS to TestFlight
+    <<: *ios_base
+    working_directory: marble-drop
+    environment:
+      <<: *ios_env
+      vars:
+        BUNDLE_ID: com.ateyourhomework.marbledrop
+    scripts: *ios_scripts
+    artifacts: *ios_artifacts
+    publishing: *ios_publish
+
+  toilet-flush-ios:
+    name: Toilet Flush iOS to TestFlight
+    <<: *ios_base
+    working_directory: toilet-flush
+    environment:
+      <<: *ios_env
+      vars:
+        BUNDLE_ID: com.ateyourhomework.toiletflush
+    scripts: *ios_scripts
+    artifacts: *ios_artifacts
+    publishing: *ios_publish
+
+  cat-box-ios:
+    name: Cat Box iOS to TestFlight
+    <<: *ios_base
+    working_directory: cat-box
+    environment:
+      <<: *ios_env
+      vars:
+        BUNDLE_ID: com.ateyourhomework.catbox
+    scripts: *ios_scripts
+    artifacts: *ios_artifacts
+    publishing: *ios_publish
+
+  disappointed-abe-ios:
+    name: Disappointed Abe iOS to TestFlight
+    <<: *ios_base
+    working_directory: disappointed-abe
+    environment:
+      <<: *ios_env
+      vars:
+        BUNDLE_ID: com.ateyourhomework.disappointedabe
+    scripts: *ios_scripts
+    artifacts: *ios_artifacts
+    publishing: *ios_publish
+
+  power-scan-ios:
+    name: Power Scan iOS to TestFlight
+    <<: *ios_base
+    working_directory: power-scan
+    environment:
+      <<: *ios_env
+      vars:
+        BUNDLE_ID: com.ateyourhomework.powerscan
+    scripts: *ios_scripts
+    artifacts: *ios_artifacts
+    publishing: *ios_publish
+
+  pill-box-ios:
+    name: Pill Box iOS to TestFlight
+    <<: *ios_base
+    working_directory: pill-box
+    environment:
+      <<: *ios_env
+      vars:
+        BUNDLE_ID: com.ateyourhomework.pillbox
+    scripts: *ios_scripts
+    artifacts: *ios_artifacts
+    publishing: *ios_publish

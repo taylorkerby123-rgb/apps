@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
+<title>Codebreaker</title>
+<style>
+:root{
+  --bg:#06100c;--panel:#0b1a14;--panel2:#0f231b;--line:#1c3a2d;
+  --g:#5cf2a6;--gd:#2e8a5f;--gdim:#1f5a40;--amber:#ffc44d;--red:#ff6060;--txt:#cfe9dc;--mut:#7fa595;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--txt);font-family:"IBM Plex Mono",ui-monospace,monospace;}
+body{
+  padding:calc(env(safe-area-inset-top) + 10px) calc(env(safe-area-inset-right) + 12px) calc(env(safe-area-inset-bottom) + 14px) calc(env(safe-area-inset-left) + 12px);
+  background:radial-gradient(ellipse at 50% 0%,#0d2a1f 0%,var(--bg) 60%);
+  min-height:100%;overflow-x:hidden;
+}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);z-index:50}
+.wrap{max-width:520px;margin:0 auto}
+.disp{font-family:VT323,monospace}
+button{font-family:inherit;color:inherit;cursor:pointer;border:none;background:none}
+.hidden{display:none!important}
+
+/* Title */
+#title{min-height:calc(100vh - 40px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:14px}
+#title h1{font-family:VT323;font-size:64px;letter-spacing:6px;margin:0;color:var(--g);text-shadow:0 0 18px rgba(92,242,166,.55)}
+.tag{color:var(--mut);font-size:13px;letter-spacing:3px;text-transform:uppercase}
+.stamp{display:inline-block;border:2px solid var(--red);color:var(--red);padding:2px 10px;font-family:VT323;font-size:22px;letter-spacing:4px;transform:rotate(-6deg);opacity:.85;margin:6px 0 10px}
+.big{width:100%;max-width:320px;padding:16px;border-radius:12px;font-weight:600;letter-spacing:2px;font-size:15px;text-transform:uppercase}
+.primary{background:var(--g);color:#04140c;box-shadow:0 0 24px rgba(92,242,166,.3)}
+.primary:active{transform:scale(.98)}
+.ghost{border:1px solid var(--gd);color:var(--g)}
+.stats{display:flex;gap:18px;color:var(--mut);font-size:12px;letter-spacing:1px;margin-top:6px}
+.stats b{color:var(--amber);font-weight:600}
+
+/* Game */
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px}
+.pill{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:12px;letter-spacing:1px;white-space:nowrap}
+.pill b{color:var(--g);font-weight:600}
+.iconbtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--panel);font-size:15px;display:flex;align-items:center;justify-content:center}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
+.lvtitle{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.lvtitle h2{margin:0;font-family:VT323;font-size:28px;color:var(--amber);letter-spacing:1px;font-weight:400}
+.dots{display:flex;gap:4px}
+.dots i{width:9px;height:9px;border-radius:2px;background:var(--gdim)}
+.dots i.on{background:var(--g);box-shadow:0 0 6px var(--g)}
+.intel{font-size:13px;line-height:1.5;color:var(--txt);margin-top:6px;white-space:pre-line}
+.riddle{margin-top:8px;padding:8px 10px;border-left:3px solid var(--amber);background:rgba(255,196,77,.07);font-size:13px;color:#ffe3a6}
+.hintline{margin-top:8px;font-size:12.5px;color:var(--g);padding:7px 10px;border:1px dashed var(--gd);border-radius:8px}
+.lbl{font-size:10.5px;letter-spacing:2px;color:var(--mut);text-transform:uppercase;display:flex;justify-content:space-between}
+.orig{font-size:11.5px;color:var(--mut);word-break:break-word;margin:4px 0 10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.orig.open{-webkit-line-clamp:unset}
+#work{font-family:VT323;font-size:30px;line-height:1.15;color:var(--g);text-shadow:0 0 10px rgba(92,242,166,.4);word-break:break-word;min-height:70px;letter-spacing:2px;margin-top:4px}
+#work.sm{font-size:23px;letter-spacing:1px}
+#work.xs{font-size:19px;letter-spacing:.5px}
+#work.win{color:var(--amber);text-shadow:0 0 14px rgba(255,196,77,.6)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;min-height:24px}
+.chip{font-size:11px;padding:3px 8px;border-radius:6px;background:var(--panel2);border:1px solid var(--gd);color:var(--g);letter-spacing:1px}
+.chip.empty{border-style:dashed;color:var(--mut);border-color:var(--line)}
+
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tool{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 8px;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:3px}
+.tool small{font-weight:400;font-size:10px;color:var(--mut);letter-spacing:.5px;text-transform:none}
+.tool:active{background:#143326;border-color:var(--gd)}
+.tool.new{animation:glow 1.4s ease-in-out 3}
+@keyframes glow{50%{border-color:var(--amber);box-shadow:0 0 14px rgba(255,196,77,.4)}}
+.wide{grid-column:1/-1}
+.shiftbox{display:flex;align-items:center;justify-content:space-between;flex-direction:row;padding:8px}
+.shiftbox .sb{width:52px;height:44px;border-radius:10px;background:var(--panel);border:1px solid var(--gd);font-size:22px;color:var(--g)}
+.shiftbox .sb:active{background:#143326}
+.shiftmid{text-align:center}
+.shiftmid .v{font-family:VT323;font-size:28px;color:var(--g);line-height:1}
+.vigbox{display:flex;gap:8px;padding:8px;flex-direction:row}
+.vigbox input,.ans input{flex:1;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--g);font-family:inherit;font-size:16px;padding:10px;text-transform:uppercase;letter-spacing:2px;outline:none}
+.vigbox input:focus,.ans input:focus{border-color:var(--gd)}
+.vigbox button,.ans button{background:var(--gd);color:#04140c;border-radius:10px;padding:0 14px;font-weight:600;font-size:13px;letter-spacing:1px}
+.row2{display:flex;gap:8px;margin-top:8px}
+.row2 button{flex:1;padding:11px;border-radius:10px;border:1px solid var(--line);background:var(--panel);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--mut)}
+.ans{display:flex;gap:8px}
+.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.msg{font-size:12px;min-height:16px;margin-top:6px;color:var(--red);letter-spacing:1px}
+
+/* Overlay */
+#ov{position:fixed;inset:0;background:rgba(2,8,5,.82);backdrop-filter:blur(4px);z-index:40;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal{background:var(--panel);border:1px solid var(--gd);border-radius:16px;padding:22px 18px;max-width:440px;width:100%;max-height:86vh;overflow:auto;box-shadow:0 0 40px rgba(92,242,166,.15)}
+.modal h3{font-family:VT323;font-weight:400;font-size:32px;color:var(--amber);margin:0 0 6px;letter-spacing:1px}
+.modal p,.modal li{font-size:13.5px;line-height:1.55}
+.modal ul{padding-left:18px;margin:8px 0}
+.ex{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-family:VT323;font-size:21px;color:var(--g);margin:8px 0;letter-spacing:1px}
+.pts{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px dashed var(--line)}
+.pts:last-of-type{border:none;font-weight:600;color:var(--amber)}
+.reveal{font-family:VT323;font-size:26px;color:var(--g);margin:10px 0 14px;line-height:1.15;text-shadow:0 0 10px rgba(92,242,166,.4)}
+</style>
+<style>
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/ibm-plex-mono-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/vt323-latin-400-normal.woff2) format('woff2')}
+html.in-app body{box-sizing:border-box;padding-top:calc(env(safe-area-inset-top) + var(--ad-top,0px));-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}
+html.in-app input,html.in-app textarea{-webkit-user-select:text;user-select:text}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="title">
+  <div class="stamp">CLASSIFIED</div>
+  <h1>CODE<br>BREAKER</h1>
+  <div class="tag">Intercept. Decode. Advance.</div>
+  <div style="height:16px"></div>
+  <button class="big primary" id="btnStart">Begin Mission</button>
+  <button class="big ghost hidden" id="btnCont">Continue</button>
+  <button class="big ghost" id="btnHow">Field Manual</button>
+  <div class="stats"><span>BEST <b id="sBest">0</b></span><span>DEEPEST LVL <b id="sMax">1</b></span></div>
+</section>
+
+<section id="game" class="hidden">
+  <div class="top">
+    <button class="iconbtn" id="btnHome" aria-label="Menu">≡</button>
+    <span class="pill">LVL <b id="hLvl">1</b></span>
+    <span class="pill">SCORE <b id="hScore">0</b></span>
+    <span class="pill">⏱ <b id="hTime">0:00</b></span>
+    <button class="iconbtn" id="btnMute" aria-label="Sound">♪</button>
+  </div>
+
+  <div class="card">
+    <div class="lvtitle"><h2 id="lvTitle">Mirror Talk</h2><div class="dots" id="dots"></div></div>
+    <div class="intel" id="intel"></div>
+    <div id="riddle" class="riddle hidden"></div>
+    <div id="hints"></div>
+  </div>
+
+  <div class="card">
+    <div class="lbl"><span>Intercept</span><span id="origToggle" style="cursor:pointer">show all</span></div>
+    <div class="orig" id="orig"></div>
+    <div class="lbl"><span>Workbench</span><span id="wkState"></span></div>
+    <div id="work"></div>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <div class="tools" id="tools"></div>
+  <div class="row2">
+    <button id="btnUndo">↶ Undo</button>
+    <button id="btnReset">Reset</button>
+    <button id="btnHint" style="color:var(--amber)">Hint</button>
+  </div>
+
+  <div class="card" style="margin-top:10px">
+    <div class="lbl" style="margin-bottom:6px"><span>Or type the message</span></div>
+    <form class="ans" id="ansForm"><input id="ans" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="DECODED TEXT"><button>Send</button></form>
+    <div class="msg" id="msg"></div>
+  </div>
+</section>
+</div>
+
+<div id="ov" class="hidden"><div class="modal" id="modal"></div></div>
+
+<script>
+const A='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const MORSE={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..'};
+const RM={};for(const k in MORSE)RM[MORSE[k]]=k;
+
+const shiftT=(s,k)=>{k=((k%26)+26)%26;return s.replace(/[A-Z]/g,c=>A[(A.indexOf(c)+k)%26])};
+const atbash=s=>s.replace(/[A-Z]/g,c=>A[25-A.indexOf(c)]);
+const rev=s=>[...s].reverse().join('');
+const vig=(s,key,dir)=>{key=(key||'').toUpperCase().replace(/[^A-Z]/g,'');if(!key)return s;let i=0;return s.replace(/[A-Z]/g,c=>{const k=A.indexOf(key[i++%key.length]);return A[(A.indexOf(c)+dir*k+26)%26]})};
+const toMorse=s=>s.trim().split(/\s+/).map(w=>[...w].filter(c=>MORSE[c]).map(c=>MORSE[c]).join(' ')).join(' / ');
+const fromMorse=s=>{if(!/^[.\-\s\/]+$/.test(s.trim()))return s;return s.trim().split(/\s*\/\s*/).map(w=>w.split(/\s+/).map(c=>RM[c]||'?').join('')).join(' ')};
+const toNum=s=>s.trim().split(/\s+/).map(w=>[...w].filter(c=>A.includes(c)).map(c=>A.indexOf(c)+1).join('-')).join(' / ');
+const fromNum=s=>{if(!/^[\d\-\s\/]+$/.test(s.trim()))return s;return s.trim().split(/\s*\/\s*/).map(w=>w.split(/[-\s]+/).filter(Boolean).map(n=>A[+n-1]||'?').join('')).join(' ')};
+const group5=s=>(s.replace(/[^A-Z]/g,'').match(/.{1,5}/g)||[]).join(' ');
+const letters=s=>s.toUpperCase().replace(/[^A-Z]/g,'');
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const rint=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+
+const SHORT=["MEET AT DAWN","THE NEST IS EMPTY","BRING THE MAP","TRUST NO ONE","GO TO PLAN B","THE OWL FLIES AT NIGHT","SILENCE IS GOLDEN","WAIT BY THE BRIDGE","THE PACKAGE IS SAFE","BURN AFTER READING","LIGHTS OUT AT NINE","KEEP YOUR HEAD DOWN","THE TRAIN LEAVES SOON","FOLLOW THE RED DOOR","CHECK UNDER THE BENCH","THE BIRD HAS SUNG","ABORT THE MISSION","THE COFFEE IS COLD","SEND MORE TEA","THE CLOCK STRUCK TWELVE","WATCH THE TOWER","THE FOX IS LOOSE","CROSS AT MIDNIGHT","NO MORE LETTERS"];
+const LONG=["THE SECRET FILES ARE HIDDEN IN THE OLD LIGHTHOUSE","MEET YOUR CONTACT BESIDE THE STATUE OF THE LION","THE ENEMY KNOWS ABOUT THE TUNNEL SO USE THE RIVER ROUTE","THE VAULT COMBINATION IS ON THE BACK OF THE PAINTING","A STRANGER WITH A BLUE UMBRELLA HAS YOUR NEXT CLUE","WE LEAVE BY BOAT WHEN THE TIDE TURNS AT MIDNIGHT","DO NOT TRUST THE MAN IN THE GRAY HAT","THE MICROFILM IS INSIDE THE HOLLOW CHESS PIECE","SIGNAL WITH THREE FLASHES WHEN THE COAST IS CLEAR","EVERY CODE CAN BE BROKEN WITH ENOUGH PATIENCE","THE GARDENER IS ONE OF OURS","HIDE THE RADIO BEFORE THE INSPECTORS ARRIVE","THE PASSWORD HAS CHANGED TO SILVER FOX","OUR AGENT IN VIENNA HAS GONE QUIET","LEAVE THE KEY UNDER THE THIRD STONE","THE BAKER ON MAIN STREET SELLS MORE THAN BREAD"];
+const RIDDLES=[
+ {key:"OWL",clue:"I hunt at night and only ever ask who."},
+ {key:"KEY",clue:"Every lock in the world is waiting for me."},
+ {key:"ECHO",clue:"I answer every shout but never speak first."},
+ {key:"SHADOW",clue:"I follow you in sunlight and vanish in the dark."},
+ {key:"CANDLE",clue:"I grow shorter the longer I live."},
+ {key:"MAP",clue:"I have cities but no houses, rivers but no water."},
+ {key:"CLOCK",clue:"I have hands but cannot clap."},
+ {key:"PIANO",clue:"I have many keys but open no locks."},
+ {key:"SPONGE",clue:"Full of holes, yet I still hold water."},
+ {key:"STAMP",clue:"I travel the world while staying in one corner."}
+];
+
+const TOOLS={
+ rev:{name:"Reverse",desc:"Flip text backwards",
+   brief:"Some agents simply write everything backwards. The REVERSE tool flips the whole message.",ex:"NWAD TA TEEM  →  MEET AT DAWN"},
+ shift:{name:"Shift Wheel",
+   brief:"A Caesar cipher slides every letter along the alphabet by a fixed number. Use the SHIFT WHEEL: tap − or + to slide letters back or forward until real words appear.",ex:"PHHW DW GDZQ  (shift −3)  →  MEET AT DAWN"},
+ atb:{name:"Atbash",desc:"Fold the alphabet",
+   brief:"Atbash is an ancient cipher that folds the alphabet in half: A↔Z, B↔Y, C↔X and so on. Applying it twice cancels out.",ex:"NVVG ZG WZDM  →  MEET AT DAWN"},
+ num:{name:"Numbers",desc:"1-2-3 → A-B-C",
+   brief:"Each letter has been swapped for its position in the alphabet (A=1, Z=26). Hyphens split letters, slashes split words.",ex:"13-5-5-20 / 1-20  →  MEET AT"},
+ morse:{name:"Morse",desc:"Dots & dashes → text",
+   brief:"Morse code turns letters into dots and dashes. Spaces split letters, slashes split words. Watch out: what comes out of Morse may still be encrypted.",ex:"-- . . - / .- -  →  MEET AT"},
+ vig:{name:"Vigenère",
+   brief:"Vigenère uses a keyword to shift each letter by a different amount, so a single shift wheel won't crack it. Solve the riddle to learn the keyword, then enter it in the VIGENÈRE tool.",ex:"key OWL:  AAPH WE RWOB  →  MEET AT DAWN"}
+};
+const TOOL_ORDER=['rev','shift','atb','num','morse','vig'];
+
+const LEVELS=[
+ {title:"Mirror Talk",intel:"Our courier writes everything backwards. Read it the right way round.",layers:['rev'],bank:'S',newTool:'rev'},
+ {title:"Caesar's Gift",intel:"Roman-style message intercepted. Julius always used a shift of 3.",layers:[{t:'shift',k:3}],bank:'S',newTool:'shift'},
+ {title:"Unknown Shift",intel:"Same method, but the shift amount is unknown. Spin the wheel until words appear.",layers:['shift'],bank:'S'},
+ {title:"Looking Glass",intel:"The letters look like nonsense, and no shift seems to help. Their alphabet is folded in half.",layers:['atb'],bank:'S',newTool:'atb'},
+ {title:"By the Numbers",intel:"A page of numbers found in a hotel bible.",layers:[],fmt:'num',bank:'S',newTool:'num'},
+ {title:"Dots & Dashes",intel:"Radio chatter picked up from a fishing trawler.",layers:[],fmt:'morse',bank:'S',newTool:'morse'},
+ {title:"Double Back",intel:"Two layers now: written backwards AND shifted.",layers:['shift','rev'],bank:'L'},
+ {title:"Folded & Turned",intel:"Two layers. An alphabet fold and a slide.",layers:['atb','shift'],bank:'L'},
+ {title:"The Keyword",intel:"A Vigenère cipher. Our analyst left a riddle for the keyword.",layers:['vig'],bank:'L',newTool:'vig'},
+ {title:"Shifted Static",intel:"A Morse transmission, but the letters underneath are still scrambled.",layers:['shift'],fmt:'morse',bank:'S'},
+ {title:"Numbers Station",intel:"Three layers. The broadcast repeats every hour. Spacing has been removed.",layers:['atb','rev'],fmt:'num',bank:'S',group:true},
+ {title:"The Vault",intel:"Three layers, grouped in fives. No more freebies.",layers:['vig','shift','rev'],bank:'L',group:true},
+ {title:"Final Protocol",intel:"Four layers. This is what the professionals use.",layers:['shift','vig','atb'],fmt:'morse',bank:'S',group:true}
+];
+
+function endlessDef(lv){
+  const n=Math.min(4,2+Math.floor((lv-LEVELS.length)/3));
+  const types=[];let usedVig=false,usedRev=false;
+  while(types.length<n){
+    const t=pick(['rev','atb','shift','shift','vig']);
+    if(t===types[types.length-1])continue;
+    if(t==='vig'&&usedVig)continue; if(t==='rev'&&usedRev)continue;
+    if(t==='vig')usedVig=true; if(t==='rev')usedRev=true;
+    types.push(t);
+  }
+  const fmt=pick([null,'morse','num']);
+  return {title:"Deep Cover #"+(lv-LEVELS.length),intel:`Unknown agency. ${n+(fmt?1:0)} layers detected. No further intel.`,layers:types,fmt,bank:fmt?'S':pick(['S','L']),group:true};
+}
+
+function build(lv){
+  const def=lv<=LEVELS.length?LEVELS[lv-1]:endlessDef(lv);
+  const plain=pick(def.bank==='L'?LONG:SHORT);
+  const layers=def.layers.map(x=>{
+    const t=typeof x==='string'?x:x.t;
+    if(t==='shift')return{t,k:(x.k||rint(4,22))};
+    if(t==='vig')return{t,...pick(RIDDLES)};
+    return{t};
+  });
+  let c=plain;
+  for(const L of layers){
+    if(L.t==='rev')c=rev(c);else if(L.t==='atb')c=atbash(c);
+    else if(L.t==='shift')c=shiftT(c,L.k);else if(L.t==='vig')c=vig(c,L.key,1);
+  }
+  if(def.group)c=group5(c);
+  if(def.fmt==='morse')c=toMorse(c);else if(def.fmt==='num')c=toNum(c);
+  // decode path
+  const steps=[];
+  if(def.fmt)steps.push({t:def.fmt});
+  [...layers].reverse().forEach(L=>steps.push(L));
+  return{lv,def,plain,cipher:c,layers,steps,ops:[],hints:0,start:Date.now(),solved:false,revealed:false};
+}
+
+function stepName(s,detail){
+  if(s.t==='rev')return'Reverse';if(s.t==='atb')return'Atbash';
+  if(s.t==='morse')return'Morse';if(s.t==='num')return'Numbers';
+  if(s.t==='shift')return detail?`Shift −${s.k}`:'Shift Wheel';
+  if(s.t==='vig')return detail?`Vigenère (${s.key})`:'Vigenère';
+}
+
+/* ---------- State ---------- */
+let S={level:1,score:0,best:0,maxLevel:1};
+try{const d=JSON.parse(localStorage.getItem('cb_save')||'null');if(d)S=Object.assign(S,d)}catch(e){}
+const save=()=>{try{localStorage.setItem('cb_save',JSON.stringify(S))}catch(e){}};
+let G=null,timer=null,muted=false,ac=null;
+
+const $=id=>document.getElementById(id);
+
+function beep(f=620,d=.05,type='square',v=.035){
+  if(muted)return;
+  try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();
+    const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.value=f;
+    g.gain.setValueAtTime(v,ac.currentTime);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+d);
+    o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d+.02);}catch(e){}
+}
+const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
+const jingle=()=>[523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.12,'triangle',.06),i*90));
+
+function unlocked(){
+  if(G.lv>LEVELS.length)return TOOL_ORDER;
+  const set=new Set();for(let i=0;i<G.lv;i++)if(LEVELS[i].newTool)set.add(LEVELS[i].newTool);
+  return TOOL_ORDER.filter(t=>set.has(t));
+}
+
+function working(){
+  let c=G.cipher;
+  for(const o of G.ops){
+    if(o.t==='rev')c=rev(c);else if(o.t==='atb')c=atbash(c);
+    else if(o.t==='shift')c=shiftT(c,o.k);else if(o.t==='morse')c=fromMorse(c);
+    else if(o.t==='num')c=fromNum(c);else if(o.t==='vig')c=vig(c,o.key,-1);
+  }
+  return c;
+}
+
+/* ---------- Rendering ---------- */
+function renderTools(){
+  const u=unlocked(),nt=G.lv<=LEVELS.length?LEVELS[G.lv-1].newTool:null;
+  let h='';
+  for(const t of u){
+    const cls='tool'+(t===nt?' new':'');
+    if(t==='shift'){
+      h+=`<div class="${cls} wide shiftbox"><button class="sb" data-sh="-1">−</button>
+      <div class="shiftmid"><div style="font-size:12px;letter-spacing:1px">SHIFT WHEEL</div><div class="v" id="shV">0</div><small id="shMap">A → A</small></div>
+      <button class="sb" data-sh="1">+</button></div>`;
+    }else if(t==='vig'){
+      h+=`<form class="${cls} wide vigbox" id="vigForm"><input id="vigKey" placeholder="KEYWORD" autocomplete="off" autocapitalize="characters" spellcheck="false"><button>Vigenère</button></form>`;
+    }else{
+      h+=`<button class="${cls}" data-op="${t}">${TOOLS[t].name}<small>${TOOLS[t].desc}</small></button>`;
+    }
+  }
+  $('tools').innerHTML=h;
+  $('tools').querySelectorAll('[data-op]').forEach(b=>b.onclick=()=>applyOp({t:b.dataset.op}));
+  $('tools').querySelectorAll('[data-sh]').forEach(b=>b.onclick=()=>doShift(+b.dataset.sh));
+  const vf=$('vigForm');
+  if(vf)vf.onsubmit=e=>{e.preventDefault();const k=letters($('vigKey').value);if(!k){flashMsg('Enter a keyword first');return}applyOp({t:'vig',key:k});$('vigKey').blur()};
+}
+
+function renderLevel(){
+  const d=G.def;
+  $('hLvl').textContent=String(G.lv).padStart(2,'0');
+  $('hScore').textContent=S.score;
+  $('lvTitle').textContent=d.title;
+  $('intel').textContent=d.intel;
+  const v=G.layers.find(l=>l.t==='vig');
+  $('riddle').classList.toggle('hidden',!v);
+  if(v)$('riddle').innerHTML=`<b>KEYWORD RIDDLE:</b> ${v.clue}`;
+  $('dots').innerHTML=G.steps.map(()=>'<i></i>').join('');
+  $('orig').textContent=G.cipher;$('orig').classList.remove('open');$('origToggle').textContent='show all';
+  $('hints').innerHTML='';$('ans').value='';$('msg').textContent='';
+  $('btnHint').textContent='Hint';
+  renderTools();renderWork(false);
+}
+
+function sizeClass(t){const n=t.length;return n>150?'xs':n>70?'sm':''}
+
+function renderWork(anim=true){
+  const t=working();
+  const el=$('work');el.className=sizeClass(t);
+  if(anim)scramble(el,t);else el.textContent=t;
+  $('chips').innerHTML=G.ops.length?G.ops.map(o=>`<span class="chip">${chipLabel(o)}</span>`).join(''):'<span class="chip empty">no tools applied</span>';
+  const top=G.ops[G.ops.length-1],k=top&&top.t==='shift'?top.k:0;
+  if($('shV')){$('shV').textContent=(k>0?'+':'')+k;$('shMap').textContent=`A → ${A[((k%26)+26)%26]}`}
+  // progress dots: count ops (rough feel), capped
+  const lit=Math.min(G.ops.length,G.steps.length);
+  [...$('dots').children].forEach((d,i)=>d.classList.toggle('on',i<lit));
+  $('wkState').textContent='';
+}
+function chipLabel(o){
+  if(o.t==='shift')return'SHIFT '+(o.k>0?'+':'')+o.k;
+  if(o.t==='vig')return'VIG:'+o.key;
+  return{rev:'REVERSE',atb:'ATBASH',morse:'MORSE→ABC',num:'123→ABC'}[o.t];
+}
+
+let scrT=null;
+function scramble(el,target){
+  clearInterval(scrT);let f=0;const frames=9;
+  scrT=setInterval(()=>{
+    f++;const settle=Math.floor(target.length*f/frames);
+    el.textContent=[...target].map((c,i)=>i<settle||!/[A-Z]/.test(c)?c:A[rint(0,25)]).join('');
+    if(f>=frames){clearInterval(scrT);el.textContent=target;}
+  },28);
+}
+
+/* ---------- Actions ---------- */
+function applyOp(o){
+  if(G.solved)return;
+  G.ops.push(o);beep(480+G.ops.length*40);buzz(8);
+  renderWork();check();
+}
+function doShift(d){
+  if(G.solved)return;
+  const top=G.ops[G.ops.length-1];
+  if(top&&top.t==='shift'){top.k+=d;if(top.k>25)top.k-=26;if(top.k<-25)top.k+=26;if(top.k===0)G.ops.pop();}
+  else G.ops.push({t:'shift',k:d});
+  beep(d>0?720:560,.035);buzz(5);
+  renderWork();check();
+}
+function check(){
+  if(letters(working())===letters(G.plain))setTimeout(()=>win(false),360);
+}
+function flashMsg(m,good){$('msg').style.color=good?'var(--g)':'var(--red)';$('msg').textContent=m;}
+
+function win(revealed){
+  if(G.solved)return;G.solved=true;try{window.AYHAds&&window.AYHAds.gameOver()}catch(_e){}G.revealed=revealed;clearInterval(timer);
+  const secs=Math.round((Date.now()-G.start)/1000);
+  const base=100+G.lv*50;
+  const hintMult=Math.max(0,1-.25*G.hints);
+  const solveP=revealed?0:Math.round(base*hintMult);
+  const timeB=revealed?0:Math.max(0,120-secs)*2;
+  const total=solveP+timeB;
+  S.score+=total;S.level=G.lv+1;S.maxLevel=Math.max(S.maxLevel,G.lv+1);S.best=Math.max(S.best,S.score);save();
+  const el=$('work');el.textContent=G.plain;el.className=sizeClass(G.plain)+' win';
+  if(!revealed){jingle();buzz([30,40,60]);}else beep(220,.25,'sawtooth',.04);
+  setTimeout(()=>{
+    modal(`<h3>${revealed?'Message Revealed':'Transmission Decoded'}</h3>
+      <div class="reveal">${G.plain}</div>
+      <div class="pts"><span>Decode (${G.hints} hint${G.hints===1?'':'s'})</span><span>${solveP}</span></div>
+      <div class="pts"><span>Speed bonus (${fmtT(secs)})</span><span>${timeB}</span></div>
+      <div class="pts"><span>Level total</span><span>+${total}</span></div>
+      ${G.lv===LEVELS.length&&!revealed?'<p style="color:var(--amber)">Training complete. You are now entering Deep Cover: endless randomized transmissions.</p>':''}
+      <div style="height:14px"></div>
+      <button class="big primary" style="max-width:none" id="btnNext">Next Transmission</button>`);
+    $('btnNext').onclick=()=>{closeModal();startLevel(G.lv+1)};
+  },revealed?500:900);
+}
+
+function hint(){
+  if(G.solved)return;
+  if(G.hints>=3){
+    modal(`<h3>Reveal?</h3><p>Revealing the message scores 0 points for this level, but you'll still advance.</p>
+      <div class="row2"><button id="rvNo">Keep Trying</button><button id="rvYes" style="color:var(--red);border-color:var(--red)">Reveal</button></div>`);
+    $('rvNo').onclick=closeModal;$('rvYes').onclick=()=>{closeModal();win(true)};return;
+  }
+  G.hints++;beep(300,.08,'triangle');
+  let t;
+  if(G.hints===1)t=`Decode takes ${G.steps.length} step${G.steps.length>1?'s':''}. Start with: ${stepName(G.steps[0],false)}.`;
+  else if(G.hints===2)t=`Full path: ${G.steps.map(s=>stepName(s,true)).join('  ›  ')}`;
+  else t=`First word: ${G.plain.split(' ')[0]}`;
+  $('hints').insertAdjacentHTML('beforeend',`<div class="hintline">HINT ${G.hints}: ${t}</div>`);
+  $('btnHint').textContent=G.hints>=3?'Reveal':`Hint (${G.hints}/3)`;
+}
+
+function fmtT(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+
+function startLevel(lv){
+  G=build(lv);S.level=lv;save();
+  $('title').classList.add('hidden');$('game').classList.remove('hidden');
+  renderLevel();window.scrollTo(0,0);
+  clearInterval(timer);G.start=Date.now();
+  timer=setInterval(()=>{$('hTime').textContent=fmtT(Math.round((Date.now()-G.start)/1000))},500);
+  $('hTime').textContent='0:00';
+  const nt=lv<=LEVELS.length?LEVELS[lv-1].newTool:null;
+  if(nt){
+    const T=TOOLS[nt];
+    modal(`<div class="tag" style="color:var(--g)">New tool unlocked</div><h3>${T.name}</h3><p>${T.brief}</p><div class="ex">${T.ex}</div>
+      <button class="big primary" style="max-width:none;margin-top:8px" id="btnGo">Got It</button>`);
+    $('btnGo').onclick=()=>{closeModal();G.start=Date.now()};
+  }
+}
+
+function modal(h){$('modal').innerHTML=h;$('ov').classList.remove('hidden')}
+function closeModal(){$('ov').classList.add('hidden')}
+
+function home(){
+  clearInterval(timer);$('game').classList.add('hidden');$('title').classList.remove('hidden');
+  $('sBest').textContent=S.best;$('sMax').textContent=S.maxLevel;
+  const c=$('btnCont');
+  if(S.level>1){c.classList.remove('hidden');c.textContent=`Continue · Lvl ${S.level}`;$('btnStart').textContent='New Mission'}
+  else{c.classList.add('hidden');$('btnStart').textContent='Begin Mission'}
+}
+
+function manual(){
+  modal(`<h3>Field Manual</h3>
+  <p>Each level gives you an intercepted message. Use your decoding tools on the <b>Workbench</b> to peel back its layers. When the real message appears, the level is cracked automatically. You can also type the answer.</p>
+  <ul>
+   <li>Tools stack in order. Layers must be removed from the outside in.</li>
+   <li>The squares next to the level title show how many layers there are.</li>
+   <li><b>Undo</b> removes your last tool. <b>Reset</b> clears them all.</li>
+   <li>Hints cost 25% of the level's points each. After three, you can reveal the answer.</li>
+   <li>Solve fast for a speed bonus.</li>
+  </ul>
+  <p>Thirteen training levels introduce new ciphers. After that, Deep Cover sends endless randomized transmissions with up to five layers.</p>
+  <button class="big primary" style="max-width:none" id="mOk">Understood</button>`);
+  $('mOk').onclick=closeModal;
+}
+
+/* ---------- Wiring ---------- */
+$('btnStart').onclick=()=>{beep(660,.06);S.score=0;S.level=1;save();startLevel(1)};
+$('btnCont').onclick=()=>{beep(660,.06);startLevel(S.level)};
+$('btnHow').onclick=manual;
+$('btnHome').onclick=()=>{
+  modal(`<h3>Paused</h3><p>Your progress is saved at level ${G.lv}.</p>
+   <div class="row2"><button id="pRes" style="color:var(--g);border-color:var(--gd)">Resume</button><button id="pMenu">Main Menu</button></div>
+   <div class="row2"><button id="pMan">Field Manual</button></div>`);
+  $('pRes').onclick=closeModal;$('pMenu').onclick=()=>{closeModal();home()};$('pMan').onclick=manual;
+};
+$('btnMute').onclick=()=>{muted=!muted;$('btnMute').style.opacity=muted?.35:1;$('btnMute').textContent=muted?'✕':'♪'};
+$('btnUndo').onclick=()=>{if(G.solved||!G.ops.length)return;G.ops.pop();beep(380,.04);renderWork()};
+$('btnReset').onclick=()=>{if(G.solved||!G.ops.length)return;G.ops=[];beep(300,.06);renderWork()};
+$('btnHint').onclick=hint;
+$('origToggle').onclick=()=>{const o=$('orig');o.classList.toggle('open');$('origToggle').textContent=o.classList.contains('open')?'collapse':'show all'};
+$('ansForm').onsubmit=e=>{
+  e.preventDefault();if(G.solved)return;
+  const v=letters($('ans').value);if(!v)return;
+  if(v===letters(G.plain)){$('ans').blur();win(false)}
+  else{const f=$('ansForm');f.classList.remove('shake');void f.offsetWidth;f.classList.add('shake');buzz(80);beep(160,.15,'sawtooth',.04);flashMsg('Negative. That is not the message.')}
+};
+$('ov').onclick=e=>{if(e.target.id==='ov'&&!$('btnNext')&&!$('btnGo'))closeModal()};
+home();
+</script>
+<script src="ads.bundle.js"></script>
+</body>
+</html>

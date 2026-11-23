@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Toilet Flush</string>
+    <string name="title_activity_main">Toilet Flush</string>
+    <string name="package_name">com.ateyourhomework.toiletflush</string>
+    <string name="custom_url_scheme">com.ateyourhomework.toiletflush</string>
+</resources>

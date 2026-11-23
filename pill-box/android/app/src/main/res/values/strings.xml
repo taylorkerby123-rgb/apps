@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Pill Box</string>
+    <string name="title_activity_main">Pill Box</string>
+    <string name="package_name">com.ateyourhomework.pillbox</string>
+    <string name="custom_url_scheme">com.ateyourhomework.pillbox</string>
+</resources>

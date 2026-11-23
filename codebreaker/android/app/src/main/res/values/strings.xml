@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Codebreaker</string>
+    <string name="title_activity_main">Codebreaker</string>
+    <string name="package_name">com.ateyourhomework.codebreaker</string>
+    <string name="custom_url_scheme">com.ateyourhomework.codebreaker</string>
+</resources>

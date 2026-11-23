@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Labyrinth Run</string>
+    <string name="title_activity_main">Labyrinth Run</string>
+    <string name="package_name">com.ateyourhomework.labyrinthrun</string>
+    <string name="custom_url_scheme">com.ateyourhomework.labyrinthrun</string>
+</resources>
