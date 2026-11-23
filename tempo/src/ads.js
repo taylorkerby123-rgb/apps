@@ -15,13 +15,14 @@ import {
 // SWAP THESE FOR YOUR REAL AD UNIT IDS FROM ADMOB BEFORE RELEASE.
 // Current values are Google's official test units (safe to tap).
 // ============================================================
-const USE_TEST_ADS = true;
 
 const IDS = {
+  // Real Tempo iOS units (AdMob app ca-app-pub-5434218408649372~2668309091)
   ios: {
-    banner: 'ca-app-pub-3940256099942544/2934735716',
-    interstitial: 'ca-app-pub-3940256099942544/4411468910',
+    banner: 'ca-app-pub-5434218408649372/2852015617',
+    interstitial: 'ca-app-pub-5434218408649372/4231390946',
   },
+  // Android: still Google's TEST units until an Android app is added in AdMob
   android: {
     banner: 'ca-app-pub-3940256099942544/6300978111',
     interstitial: 'ca-app-pub-3940256099942544/1033173712',
@@ -32,6 +33,9 @@ const GAMES_BETWEEN_INTERSTITIALS = 3;
 const MIN_MS_BETWEEN_INTERSTITIALS = 3 * 60 * 1000;
 
 const platform = Capacitor.getPlatform(); // 'ios' | 'android' | 'web'
+// iOS uses live ads. Register your own phone under AdMob > Settings > Test devices
+// so you see test ads on it and never tap live ones.
+const USE_TEST_ADS = platform !== 'ios';
 const native = platform === 'ios' || platform === 'android';
 const units = IDS[platform] || {};
 
