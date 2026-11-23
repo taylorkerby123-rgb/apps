@@ -1,0 +1,41 @@
+# Codemagic cloud builds for Ate Your Homework apps. Each app lives in its own folder.
+# Tempo (iOS): Builds on Codemagic's Macs and uploads to TestFlight.
+# Requires, in Codemagic: Team settings > Integrations > Developer Portal,
+# an App Store Connect API key saved under the name "AYH App Store Connect".
+
+workflows:
+  ios-testflight:
+    name: Tempo iOS to TestFlight
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: AYH App Store Connect
+    working_directory: tempo
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.ateyourhomework.tempo
+      node: 22
+      xcode: latest
+    scripts:
+      - name: Install packages
+        script: npm ci
+      - name: Build ads bundle
+        script: npx esbuild src/ads.js --bundle --format=iife --minify --outfile=www/ads.bundle.js
+      - name: Copy web app into iOS project
+        script: npx cap sync ios
+      - name: Apply signing profiles
+        script: xcode-project use-profiles
+      - name: Set build number
+        script: |
+          cd ios/App
+          agvtool new-version -all $BUILD_NUMBER
+      - name: Build IPA
+        script: xcode-project build-ipa --project "ios/App/App.xcodeproj" --scheme "App"
+    artifacts:
+      - tempo/build/ios/ipa/*.ipa
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true

@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tempo · Chess Tutor</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxOTE5MWMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwOTA5MGEiLz48L2xpbmVhckdyYWRpZW50Pgo8bGluZWFyR3JhZGllbnQgaWQ9ImJyIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZWFkMmEwIi8+PHN0b3Agb2Zmc2V0PSIuNSIgc3RvcC1jb2xvcj0iI2JjOWQ2NCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzhhNzA0NSIvPjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMTIiIGZpbGw9InVybCgjYmcpIi8+CjxyZWN0IHg9IjM4IiB5PSIzOCIgd2lkdGg9IjQzNiIgaGVpZ2h0PSI0MzYiIHJ4PSI3OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYjg5YTYyIiBzdHJva2Utb3BhY2l0eT0iLjUiIHN0cm9rZS13aWR0aD0iMi41Ii8+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI1NiAyNjIpIHNjYWxlKDEuMTgpIHRyYW5zbGF0ZSgtMjUyIC0yODIpIj4KPHBhdGggZmlsbD0idXJsKCNicikiIGQ9Ik0xNzIgMzk0aDE2MHYtMTZIMTcyek0xOTAgMzY0YzAtNDYgMTgtNzQgNTYtMTA0LTIwLTEtNDIgNy01OCAyMC0xNCAxMS0zMiAzLTI5LTE1IDQtMjQgMzgtNTggNTYtODAgMTAtMTIgMTItMjggMTItNDJsMjAgMTUgMTUtMjYgMTYgMjdjNjIgMjIgOTIgNjYgODggMTQwbC00IDY1eiIvPgo8Y2lyY2xlIGN4PSIyMzQiIGN5PSIxODEiIHI9IjguNSIgZmlsbD0iIzBkMGQwZiIvPgo8cGF0aCBkPSJNMjY4IDE5OGMyOCAxNiA0MiA0NCA0MiA4MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMGQwZDBmIiBzdHJva2Utb3BhY2l0eT0iLjU1IiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L2c+Cjwvc3ZnPg==">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<meta name="theme-color" content="#0b0b0c">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/inter-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/inter-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/inter-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/cormorant-garamond-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/cormorant-garamond-latin-600-normal.woff2) format('woff2')}
+
+/* App-only adjustments: active when running inside the iOS/Android app */
+html.in-app .ad,html.in-app [data-ad-slot]{display:none!important}
+html.in-app body{padding-top:calc(env(safe-area-inset-top) + var(--ad-top,0px));-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}
+html.in-app .topbar{top:calc(env(safe-area-inset-top) + var(--ad-top,0px))}
+html.in-app input,html.in-app textarea{-webkit-user-select:text;user-select:text}
+</style>
+<style>
+:root{
+  --bg:#0b0b0c; --panel:#121214; --panel2:#17171a; --line:#25252a; --line2:#34343a;
+  --ink:#ece7dd; --ink2:#c9c3b8; --mute:#87827a; --dim:#5d5a55;
+  --brass:#b89a62; --brass2:#d8bd86; --brassbg:rgba(184,154,98,.10);
+  --good:#8fb08a; --bad:#c0705f;
+  --sqL:#d4ccbb; --sqD:#857b6b;
+  --serif:'Cormorant Garamond', 'Times New Roman', serif;
+  --sans:'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --r:4px;
+  --nav:232px;
+  --tab:64px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+.svg-defs{position:absolute;width:0;height:0;overflow:hidden}
+
+/* ---------- Shell ---------- */
+.app{display:flex;min-height:100vh}
+.side{position:fixed;inset:0 auto 0 0;width:var(--nav);border-right:1px solid var(--line);padding:32px 22px;display:flex;flex-direction:column;gap:36px;background:var(--bg);z-index:5}
+.mark{display:flex;align-items:center;gap:12px}
+.mark .appicon{width:34px;height:34px;display:block}
+.mark .word{font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:.32em}
+.mark .sub{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);margin-top:-4px}
+.navlist{display:flex;flex-direction:column;gap:2px}
+.navlist a{display:flex;align-items:center;gap:14px;padding:11px 12px;border-radius:var(--r);color:var(--mute);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;transition:color .2s,background .2s}
+.navlist a svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.4}
+.navlist a:hover{color:var(--ink)}
+.navlist a.on{color:var(--ink);background:var(--panel2)}
+.navlist a.on svg{stroke:var(--brass)}
+.side .chip{margin-top:auto;border-top:1px solid var(--line);padding-top:20px}
+.side .chip .lab{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.side .chip .val{font-family:var(--serif);font-size:38px;font-weight:500;line-height:1.1}
+.side .chip .tier{font-size:12px;color:var(--brass);letter-spacing:.14em;text-transform:uppercase}
+.sync{font-size:10px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-top:10px}
+
+main{flex:1;margin-left:var(--nav);min-width:0;padding:28px 44px 60px}
+.wrap{max-width:1080px;margin:0 auto}
+.topbar{display:none}
+.tabbar{display:none}
+
+/* ---------- Ads ---------- */
+.ad{border:1px solid var(--line);background:repeating-linear-gradient(135deg,transparent 0 10px,rgba(255,255,255,.012) 10px 20px),var(--panel);border-radius:var(--r);display:flex;align-items:center;justify-content:center;position:relative;color:var(--dim);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.ad::before{content:'Advertisement';position:absolute;top:6px;left:9px;font-size:9px;letter-spacing:.2em;color:var(--dim)}
+.ad .dim{opacity:.8}
+.ad-banner{height:90px;max-width:728px;margin:0 auto 32px}
+.ad-rect{width:100%;max-width:300px;height:250px;margin:0 auto}
+.ad-native{height:auto;justify-content:flex-start;padding:18px 20px;gap:16px;text-transform:none;letter-spacing:0;font-size:13px}
+.ad-native::before{content:'Sponsored'}
+.ad-native .thumb{width:44px;height:44px;border:1px solid var(--line2);border-radius:var(--r);flex:none}
+.ad-native .t1{color:var(--ink2);font-size:14px;margin-top:8px}
+.ad-native .t2{color:var(--dim);font-size:12px}
+
+/* ---------- Type ---------- */
+.eyebrow{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.eyebrow.brass{color:var(--brass)}
+h1.display{font-family:var(--serif);font-weight:500;font-size:44px;line-height:1.05;letter-spacing:.01em}
+h2.title{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.15}
+h3{font-family:var(--serif);font-weight:600;font-size:21px;line-height:1.2}
+p.lead{color:var(--ink2);font-size:16px;max-width:60ch}
+.muted{color:var(--mute)}
+.rule{height:1px;background:var(--line);margin:28px 0}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:44px;padding:0 22px;border-radius:var(--r);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;border:1px solid var(--line2);color:var(--ink);transition:all .2s}
+.btn:hover{border-color:var(--mute)}
+.btn.primary{background:var(--ink);color:#0b0b0c;border-color:var(--ink)}
+.btn.primary:hover{background:#fff}
+.btn.brass{background:var(--brass);border-color:var(--brass);color:#0b0b0c}
+.btn.brass:hover{background:var(--brass2)}
+.btn.ghost{border-color:transparent;color:var(--mute)}
+.btn.ghost:hover{color:var(--ink)}
+.btn.sm{height:34px;padding:0 14px;font-size:11px}
+.btn:disabled{opacity:.35;pointer-events:none}
+.iconbtn{width:40px;height:40px;border:1px solid var(--line2);border-radius:var(--r);display:inline-flex;align-items:center;justify-content:center;color:var(--ink2)}
+.iconbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.4}
+.iconbtn:hover{color:var(--ink);border-color:var(--mute)}
+
+/* ---------- Cards ---------- */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:26px}
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.stat .lab{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.stat .val{font-family:var(--serif);font-size:34px;font-weight:500;line-height:1.15;margin-top:4px}
+.stat .val small{font-family:var(--sans);font-size:12px;color:var(--mute);margin-left:4px;letter-spacing:.05em}
+.bar{height:2px;background:var(--line2);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--brass);transition:width .8s cubic-bezier(.2,.7,.2,1)}
+
+/* ---------- Home ---------- */
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:20px;margin-bottom:20px}
+.hero .score{padding:34px 34px 30px;position:relative;overflow:hidden}
+.hero .score .big{font-family:var(--serif);font-size:96px;font-weight:500;line-height:1;margin:14px 0 6px;letter-spacing:-.01em}
+.hero .score .delta{font-size:13px;color:var(--good);letter-spacing:.06em}
+.hero .score .delta.neg{color:var(--bad)}
+.hero .score .tierline{display:flex;justify-content:space-between;margin:26px 0 10px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.hero .score .tierline b{color:var(--brass);font-weight:600}
+.hero .score .ghost{position:absolute;right:-30px;bottom:-40px;width:260px;height:260px;opacity:.04}
+.hero .score .ghost svg{width:100%;height:100%;--pd:transparent;fill:var(--ink);stroke:none}
+.next{display:flex;flex-direction:column}
+.next .num-roman{font-family:var(--serif);color:var(--brass);font-size:15px;letter-spacing:.2em}
+.next h3{font-size:28px;margin:10px 0 8px}
+.next p{color:var(--ink2);margin-bottom:22px}
+.next .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.spark{height:56px;width:100%;margin-top:18px}
+
+/* ---------- Lessons list ---------- */
+.chapter{margin-top:42px}
+.chapter-head{display:flex;align-items:baseline;gap:18px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.chapter-head .rn{font-family:var(--serif);color:var(--brass);font-size:22px;width:28px}
+.lrow{display:grid;grid-template-columns:56px 1fr 120px 24px;align-items:center;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);transition:background .2s}
+.lrow:hover{background:linear-gradient(90deg,transparent,var(--panel) 30%,var(--panel) 70%,transparent)}
+.lrow .ico{width:48px;height:48px;border:1px solid var(--line2);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.lrow .ico svg{width:30px;height:30px}
+.lrow .nm{font-family:var(--serif);font-size:22px;font-weight:600}
+.lrow .sm{font-size:13px;color:var(--mute)}
+.lrow .pct{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:8px;text-align:right}
+.lrow .pct.done{color:var(--brass)}
+.lrow .chev{color:var(--dim)}
+.list-ad{margin-top:28px}
+
+/* ---------- Lesson detail ---------- */
+.back{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-bottom:26px}
+.back:hover{color:var(--ink)}
+.lesson-grid{display:grid;grid-template-columns:1fr minmax(320px,440px);grid-template-areas:'text board' 'prac board';column-gap:44px;align-items:start}.lesson-text{grid-area:text}.lesson-board{grid-area:board;position:sticky;top:24px}.lesson-prac{grid-area:prac}
+.lesson-text p{color:var(--ink2);margin-bottom:16px;font-size:15.5px}
+.keys{list-style:none;margin:24px 0 8px;border-top:1px solid var(--line)}
+.keys li{padding:12px 0 12px 28px;border-bottom:1px solid var(--line);position:relative;font-size:14px}
+.keys li::before{content:'';position:absolute;left:4px;top:20px;width:8px;height:8px;border:1px solid var(--brass);transform:rotate(45deg)}
+.mastery-box{margin-top:30px}
+.mrow{display:flex;justify-content:space-between;font-size:12px;letter-spacing:.06em;color:var(--ink2);margin:14px 0 8px}
+.drill-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.drill-dots{display:flex;gap:6px}
+.drill-dots i{width:22px;height:2px;background:var(--line2)}
+.drill-dots i.on{background:var(--ink)}
+.drill-dots i.ok{background:var(--brass)}
+.prompt{font-family:var(--serif);font-size:20px;line-height:1.3;margin:16px 0 6px;min-height:52px}
+.feedback{font-size:13.5px;min-height:44px;color:var(--ink2)}
+.feedback.ok{color:var(--good)}
+.feedback.no{color:var(--bad)}
+.drill-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.practice{margin-top:34px;border-color:var(--line2);background:linear-gradient(160deg,var(--brassbg),transparent 60%),var(--panel)}
+
+/* ---------- Board ---------- */
+.board-frame{position:relative;padding:10px;border:1px solid var(--line2);border-radius:2px;background:#0f0f11}
+.board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);aspect-ratio:1/1;width:100%;user-select:none;touch-action:manipulation;position:relative}
+.sq{position:relative;min-width:0;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.sq.l{background:var(--sqL)} .sq.d{background:var(--sqD)}
+.sq .pc{width:88%;height:88%;position:relative;z-index:2;transition:transform .12s;filter:drop-shadow(0 1px 1px rgba(0,0,0,.25))}
+.sq.sel .pc{transform:translateY(-2px)}
+.pc.pw{fill:#f6f2ea;stroke:#151517;--pd:#151517}
+.pc.pb{fill:#1c1c1f;stroke:#0a0a0b;--pd:#d4ccbb}
+.pc{stroke-width:1.3;stroke-linejoin:round;stroke-linecap:round}
+.sq.last::before{content:'';position:absolute;inset:0;background:rgba(184,154,98,.42)}
+.sq.sel::before{content:'';position:absolute;inset:0;background:rgba(184,154,98,.62)}
+.sq.chk::before{content:'';position:absolute;inset:0;background:radial-gradient(circle,rgba(192,90,70,.85) 0,rgba(192,90,70,.35) 45%,transparent 72%)}
+.sq.dot::after{content:'';position:absolute;width:26%;height:26%;border-radius:50%;background:rgba(15,15,17,.32);z-index:3}
+.sq.cap::after{content:'';position:absolute;inset:4%;border-radius:50%;border:4px solid rgba(15,15,17,.32);z-index:3}
+.sq.hint::before{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 3px var(--brass);animation:pulse 1.4s ease-in-out infinite}
+.sq.hint2::before{content:'';position:absolute;inset:0;background:rgba(143,176,138,.5)}
+@keyframes pulse{50%{box-shadow:inset 0 0 0 6px rgba(184,154,98,.5)}}
+.sq .cr{position:absolute;font-size:9.5px;font-weight:600;z-index:1;letter-spacing:0}
+.sq .cr.rk{top:2px;left:3px} .sq .cr.fl{bottom:1px;right:4px}
+.sq.l .cr{color:var(--sqD)} .sq.d .cr{color:var(--sqL)}
+
+/* ---------- Play ---------- */
+.play-grid{display:grid;grid-template-columns:minmax(0,600px) minmax(280px,340px);gap:32px;justify-content:center;align-items:start}
+.player{display:flex;align-items:center;justify-content:space-between;padding:10px 2px}
+.player .who{display:flex;align-items:center;gap:12px}
+.player .av{width:34px;height:34px;border:1px solid var(--line2);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.player .av svg{width:28px;height:28px}
+.player .nm{font-size:14px;font-weight:500}
+.player .rt{font-size:12px;color:var(--mute)}
+.player .capt{display:flex;gap:0;height:18px;align-items:center}
+.player .capt svg{width:16px;height:16px;margin-left:-4px}
+.thinking{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);display:none}
+.thinking.on{display:block}
+.thinking i{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--brass);margin-left:3px;animation:blink 1s infinite}
+.thinking i:nth-child(2){animation-delay:.2s}.thinking i:nth-child(3){animation-delay:.4s}
+@keyframes blink{50%{opacity:.2}}
+.controls{display:flex;gap:10px;margin-top:16px;justify-content:space-between;flex-wrap:wrap}
+.controls .grp{display:flex;gap:8px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
+.panel+.panel{margin-top:16px}
+.panel-h{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.panel-b{padding:16px 20px}
+.focus-name{font-family:var(--serif);font-size:20px;font-weight:600}
+.checks{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.checks span{font-size:11px;letter-spacing:.08em;padding:5px 10px;border:1px solid var(--line2);border-radius:20px;color:var(--mute)}
+.checks span.ok{border-color:var(--brass);color:var(--brass)}
+.opp{margin-top:14px;padding:14px;border:1px solid var(--brass);border-radius:var(--r);background:var(--brassbg);display:none}
+.opp.on{display:block;animation:fadein .4s}
+.opp .t{font-size:13.5px;color:var(--ink)}
+.opp .a{display:flex;gap:8px;margin-top:10px}
+.log{list-style:none;max-height:210px;overflow:auto;margin-top:6px}
+.log li{font-size:13px;padding:9px 0;border-bottom:1px solid var(--line);color:var(--ink2);display:flex;gap:10px;animation:fadein .4s}
+.log li:last-child{border-bottom:0}
+.log li .tg{flex:none;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;padding-top:3px;width:62px;color:var(--mute)}
+.log li.good .tg{color:var(--brass)} .log li.warn .tg{color:var(--bad)} .log li.miss .tg{color:#a89a7c}
+@keyframes fadein{from{opacity:0;transform:translateY(-3px)}}
+.toggle{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);cursor:pointer}
+.toggle .sw{width:30px;height:16px;border-radius:10px;border:1px solid var(--line2);position:relative;transition:.2s}
+.toggle .sw::after{content:'';position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:var(--mute);transition:.2s}
+.toggle.on .sw{border-color:var(--brass)}
+.toggle.on .sw::after{left:16px;background:var(--brass)}
+.moves{display:grid;grid-template-columns:34px 1fr 1fr;font-size:13px;max-height:170px;overflow:auto;font-variant-numeric:tabular-nums}
+.moves span{padding:4px 6px}
+.moves .n{color:var(--dim)}
+.moves .cur{color:var(--brass)}
+.side-ad{margin-top:16px}
+
+/* setup */
+.setup{max-width:760px;margin:0 auto}
+.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 30px}
+.lvl{border:1px solid var(--line2);border-radius:var(--r);padding:18px 16px;text-align:left;transition:.2s;background:var(--panel)}
+.lvl:hover{border-color:var(--mute)}
+.lvl.on{border-color:var(--brass);background:var(--brassbg)}
+.lvl .rn{font-family:var(--serif);color:var(--brass);font-size:15px;letter-spacing:.15em}
+.lvl .nm{font-family:var(--serif);font-size:21px;font-weight:600;margin-top:6px}
+.lvl .rt{font-size:12px;color:var(--mute)}
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;margin:14px 0 30px}
+.seg button{padding:11px 20px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);border-right:1px solid var(--line2)}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--ink);color:#0b0b0c}
+select.sel{appearance:none;background:var(--panel);border:1px solid var(--line2);color:var(--ink);height:44px;border-radius:var(--r);padding:0 40px 0 14px;font:inherit;font-size:14px;margin:14px 0 30px;width:100%;max-width:380px;background-image:linear-gradient(45deg,transparent 50%,var(--mute) 50%),linear-gradient(135deg,var(--mute) 50%,transparent 50%);background-position:calc(100% - 20px) 19px,calc(100% - 15px) 19px;background-size:5px 5px;background-repeat:no-repeat}
+
+/* ---------- Progress ---------- */
+.chart{width:100%;height:auto;display:block}
+.chart text{font-family:var(--sans);font-size:10px;fill:var(--mute);letter-spacing:.08em}
+.ladder{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:22px}
+.ladder .t{text-align:center;padding:14px 4px 12px;border:1px solid var(--line);border-radius:var(--r);opacity:.45}
+.ladder .t.got{opacity:1}
+.ladder .t.cur{border-color:var(--brass);background:var(--brassbg);opacity:1}
+.ladder .t svg{width:42px;height:42px}
+.ladder .t .n{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-top:4px}
+.ladder .t .r{font-size:11px;color:var(--mute)}
+table.tt{width:100%;border-collapse:collapse;font-size:13.5px}
+table.tt th{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);font-weight:500;text-align:left;padding:0 0 10px;border-bottom:1px solid var(--line)}
+table.tt td{padding:13px 0;border-bottom:1px solid var(--line);vertical-align:middle}
+table.tt td.r,table.tt th.r{text-align:right}
+table.tt .vis{width:110px}
+.res{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;font-size:11px;font-weight:600;border:1px solid var(--line2)}
+.res.W{border-color:var(--brass);color:var(--brass)} .res.L{color:var(--bad)} .res.D{color:var(--mute)}
+.pos{color:var(--good)} .neg{color:var(--bad)}
+.empty{color:var(--mute);font-size:14px;padding:18px 0}
+
+/* ---------- Modal ---------- */
+.modal{position:fixed;inset:0;background:rgba(5,5,6,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+.modal.on{display:flex;animation:fadein .3s}
+.dialog{background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);width:100%;max-width:520px;max-height:92vh;overflow:auto;padding:34px}
+.dialog .result{font-family:var(--serif);font-size:48px;font-weight:500;line-height:1}
+.dialog .rchange{display:flex;align-items:baseline;gap:14px;margin:22px 0 4px}
+.dialog .rchange .big{font-family:var(--serif);font-size:56px;line-height:1}
+.dialog .rchange .d{font-size:15px}
+.dialog .tl{list-style:none;margin:16px 0}
+.dialog .tl li{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.dialog .acts{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.promo{display:flex;gap:10px;justify-content:center;margin-top:18px}
+.promo button{width:72px;height:72px;border:1px solid var(--line2);border-radius:var(--r);background:var(--sqL)}
+.promo button:hover{border-color:var(--brass)}
+.promo svg{width:56px;height:56px}
+.toast{position:fixed;left:50%;top:22px;transform:translate(-50%,-20px);background:var(--ink);color:#0b0b0c;padding:11px 20px;border-radius:var(--r);font-size:12.5px;letter-spacing:.06em;opacity:0;transition:.35s;z-index:60;pointer-events:none;font-weight:500;white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast b{color:#7a5f2e}
+
+.view{display:none}
+.view.on{display:block;animation:fadein .35s}
+.section-h{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;gap:16px;flex-wrap:wrap}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1100px){
+  .play-grid{grid-template-columns:minmax(0,560px);}
+  .play-side{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .play-side .panel+.panel{margin-top:0}
+  .side-ad{grid-column:1/-1;margin-top:0}
+}
+@media (max-width:900px){
+  :root{--nav:0px}
+  .side{display:none}
+  main{margin-left:0;padding:0 16px calc(var(--tab) + 28px + env(safe-area-inset-bottom))}
+  .topbar{display:flex;align-items:center;justify-content:space-between;height:60px;margin:0 -16px 16px;padding:0 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(11,11,12,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:10}
+  .topbar .mark .word{font-size:18px}
+  .topbar .mark .appicon{width:28px;height:28px}
+  .topbar .rc{text-align:right;line-height:1.1}
+  .topbar .rc .v{font-family:var(--serif);font-size:24px;font-weight:500}
+  .topbar .rc .t{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass)}
+  .tabbar{display:flex;position:fixed;bottom:0;left:0;right:0;height:calc(var(--tab) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:rgba(11,11,12,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);z-index:20}
+  .tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+  .tabbar a svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.4}
+  .tabbar a.on{color:var(--ink)}
+  .tabbar a.on svg{stroke:var(--brass)}
+  .ad-banner{height:50px;max-width:320px;margin-bottom:22px}
+  .ad-banner::before{top:3px;font-size:8px}
+  .hero{grid-template-columns:1fr}
+  .hero .score{padding:26px 24px}
+  .hero .score .big{font-size:80px}
+  .card{padding:22px}
+  h1.display{font-size:34px}
+  .g3,.g4{grid-template-columns:1fr 1fr}
+  .g2{grid-template-columns:1fr}
+  .lesson-grid{grid-template-columns:1fr;grid-template-areas:'text' 'board' 'prac';row-gap:8px}.lesson-board{position:static;margin-top:20px}
+  .lrow{grid-template-columns:44px 1fr 64px 14px;gap:14px;padding:16px 0}
+  .lrow .ico{width:40px;height:40px} .lrow .ico svg{width:26px;height:26px}
+  .lrow .nm{font-size:19px}
+  .lrow .sm{font-size:12.5px}
+  .levels{grid-template-columns:1fr 1fr}
+  .play-side{grid-template-columns:1fr}
+  .board-frame{padding:6px;margin:0 -6px}
+  .ladder{grid-template-columns:repeat(3,1fr)}
+  .dialog{padding:26px 22px}
+  .dialog .result{font-size:40px}
+  table.tt .vis{width:70px}
+  .hide-m{display:none}
+}
+
+</style>
+</head>
+<body>
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <symbol id="p-p" viewBox="0 0 45 45"><path d="M22.5 9a4.6 4.6 0 0 0-3 8.1c-2 1.2-3.3 3.2-3.3 5.5 0 1.7.7 3.2 1.8 4.3-2.9 1.5-5.5 5.2-5.5 9.6h20c0-4.4-2.6-8.1-5.5-9.6 1.1-1.1 1.8-2.6 1.8-4.3 0-2.3-1.3-4.3-3.3-5.5a4.6 4.6 0 0 0-3-8.1z"/></symbol>
+    <symbol id="p-r" viewBox="0 0 45 45"><path d="M11.5 37.5h22v-3.5h-22zM14 34l1.6-4.5h13.8L31 34zM16 29.5V18h13v11.5zM13.5 18l2.5-3h13l2.5 3zM13.5 15V9h3.5v2.6h3.2V9h4.6v2.6H28V9h3.5v6z"/><path d="M16 18h13" style="fill:none;stroke:var(--pd)"/></symbol>
+    <symbol id="p-b" viewBox="0 0 45 45"><path d="M11.5 37.5h22v-3.5h-22zM15 34c1.2-3 3.3-4.6 3.5-8h8c.2 3.4 2.3 5 3.5 8zM17.5 26.5h10v-2.5h-10z"/><path d="M22.5 10.5c-4.2 3-6.8 7-6.8 10.4 0 2.4 2.6 3.6 6.8 3.6s6.8-1.2 6.8-3.6c0-3.4-2.6-7.4-6.8-10.4z"/><circle cx="22.5" cy="8" r="2.2"/><path d="M25 15l-4 5" style="fill:none;stroke:var(--pd);stroke-width:1.5"/></symbol>
+    <symbol id="p-n" viewBox="0 0 45 45"><path d="M11.5 37.5h22v-3.5h-22z"/><path d="M14 34c0-5.5 2.5-8.5 6.5-11.5-2.2-.2-4.6.7-6.4 2.3-1.4 1.2-3.6.2-3.3-1.7.4-2.6 4.2-6.3 6.2-8.6 1.1-1.3 1.2-3 1.2-4.5l2.2 1.6 1.7-2.8 1.8 2.9C29 13 32.6 18 32.2 26l-.4 8z"/><circle cx="18.6" cy="15.2" r="1.15" style="fill:var(--pd);stroke:none"/><path d="M22.5 22.5c.8-2 2.4-3.4 4.4-4" style="fill:none;stroke:var(--pd);stroke-width:1.1;opacity:.7"/></symbol>
+    <symbol id="p-q" viewBox="0 0 45 45"><path d="M11 37.5h23v-3.5H11zM13 34l2.6-5.5h13.8L32 34z"/><path d="M15.6 28.5L11 14.5l4.8 6.2 1.4-9.2 3.4 8.3 1.9-9.3 1.9 9.3 3.4-8.3 1.4 9.2 4.8-6.2-4.6 14z"/><circle cx="11" cy="13.4" r="1.9"/><circle cx="17.2" cy="10.6" r="1.9"/><circle cx="22.5" cy="9.3" r="1.9"/><circle cx="27.8" cy="10.6" r="1.9"/><circle cx="34" cy="13.4" r="1.9"/></symbol>
+    <symbol id="p-k" viewBox="0 0 45 45"><path d="M11 37.5h23v-3.5H11zM13 34l2.6-5.5h13.8L32 34z"/><path d="M15.6 28.5c-3.6-4.2-4.6-8.6-1.4-11.2 2.8-2.2 6.4-1 8.3 2.2 1.9-3.2 5.5-4.4 8.3-2.2 3.2 2.6 2.2 7-1.4 11.2z"/><path d="M22.5 19.5V12.5"/><path d="M22.5 5.5v8M19 9h7" style="fill:none;stroke-width:2.2"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5.5v-5h-5v5H4z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5c2.5-1 5.5-1 8 .8 2.5-1.8 5.5-1.8 8-.8V19c-2.5-1-5.5-1-8 .8-2.5-1.8-5.5-1.8-8-.8zM12 6.3v13.5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16"/><path d="M4 12h16M12 4v16"/><rect x="4" y="4" width="8" height="8" style="fill:currentColor;opacity:.25"/><rect x="12" y="12" width="8" height="8" style="fill:currentColor;opacity:.25"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M7.5 15.5l4-4.5 3 2.5L20 7"/></symbol>
+    <symbol id="i-flip" viewBox="0 0 24 24"><path d="M7 4v15M7 19l-3-3M7 19l3-3M17 20V5M17 5l-3 3M17 5l3 3"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 7 4.5 11.5 9 16M5 11.5h9.5a5 5 0 0 1 0 10H11"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M6 21V4M6 4.5h11l-2.5 4 2.5 4H6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <aside class="side">
+    <a class="mark" href="#home">
+      <img class="appicon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxOTE5MWMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwOTA5MGEiLz48L2xpbmVhckdyYWRpZW50Pgo8bGluZWFyR3JhZGllbnQgaWQ9ImJyIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZWFkMmEwIi8+PHN0b3Agb2Zmc2V0PSIuNSIgc3RvcC1jb2xvcj0iI2JjOWQ2NCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzhhNzA0NSIvPjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMTIiIGZpbGw9InVybCgjYmcpIi8+CjxyZWN0IHg9IjM4IiB5PSIzOCIgd2lkdGg9IjQzNiIgaGVpZ2h0PSI0MzYiIHJ4PSI3OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYjg5YTYyIiBzdHJva2Utb3BhY2l0eT0iLjUiIHN0cm9rZS13aWR0aD0iMi41Ii8+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI1NiAyNjIpIHNjYWxlKDEuMTgpIHRyYW5zbGF0ZSgtMjUyIC0yODIpIj4KPHBhdGggZmlsbD0idXJsKCNicikiIGQ9Ik0xNzIgMzk0aDE2MHYtMTZIMTcyek0xOTAgMzY0YzAtNDYgMTgtNzQgNTYtMTA0LTIwLTEtNDIgNy01OCAyMC0xNCAxMS0zMiAzLTI5LTE1IDQtMjQgMzgtNTggNTYtODAgMTAtMTIgMTItMjggMTItNDJsMjAgMTUgMTUtMjYgMTYgMjdjNjIgMjIgOTIgNjYgODggMTQwbC00IDY1eiIvPgo8Y2lyY2xlIGN4PSIyMzQiIGN5PSIxODEiIHI9IjguNSIgZmlsbD0iIzBkMGQwZiIvPgo8cGF0aCBkPSJNMjY4IDE5OGMyOCAxNiA0MiA0NCA0MiA4MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMGQwZDBmIiBzdHJva2Utb3BhY2l0eT0iLjU1IiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L2c+Cjwvc3ZnPg==" alt="">
+      <div><div class="word">TEMPO</div><div class="sub">Chess Tutor</div></div>
+    </a>
+    <nav class="navlist">
+      <a href="#home" data-nav="home"><svg><use href="#i-home"/></svg>Home</a>
+      <a href="#lessons" data-nav="lessons"><svg><use href="#i-book"/></svg>Lessons</a>
+      <a href="#play" data-nav="play"><svg><use href="#i-play"/></svg>Play</a>
+      <a href="#progress" data-nav="progress"><svg><use href="#i-chart"/></svg>Progress</a>
+    </nav>
+    <div class="chip">
+      <div class="lab">Your rating</div>
+      <div class="val num" data-bind="rating">600</div>
+      <div class="tier" data-bind="tier">Pawn</div>
+      <div class="sync" data-bind="sync">Saved on this device</div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <a class="mark" href="#home">
+        <img class="appicon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxOTE5MWMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwOTA5MGEiLz48L2xpbmVhckdyYWRpZW50Pgo8bGluZWFyR3JhZGllbnQgaWQ9ImJyIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZWFkMmEwIi8+PHN0b3Agb2Zmc2V0PSIuNSIgc3RvcC1jb2xvcj0iI2JjOWQ2NCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzhhNzA0NSIvPjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMTIiIGZpbGw9InVybCgjYmcpIi8+CjxyZWN0IHg9IjM4IiB5PSIzOCIgd2lkdGg9IjQzNiIgaGVpZ2h0PSI0MzYiIHJ4PSI3OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYjg5YTYyIiBzdHJva2Utb3BhY2l0eT0iLjUiIHN0cm9rZS13aWR0aD0iMi41Ii8+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI1NiAyNjIpIHNjYWxlKDEuMTgpIHRyYW5zbGF0ZSgtMjUyIC0yODIpIj4KPHBhdGggZmlsbD0idXJsKCNicikiIGQ9Ik0xNzIgMzk0aDE2MHYtMTZIMTcyek0xOTAgMzY0YzAtNDYgMTgtNzQgNTYtMTA0LTIwLTEtNDIgNy01OCAyMC0xNCAxMS0zMiAzLTI5LTE1IDQtMjQgMzgtNTggNTYtODAgMTAtMTIgMTItMjggMTItNDJsMjAgMTUgMTUtMjYgMTYgMjdjNjIgMjIgOTIgNjYgODggMTQwbC00IDY1eiIvPgo8Y2lyY2xlIGN4PSIyMzQiIGN5PSIxODEiIHI9IjguNSIgZmlsbD0iIzBkMGQwZiIvPgo8cGF0aCBkPSJNMjY4IDE5OGMyOCAxNiA0MiA0NCA0MiA4MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMGQwZDBmIiBzdHJva2Utb3BhY2l0eT0iLjU1IiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L2c+Cjwvc3ZnPg==" alt="">
+        <div class="word">TEMPO</div>
+      </a>
+      <a class="rc" href="#progress"><div class="v num" data-bind="rating">600</div><div class="t" data-bind="tier">Pawn</div></a>
+    </div>
+
+    <!-- AD SLOT: top leaderboard. Desktop 728x90, mobile 320x50. Replace inner markup with your ad tag. -->
+    <div class="ad ad-banner" data-ad-slot="top-banner"><span class="dim" data-bind="adsize">728 × 90</span></div>
+
+    <div class="wrap">
+      <section class="view" id="view-home"></section>
+      <section class="view" id="view-lessons"></section>
+      <section class="view" id="view-lesson"></section>
+      <section class="view" id="view-play"></section>
+      <section class="view" id="view-progress"></section>
+    </div>
+  </main>
+
+  <nav class="tabbar">
+    <a href="#home" data-nav="home"><svg><use href="#i-home"/></svg>Home</a>
+    <a href="#lessons" data-nav="lessons"><svg><use href="#i-book"/></svg>Lessons</a>
+    <a href="#play" data-nav="play"><svg><use href="#i-play"/></svg>Play</a>
+    <a href="#progress" data-nav="progress"><svg><use href="#i-chart"/></svg>Progress</a>
+  </nav>
+</div>
+
+<div class="modal" id="modal"><div class="dialog" id="dialog"></div></div>
+<div class="toast" id="toast"></div>
+
+<script id="engine-src">
+/* TEMPO chess engine: rules, search, and technique detection. Runs in page and in a Worker. */
+var ENG = (function () {
+  var FILES = 'abcdefgh';
+  var VAL = { p: 100, n: 320, b: 330, r: 500, q: 900, k: 0 };
+  var TV = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 100 };
+  var KN = [[1, 2], [2, 1], [-1, 2], [-2, 1], [1, -2], [2, -1], [-1, -2], [-2, -1]];
+  var DIAG = [[1, 1], [1, -1], [-1, 1], [-1, -1]];
+  var ORTH = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+  var ALL8 = DIAG.concat(ORTH);
+  var START = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+
+  function col(p) { return p ? (p === p.toUpperCase() ? 'w' : 'b') : null; }
+  function typ(p) { return p ? p.toLowerCase() : null; }
+  function opp(c) { return c === 'w' ? 'b' : 'w'; }
+  function on(r, f) { return r >= 0 && r < 8 && f >= 0 && f < 8; }
+  function sqName(i) { return FILES[i & 7] + (8 - (i >> 3)); }
+  function sqIdx(n) { return (8 - parseInt(n[1], 10)) * 8 + FILES.indexOf(n[0]); }
+
+  function parse(fen) {
+    var parts = fen.trim().split(/\s+/);
+    var b = new Array(64).fill(null), i = 0;
+    for (var k = 0; k < parts[0].length; k++) {
+      var ch = parts[0][k];
+      if (ch === '/') continue;
+      if (/\d/.test(ch)) i += +ch; else b[i++] = ch;
+    }
+    var c = parts[2] || '-';
+    return {
+      b: b, t: parts[1] || 'w',
+      c: { K: c.indexOf('K') >= 0, Q: c.indexOf('Q') >= 0, k: c.indexOf('k') >= 0, q: c.indexOf('q') >= 0 },
+      ep: parts[3] && parts[3] !== '-' ? sqIdx(parts[3]) : -1,
+      h: +(parts[4] || 0), n: +(parts[5] || 1)
+    };
+  }
+  function fen(s) {
+    var out = '';
+    for (var r = 0; r < 8; r++) {
+      var e = 0;
+      for (var f = 0; f < 8; f++) {
+        var p = s.b[r * 8 + f];
+        if (!p) e++; else { if (e) { out += e; e = 0; } out += p; }
+      }
+      if (e) out += e;
+      if (r < 7) out += '/';
+    }
+    var c = (s.c.K ? 'K' : '') + (s.c.Q ? 'Q' : '') + (s.c.k ? 'k' : '') + (s.c.q ? 'q' : '');
+    return out + ' ' + s.t + ' ' + (c || '-') + ' ' + (s.ep >= 0 ? sqName(s.ep) : '-') + ' ' + s.h + ' ' + s.n;
+  }
+  function posKey(s) { return fen(s).split(' ').slice(0, 4).join(' '); }
+
+  function attacked(b, sq, by) {
+    var r = sq >> 3, f = sq & 7, i, rr, ff, p;
+    var pr = by === 'w' ? r + 1 : r - 1, pawn = by === 'w' ? 'P' : 'p';
+    if (pr >= 0 && pr < 8) {
+      if (f > 0 && b[pr * 8 + f - 1] === pawn) return true;
+      if (f < 7 && b[pr * 8 + f + 1] === pawn) return true;
+    }
+    var kn = by === 'w' ? 'N' : 'n', kg = by === 'w' ? 'K' : 'k';
+    for (i = 0; i < 8; i++) {
+      rr = r + KN[i][0]; ff = f + KN[i][1];
+      if (on(rr, ff) && b[rr * 8 + ff] === kn) return true;
+      rr = r + ALL8[i][0]; ff = f + ALL8[i][1];
+      if (on(rr, ff) && b[rr * 8 + ff] === kg) return true;
+    }
+    var bq = by === 'w' ? 'BQ' : 'bq', rq = by === 'w' ? 'RQ' : 'rq';
+    for (i = 0; i < 4; i++) {
+      rr = r + DIAG[i][0]; ff = f + DIAG[i][1];
+      while (on(rr, ff)) { p = b[rr * 8 + ff]; if (p) { if (bq.indexOf(p) >= 0) return true; break; } rr += DIAG[i][0]; ff += DIAG[i][1]; }
+      rr = r + ORTH[i][0]; ff = f + ORTH[i][1];
+      while (on(rr, ff)) { p = b[rr * 8 + ff]; if (p) { if (rq.indexOf(p) >= 0) return true; break; } rr += ORTH[i][0]; ff += ORTH[i][1]; }
+    }
+    return false;
+  }
+  function attackers(b, sq, by) { // list of squares of pieces of color `by` attacking sq
+    var out = [];
+    for (var i = 0; i < 64; i++) if (b[i] && col(b[i]) === by && attacksSq(b, i, sq)) out.push(i);
+    return out;
+  }
+  function kingSq(b, c) { var k = c === 'w' ? 'K' : 'k'; for (var i = 0; i < 64; i++) if (b[i] === k) return i; return -1; }
+  function inCheck(s) { var k = kingSq(s.b, s.t); return k >= 0 && attacked(s.b, k, opp(s.t)); }
+
+  // squares attacked by the piece standing on sq
+  function attacksFrom(b, sq) {
+    var p = b[sq]; if (!p) return [];
+    var t = typ(p), c = col(p), r = sq >> 3, f = sq & 7, out = [], i, rr, ff;
+    if (t === 'p') {
+      var d = c === 'w' ? -1 : 1;
+      if (on(r + d, f - 1)) out.push((r + d) * 8 + f - 1);
+      if (on(r + d, f + 1)) out.push((r + d) * 8 + f + 1);
+    } else if (t === 'n' || t === 'k') {
+      var set = t === 'n' ? KN : ALL8;
+      for (i = 0; i < 8; i++) { rr = r + set[i][0]; ff = f + set[i][1]; if (on(rr, ff)) out.push(rr * 8 + ff); }
+    } else {
+      var dirs = t === 'b' ? DIAG : t === 'r' ? ORTH : ALL8;
+      for (i = 0; i < dirs.length; i++) {
+        rr = r + dirs[i][0]; ff = f + dirs[i][1];
+        while (on(rr, ff)) { out.push(rr * 8 + ff); if (b[rr * 8 + ff]) break; rr += dirs[i][0]; ff += dirs[i][1]; }
+      }
+    }
+    return out;
+  }
+  function attacksSq(b, from, sq) { return attacksFrom(b, from).indexOf(sq) >= 0; }
+
+  function pseudo(s, capsOnly) {
+    var b = s.b, us = s.t, them = opp(us), mv = [], i;
+    for (var sq = 0; sq < 64; sq++) {
+      var p = b[sq]; if (!p || col(p) !== us) continue;
+      var t = typ(p), r = sq >> 3, f = sq & 7, rr, ff, to, q;
+      if (t === 'p') {
+        var d = us === 'w' ? -1 : 1, startR = us === 'w' ? 6 : 1, promR = us === 'w' ? 0 : 7;
+        rr = r + d;
+        if (rr >= 0 && rr < 8) {
+          to = rr * 8 + f;
+          if (!b[to] && (!capsOnly || rr === promR)) {
+            if (rr === promR) ['q', 'r', 'b', 'n'].forEach(function (pp) { mv.push({ from: sq, to: to, p: p, promo: pp }); });
+            else {
+              mv.push({ from: sq, to: to, p: p });
+              if (r === startR && !b[(r + 2 * d) * 8 + f]) mv.push({ from: sq, to: (r + 2 * d) * 8 + f, p: p, dbl: true });
+            }
+          }
+          for (var df = -1; df <= 1; df += 2) {
+            ff = f + df; if (ff < 0 || ff > 7) continue;
+            to = rr * 8 + ff;
+            if (b[to] && col(b[to]) === them) {
+              if (rr === promR) ['q', 'r', 'b', 'n'].forEach(function (pp) { mv.push({ from: sq, to: to, p: p, cap: b[to], promo: pp }); });
+              else mv.push({ from: sq, to: to, p: p, cap: b[to] });
+            } else if (to === s.ep) mv.push({ from: sq, to: to, p: p, cap: us === 'w' ? 'p' : 'P', ep: true });
+          }
+        }
+      } else if (t === 'n' || t === 'k') {
+        var set = t === 'n' ? KN : ALL8;
+        for (i = 0; i < 8; i++) {
+          rr = r + set[i][0]; ff = f + set[i][1]; if (!on(rr, ff)) continue;
+          to = rr * 8 + ff; q = b[to];
+          if (!q) { if (!capsOnly) mv.push({ from: sq, to: to, p: p }); }
+          else if (col(q) === them) mv.push({ from: sq, to: to, p: p, cap: q });
+        }
+        if (t === 'k' && !capsOnly) {
+          var home = us === 'w' ? 60 : 4;
+          if (sq === home && !attacked(b, home, them)) {
+            var ks = us === 'w' ? s.c.K : s.c.k, qs = us === 'w' ? s.c.Q : s.c.q;
+            var rook = us === 'w' ? 'R' : 'r';
+            if (ks && !b[home + 1] && !b[home + 2] && b[home + 3] === rook && !attacked(b, home + 1, them) && !attacked(b, home + 2, them))
+              mv.push({ from: sq, to: home + 2, p: p, castle: 'k' });
+            if (qs && !b[home - 1] && !b[home - 2] && !b[home - 3] && b[home - 4] === rook && !attacked(b, home - 1, them) && !attacked(b, home - 2, them))
+              mv.push({ from: sq, to: home - 2, p: p, castle: 'q' });
+          }
+        }
+      } else {
+        var dirs = t === 'b' ? DIAG : t === 'r' ? ORTH : ALL8;
+        for (i = 0; i < dirs.length; i++) {
+          rr = r + dirs[i][0]; ff = f + dirs[i][1];
+          while (on(rr, ff)) {
+            to = rr * 8 + ff; q = b[to];
+            if (!q) { if (!capsOnly) mv.push({ from: sq, to: to, p: p }); }
+            else { if (col(q) === them) mv.push({ from: sq, to: to, p: p, cap: q }); break; }
+            rr += dirs[i][0]; ff += dirs[i][1];
+          }
+        }
+      }
+    }
+    return mv;
+  }
+
+  function make(s, m) {
+    var b = s.b.slice(), us = s.t;
+    b[m.to] = m.promo ? (us === 'w' ? m.promo.toUpperCase() : m.promo) : m.p;
+    b[m.from] = null;
+    if (m.ep) b[m.to + (us === 'w' ? 8 : -8)] = null;
+    if (m.castle === 'k') { b[m.to - 1] = b[m.to + 1]; b[m.to + 1] = null; }
+    if (m.castle === 'q') { b[m.to + 1] = b[m.to - 2]; b[m.to - 2] = null; }
+    var c = { K: s.c.K, Q: s.c.Q, k: s.c.k, q: s.c.q };
+    if (m.p === 'K') { c.K = c.Q = false; }
+    if (m.p === 'k') { c.k = c.q = false; }
+    [m.from, m.to].forEach(function (x) {
+      if (x === 63) c.K = false; if (x === 56) c.Q = false; if (x === 7) c.k = false; if (x === 0) c.q = false;
+    });
+    return {
+      b: b, t: opp(us), c: c,
+      ep: m.dbl ? (m.from + m.to) >> 1 : -1,
+      h: (typ(m.p) === 'p' || m.cap) ? 0 : s.h + 1,
+      n: us === 'b' ? s.n + 1 : s.n
+    };
+  }
+
+  function legal(s, capsOnly) {
+    var out = [], ps = pseudo(s, capsOnly);
+    for (var i = 0; i < ps.length; i++) {
+      var a = make(s, ps[i]);
+      var k = kingSq(a.b, s.t);
+      if (!attacked(a.b, k, a.t)) out.push(ps[i]);
+    }
+    return out;
+  }
+
+  function insufficient(b) {
+    var minors = 0, other = 0;
+    for (var i = 0; i < 64; i++) {
+      var p = b[i]; if (!p) continue; var t = typ(p);
+      if (t === 'k') continue;
+      if (t === 'n' || t === 'b') minors++; else other++;
+    }
+    return other === 0 && minors <= 1;
+  }
+  function status(s) {
+    var lm = legal(s);
+    if (!lm.length) return inCheck(s) ? 'checkmate' : 'stalemate';
+    if (s.h >= 100) return 'fifty';
+    if (insufficient(s.b)) return 'insufficient';
+    return null;
+  }
+
+  function uci(m) { return sqName(m.from) + sqName(m.to) + (m.promo || ''); }
+  function findMove(s, u) { var l = legal(s); for (var i = 0; i < l.length; i++) if (uci(l[i]) === u) return l[i]; return null; }
+
+  function san(s, m) {
+    var str;
+    if (m.castle) str = m.castle === 'k' ? 'O-O' : 'O-O-O';
+    else {
+      var t = typ(m.p);
+      if (t === 'p') {
+        str = (m.cap ? FILES[m.from & 7] + 'x' : '') + sqName(m.to) + (m.promo ? '=' + m.promo.toUpperCase() : '');
+      } else {
+        str = t.toUpperCase();
+        var amb = legal(s).filter(function (o) { return o.p === m.p && o.to === m.to && o.from !== m.from; });
+        if (amb.length) {
+          var sameF = amb.some(function (o) { return (o.from & 7) === (m.from & 7); });
+          var sameR = amb.some(function (o) { return (o.from >> 3) === (m.from >> 3); });
+          if (!sameF) str += FILES[m.from & 7];
+          else if (!sameR) str += (8 - (m.from >> 3));
+          else str += sqName(m.from);
+        }
+        str += (m.cap ? 'x' : '') + sqName(m.to);
+      }
+    }
+    var a = make(s, m);
+    if (inCheck(a)) str += legal(a).length ? '+' : '#';
+    return str;
+  }
+
+  /* ---------------- Evaluation ---------------- */
+  var PST = {
+    p: [0, 0, 0, 0, 0, 0, 0, 0, 50, 50, 50, 50, 50, 50, 50, 50, 10, 10, 20, 30, 30, 20, 10, 10, 5, 5, 10, 25, 25, 10, 5, 5, 0, 0, 0, 20, 20, 0, 0, 0, 5, -5, -10, 0, 0, -10, -5, 5, 5, 10, 10, -20, -20, 10, 10, 5, 0, 0, 0, 0, 0, 0, 0, 0],
+    n: [-50, -40, -30, -30, -30, -30, -40, -50, -40, -20, 0, 0, 0, 0, -20, -40, -30, 0, 10, 15, 15, 10, 0, -30, -30, 5, 15, 20, 20, 15, 5, -30, -30, 0, 15, 20, 20, 15, 0, -30, -30, 5, 10, 15, 15, 10, 5, -30, -40, -20, 0, 5, 5, 0, -20, -40, -50, -40, -30, -30, -30, -30, -40, -50],
+    b: [-20, -10, -10, -10, -10, -10, -10, -20, -10, 0, 0, 0, 0, 0, 0, -10, -10, 0, 5, 10, 10, 5, 0, -10, -10, 5, 5, 10, 10, 5, 5, -10, -10, 0, 10, 10, 10, 10, 0, -10, -10, 10, 10, 10, 10, 10, 10, -10, -10, 5, 0, 0, 0, 0, 5, -10, -20, -10, -10, -10, -10, -10, -10, -20],
+    r: [0, 0, 0, 0, 0, 0, 0, 0, 5, 10, 10, 10, 10, 10, 10, 5, -5, 0, 0, 0, 0, 0, 0, -5, -5, 0, 0, 0, 0, 0, 0, -5, -5, 0, 0, 0, 0, 0, 0, -5, -5, 0, 0, 0, 0, 0, 0, -5, -5, 0, 0, 0, 0, 0, 0, -5, 0, 0, 0, 5, 5, 0, 0, 0],
+    q: [-20, -10, -10, -5, -5, -10, -10, -20, -10, 0, 0, 0, 0, 0, 0, -10, -10, 0, 5, 5, 5, 5, 0, -10, -5, 0, 5, 5, 5, 5, 0, -5, 0, 0, 5, 5, 5, 5, 0, -5, -10, 5, 5, 5, 5, 5, 0, -10, -10, 0, 5, 0, 0, 0, 0, -10, -20, -10, -10, -5, -5, -10, -10, -20],
+    k: [-30, -40, -40, -50, -50, -40, -40, -30, -30, -40, -40, -50, -50, -40, -40, -30, -30, -40, -40, -50, -50, -40, -40, -30, -30, -40, -40, -50, -50, -40, -40, -30, -20, -30, -30, -40, -40, -30, -30, -20, -10, -20, -20, -20, -20, -20, -20, -10, 20, 20, 0, 0, 0, 0, 20, 20, 20, 30, 10, 0, 0, 10, 30, 20],
+    ke: [-50, -40, -30, -20, -20, -30, -40, -50, -30, -20, -10, 0, 0, -10, -20, -30, -30, -10, 20, 30, 30, 20, -10, -30, -30, -10, 30, 40, 40, 30, -10, -30, -30, -10, 30, 40, 40, 30, -10, -30, -30, -10, 20, 30, 30, 20, -10, -30, -30, -30, 0, 0, 0, 0, -30, -30, -50, -30, -30, -30, -30, -30, -30, -50]
+  };
+  function evaluate(s) { // from side-to-move perspective
+    var b = s.b, score = 0, npW = 0, npB = 0, i, p, t;
+    for (i = 0; i < 64; i++) { p = b[i]; if (!p) continue; t = typ(p); if (t !== 'p' && t !== 'k') { if (col(p) === 'w') npW += VAL[t]; else npB += VAL[t]; } }
+    var endgame = npW <= 1300 && npB <= 1300;
+    var wk = -1, bk = -1;
+    for (i = 0; i < 64; i++) {
+      p = b[i]; if (!p) continue; t = typ(p);
+      var w = col(p) === 'w', idx = w ? i : ((7 - (i >> 3)) * 8 + (i & 7));
+      var v = VAL[t] + (t === 'k' ? (endgame ? PST.ke[idx] : PST.k[idx]) : PST[t][idx]);
+      score += w ? v : -v;
+      if (p === 'K') wk = i; if (p === 'k') bk = i;
+    }
+    // mop-up: help the stronger side drive the lone king to the edge
+    var matW = npW, matB = npB;
+    if (endgame && Math.abs(matW - matB) >= 400 && wk >= 0 && bk >= 0) {
+      var strong = matW > matB ? 1 : -1, weakK = strong > 0 ? bk : wk;
+      var wr = weakK >> 3, wf = weakK & 7;
+      var cd = Math.max(3 - wr, wr - 4) + Math.max(3 - wf, wf - 4);
+      var kd = Math.abs((wk >> 3) - (bk >> 3)) + Math.abs((wk & 7) - (bk & 7));
+      score += strong * (cd * 10 + (14 - kd) * 4);
+    }
+    return s.t === 'w' ? score : -score;
+  }
+
+  /* ---------------- Search ---------------- */
+  var MATE = 100000, nodes = 0, deadline = 0, aborted = false;
+  function order(moves) {
+    for (var i = 0; i < moves.length; i++) {
+      var m = moves[i];
+      m._o = (m.cap ? 10 * VAL[typ(m.cap)] - VAL[typ(m.p)] + 1000 : 0) + (m.promo ? 800 : 0);
+    }
+    moves.sort(function (a, b) { return b._o - a._o; });
+    return moves;
+  }
+  function quiesce(s, alpha, beta, qd) {
+    nodes++;
+    var stand = evaluate(s);
+    if (stand >= beta) return beta;
+    if (alpha < stand) alpha = stand;
+    if (qd > 6) return alpha;
+    var ms = order(legal(s, true));
+    for (var i = 0; i < ms.length; i++) {
+      var sc = -quiesce(make(s, ms[i]), -beta, -alpha, qd + 1);
+      if (sc >= beta) return beta;
+      if (sc > alpha) alpha = sc;
+    }
+    return alpha;
+  }
+  function negamax(s, depth, alpha, beta, ply) {
+    if ((++nodes & 1023) === 0 && deadline && Date.now() > deadline) aborted = true;
+    if (aborted) return 0;
+    var ms = legal(s);
+    if (!ms.length) return inCheck(s) ? -MATE + ply : 0;
+    if (s.h >= 100) return 0;
+    if (depth <= 0) return quiesce(s, alpha, beta, 0);
+    order(ms);
+    var best = -Infinity;
+    for (var i = 0; i < ms.length; i++) {
+      var sc = -negamax(make(s, ms[i]), depth - 1, -beta, -alpha, ply + 1);
+      if (sc > best) best = sc;
+      if (sc > alpha) alpha = sc;
+      if (alpha >= beta) break;
+    }
+    return best;
+  }
+  function scoreRoot(s, depth) {
+    var ms = order(legal(s)), res = [];
+    for (var i = 0; i < ms.length; i++) res.push({ m: ms[i], sc: -negamax(make(s, ms[i]), depth - 1, -Infinity, Infinity, 1) });
+    return res;
+  }
+  var LEVELS = [
+    { name: 'Novice', rating: 500, depth: 1, noise: 140, blunder: 0.18 },
+    { name: 'Apprentice', rating: 800, depth: 2, noise: 60, blunder: 0.05 },
+    { name: 'Club', rating: 1100, depth: 3, noise: 18, blunder: 0 },
+    { name: 'Expert', rating: 1400, depth: 5, noise: 0, blunder: 0, time: 2200 }
+  ];
+  function bestMove(fenStr, level) {
+    var s = parse(fenStr), L = LEVELS[level] || LEVELS[1];
+    nodes = 0; aborted = false; deadline = 0;
+    var ms = legal(s); if (!ms.length) return null;
+    if (ms.length === 1) return uci(ms[0]);
+    if (L.blunder && Math.random() < L.blunder) return uci(ms[Math.floor(Math.random() * ms.length)]);
+    if (L.noise) {
+      var res = scoreRoot(s, L.depth), best = null, bs = -Infinity;
+      res.forEach(function (r) { var v = r.sc + (Math.random() * 2 - 1) * L.noise; if (v > bs) { bs = v; best = r.m; } });
+      return uci(best);
+    }
+    // iterative deepening with time budget
+    deadline = Date.now() + (L.time || 1500);
+    var bestM = ms[0], order0 = order(ms.slice());
+    for (var d = 1; d <= L.depth; d++) {
+      var alpha = -Infinity, cur = null, curS = -Infinity;
+      for (var i = 0; i < order0.length; i++) {
+        var sc = -negamax(make(s, order0[i]), d - 1, -Infinity, -alpha, 1);
+        if (aborted) break;
+        if (sc > curS) { curS = sc; cur = order0[i]; }
+        if (sc > alpha) alpha = sc;
+      }
+      if (aborted) break;
+      bestM = cur;
+      order0.splice(order0.indexOf(cur), 1); order0.unshift(cur);
+      if (curS > MATE - 100) break;
+    }
+    return uci(bestM);
+  }
+
+  /* ---------------- Technique detection ---------------- */
+  function tv(p) { return TV[typ(p)]; }
+  function safeSquare(b, sq, us) { // our piece on sq isn't simply lost
+    var them = opp(us);
+    if (!attacked(b, sq, them)) return true;
+    if (!attacked(b, sq, us)) return false;
+    var att = attackers(b, sq, them), mine = tv(b[sq]);
+    for (var i = 0; i < att.length; i++) if (tv(b[att[i]]) < mine) return false;
+    return true;
+  }
+  function isSlider(p) { var t = typ(p); return t === 'b' || t === 'r' || t === 'q'; }
+  function dirsOf(p) { var t = typ(p); return t === 'b' ? DIAG : t === 'r' ? ORTH : ALL8; }
+  function rayPieces(b, sq, d, n) { // first n pieces along a ray
+    var r = (sq >> 3) + d[0], f = (sq & 7) + d[1], out = [];
+    while (on(r, f) && out.length < n) { var i = r * 8 + f; if (b[i]) out.push(i); r += d[0]; f += d[1]; }
+    return out;
+  }
+
+  function detectFork(s, m, a) {
+    var us = s.t, b = a.b, sq = m.to, mover = b[sq];
+    if (!safeSquare(b, sq, us)) return null;
+    var targets = attacksFrom(b, sq).filter(function (x) {
+      var p = b[x]; if (!p || col(p) === us) return false;
+      var t = typ(p); if (t === 'p') return false;
+      if (t === 'k') return true;
+      return tv(p) > tv(mover) || !attacked(b, x, opp(us));
+    });
+    return targets.length >= 2 ? { piece: sq, targets: targets } : null;
+  }
+  function detectPin(s, m, a) {
+    var us = s.t, b = a.b, sq = m.to, mover = b[sq];
+    if (!isSlider(mover)) return null;
+    var dirs = dirsOf(mover);
+    for (var i = 0; i < dirs.length; i++) {
+      var rp = rayPieces(b, sq, dirs[i], 2);
+      if (rp.length < 2) continue;
+      var x = b[rp[0]], y = b[rp[1]];
+      if (col(x) === us || col(y) === us) continue;
+      if (typ(x) === 'k' || typ(x) === 'p') continue;
+      if (typ(y) === 'k' || tv(y) > tv(x)) {
+        if (!safeSquare(b, sq, us) && typ(y) !== 'k') continue;
+        // pinned piece shouldn't simply capture the pinner for free
+        if (attacksSq(b, rp[0], sq) && tv(x) <= tv(mover) && !attacked(b, sq, us)) continue;
+        return { piece: sq, pinned: rp[0], behind: rp[1] };
+      }
+    }
+    return null;
+  }
+  function detectSkewer(s, m, a) {
+    var us = s.t, b = a.b, sq = m.to, mover = b[sq];
+    if (!isSlider(mover)) return null;
+    if (!safeSquare(b, sq, us)) return null;
+    var dirs = dirsOf(mover);
+    for (var i = 0; i < dirs.length; i++) {
+      var rp = rayPieces(b, sq, dirs[i], 2);
+      if (rp.length < 2) continue;
+      var x = b[rp[0]], y = b[rp[1]];
+      if (col(x) === us || col(y) === us) continue;
+      var tx = typ(x), ty = typ(y);
+      if ((tx === 'k' && tv(y) >= 3) || (tx === 'q' && (ty === 'r' || ty === 'b' || ty === 'n') && !attacked(b, rp[1], opp(us))) )
+        return { piece: sq, front: rp[0], behind: rp[1] };
+    }
+    return null;
+  }
+  function detectDiscovered(s, m, a) {
+    var us = s.t, b = a.b, from = m.from;
+    for (var sq = 0; sq < 64; sq++) {
+      var p = b[sq]; if (!p || col(p) !== us || !isSlider(p) || sq === m.to) continue;
+      var dirs = dirsOf(p);
+      for (var i = 0; i < dirs.length; i++) {
+        var before = rayPieces(s.b, sq, dirs[i], 1);
+        if (!before.length || before[0] !== from) continue;
+        var after = rayPieces(b, sq, dirs[i], 1);
+        if (!after.length) continue;
+        var tp = b[after[0]];
+        if (col(tp) === us) continue;
+        var tt = typ(tp);
+        if (tt === 'k' || tt === 'q' || (tv(tp) > tv(p)) || (tt !== 'p' && !attacked(b, after[0], opp(us))))
+          return { piece: sq, target: after[0], moved: m.to };
+      }
+    }
+    return null;
+  }
+  function detectBackRank(s, m, a) {
+    if (!inCheck(a) || legal(a).length) return null;
+    var p = a.b[m.to], t = typ(p);
+    if (t !== 'r' && t !== 'q') return null;
+    var k = kingSq(a.b, a.t), rank = a.t === 'b' ? 0 : 7;
+    if ((k >> 3) !== rank || (m.to >> 3) !== rank) return null;
+    return { piece: m.to, king: k };
+  }
+  function detectMate(s, m, a) { return inCheck(a) && !legal(a).length ? { piece: m.to } : null; }
+
+  var DETECT = { fork: detectFork, pin: detectPin, skewer: detectSkewer, discovered: detectDiscovered, backrank: detectBackRank, mate: detectMate };
+  var TACTICS = ['fork', 'pin', 'skewer', 'discovered', 'backrank'];
+
+  // tactical events created by move m in state s
+  function techniques(s, m) {
+    var a = make(s, m), out = {};
+    TACTICS.forEach(function (k) { var r = DETECT[k](s, m, a); if (r) out[k] = r; });
+    if (out.backrank) delete out.fork;
+    return out;
+  }
+  // which tactical techniques are available to the side to move
+  function opportunities(s) {
+    var ms = legal(s), out = {};
+    for (var i = 0; i < ms.length; i++) {
+      var a = make(s, ms[i]);
+      for (var j = 0; j < TACTICS.length; j++) {
+        var k = TACTICS[j];
+        if (out[k]) continue;
+        var r = DETECT[k](s, ms[i], a);
+        if (r) {
+          // only count real chances: the opponent's best reply mustn't simply refute it
+          if (k !== 'backrank' && !worthIt(s, ms[i])) continue;
+          out[k] = { move: uci(ms[i]), from: ms[i].from, to: ms[i].to };
+        }
+      }
+    }
+    return out;
+  }
+  function worthIt(s, m) { // shallow check that the move doesn't lose material
+    var before = evaluate(s);
+    nodes = 0; aborted = false; deadline = 0;
+    var after = -negamax(make(s, m), 1, -Infinity, Infinity, 1);
+    return after >= before - 60;
+  }
+
+  return {
+    START: START, LEVELS: LEVELS, parse: parse, fen: fen, posKey: posKey, legal: legal, make: make, status: status,
+    inCheck: inCheck, san: san, uci: uci, findMove: findMove, sqName: sqName, sqIdx: sqIdx, kingSq: kingSq,
+    bestMove: bestMove, techniques: techniques, opportunities: opportunities, DETECT: DETECT, col: col, typ: typ,
+    evaluate: evaluate, attacked: attacked
+  };
+})();
+if (typeof module !== 'undefined') module.exports = ENG;
+
+</script>
+<script>
+/* Curriculum. Drill goal: `moves` (accepted UCI list) or `mate` (any checkmating move). */
+var CURRICULUM = [
+  {
+    chapter: 'I', title: 'Opening Principles',
+    lessons: [
+      {
+        id: 'center', name: 'Command the Center', tech: 'center', icon: 'p',
+        summary: 'The four central squares are the high ground of the board.',
+        body: [
+          'Pieces in the center reach more squares and can swing to either side quickly. A knight on e4 touches eight squares; a knight on a1 touches two.',
+          'Begin with a central pawn, usually e4 or d4. It claims space, opens lines for your bishop and queen, and makes your opponent react to you.'
+        ],
+        keys: ['Open with e4 or d4', 'Support central pawns with pieces', 'Challenge your opponent’s center pawns'],
+        drills: [
+          { fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1', moves: ['e2e4', 'd2d4'], prompt: 'Make the first move that seizes the center.', rating: 650 },
+          { fen: 'rnbqkbnr/ppp1pppp/8/3p4/3P4/8/PPP1PPPP/RNBQKBNR w KQkq - 0 2', moves: ['c2c4'], prompt: 'Strike at Black’s central pawn with a pawn from the flank.', rating: 800 },
+          { fen: 'rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2', moves: ['g1f3'], prompt: 'Develop a piece that also attacks Black’s center pawn.', rating: 750 }
+        ],
+        practice: { goal: 'Place a pawn on d4, e4, d5 or e5 within your first three moves.', need: 3 }
+      },
+      {
+        id: 'develop', name: 'Develop with Purpose', tech: 'develop', icon: 'n',
+        summary: 'Knights and bishops first, each to its best square, one move each.',
+        body: [
+          'Every opening move should bring a new piece into play. Knights before bishops is a reliable rule: knights need time to reach the center, bishops can strike from afar.',
+          'Avoid moving the same piece twice and resist early queen adventures. A developed army beats a single raider.'
+        ],
+        keys: ['Knights toward the center', 'Bishops to active diagonals', 'One move per piece in the opening'],
+        drills: [
+          { fen: 'r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3', moves: ['f1c4', 'f1b5'], prompt: 'Develop your king’s bishop to an active diagonal.', rating: 800 },
+          { fen: 'rnbqkbnr/ppp2ppp/4p3/3p4/2PP4/8/PP2PPPP/RNBQKBNR w KQkq - 0 3', moves: ['b1c3', 'g1f3'], prompt: 'Bring a knight toward the center.', rating: 750 }
+        ],
+        practice: { goal: 'Develop all four knights and bishops within your first ten moves.', need: 3 }
+      },
+      {
+        id: 'castle', name: 'Secure the King', tech: 'castle', icon: 'k',
+        summary: 'Castle early. A king in the center is a target.',
+        body: [
+          'Castling tucks your king behind a wall of pawns and connects your rooks in one move. It is the only move in chess that moves two pieces.',
+          'Clear the squares between king and rook, then castle, usually kingside, within the first ten moves.'
+        ],
+        keys: ['Clear the back rank', 'Castle before move ten', 'Keep the pawns in front of the king'],
+        drills: [
+          { fen: 'r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/2P2N2/PP1P1PPP/RNBQK2R w KQkq - 1 5', moves: ['e1g1'], prompt: 'Make your king safe and connect your rooks.', rating: 700 }
+        ],
+        practice: { goal: 'Castle within your first twelve moves.', need: 3 }
+      }
+    ]
+  },
+  {
+    chapter: 'II', title: 'Tactics',
+    lessons: [
+      {
+        id: 'fork', name: 'The Fork', tech: 'fork', icon: 'n',
+        summary: 'One piece, two targets. Your opponent can only save one.',
+        body: [
+          'A fork attacks two or more pieces at once. Knights are the classic forkers because their jumps are hard to see coming, but every piece, even a pawn, can fork.',
+          'Look for enemy pieces that are loose or more valuable than your attacker, especially the king and queen. A fork with check is the most forcing of all.'
+        ],
+        keys: ['Hunt for undefended pieces', 'Checks make forks unstoppable', 'Knights fork pieces that sit a knight’s jump apart'],
+        drills: [
+          { fen: 'r3k2r/pp3ppp/8/1N6/8/8/PPP2PPP/4K2R w Kkq - 0 1', moves: ['b5c7'], prompt: 'Win the rook with a knight jump.', rating: 900 },
+          { fen: '6k1/5ppp/2n1b3/8/3P4/2N5/5PPP/6K1 w - - 0 1', moves: ['d4d5'], prompt: 'Even a pawn can fork. Find it.', rating: 1000 },
+          { fen: 'r5k1/6pp/8/8/8/8/5PPP/3Q2K1 w - - 0 1', moves: ['d1d5'], prompt: 'Check the king and attack the rook at the same time.', rating: 1050 }
+        ],
+        practice: { goal: 'Execute forks in full games.', need: 3 }
+      },
+      {
+        id: 'pin', name: 'The Pin', tech: 'pin', icon: 'b',
+        summary: 'Freeze a piece in front of something more valuable.',
+        body: [
+          'A pin attacks a piece that cannot move without exposing a more valuable piece behind it. When the piece behind is the king, the pinned piece cannot legally move at all.',
+          'Bishops, rooks and queens create pins along their lines. Once a piece is pinned, attack it again: it cannot run.'
+        ],
+        keys: ['Line up king, queen and pieces', 'Pinned pieces cannot defend', 'Pile on the pinned piece'],
+        drills: [
+          { fen: '4k3/pp3ppp/2n5/8/8/8/PPP2PPP/5BK1 w - - 0 1', moves: ['f1b5'], prompt: 'Pin the knight to the king.', rating: 900 },
+          { fen: '4k3/pp3ppp/4q3/8/8/8/PP3KPP/3R4 w - - 0 1', moves: ['d1e1'], prompt: 'Pin the queen to her king.', rating: 1000 }
+        ],
+        practice: { goal: 'Pin enemy pieces in full games.', need: 3 }
+      },
+      {
+        id: 'skewer', name: 'The Skewer', tech: 'skewer', icon: 'r',
+        summary: 'A pin in reverse: the valuable piece must step aside.',
+        body: [
+          'A skewer attacks a valuable piece, usually the king or queen, that stands in front of another piece on the same line. When the front piece moves, you capture the one behind.',
+          'Skewers come from long-range pieces. Watch for an enemy king and rook, or queen and rook, sharing a line.'
+        ],
+        keys: ['Check along a line with a piece behind', 'The front piece must move', 'Collect what was hiding behind it'],
+        drills: [
+          { fen: '8/8/8/8/2k4r/8/5PP1/R5K1 w - - 0 1', moves: ['a1a4'], prompt: 'Check the king and win the rook behind it.', rating: 950 },
+          { fen: '6q1/8/4k3/8/8/8/4B1PP/7K w - - 0 1', moves: ['e2c4'], prompt: 'Skewer the king to the queen.', rating: 1050 }
+        ],
+        practice: { goal: 'Skewer enemy pieces in full games.', need: 2 }
+      },
+      {
+        id: 'discovered', name: 'Discovered Attack', tech: 'discovered', icon: 'b',
+        summary: 'Move one piece to unleash another.',
+        body: [
+          'When a piece steps off a line, the rook, bishop or queen behind it suddenly attacks. The piece that moved can make its own threat, so two attacks land at once.',
+          'A discovered check is the most powerful version: your opponent must deal with the check, and your moving piece is free to take anything.'
+        ],
+        keys: ['Line up a long-range piece behind your own', 'Move the front piece with a threat', 'Discovered check wins material'],
+        drills: [
+          { fen: '3q3k/pp5p/8/8/3N4/8/1B3PPP/6K1 w - - 0 1', moves: ['d4e6', 'd4c6'], prompt: 'Uncover a check and attack the queen.', rating: 1050 },
+          { fen: '6k1/3q1ppp/8/8/8/3B4/5PPP/3R2K1 w - - 0 1', moves: ['d3h7'], prompt: 'Give check with the bishop and uncover your rook.', rating: 1100 }
+        ],
+        practice: { goal: 'Unleash discovered attacks in full games.', need: 2 }
+      }
+    ]
+  },
+  {
+    chapter: 'III', title: 'Checkmates',
+    lessons: [
+      {
+        id: 'backrank', name: 'Back-Rank Mate', tech: 'backrank', icon: 'r',
+        summary: 'A king trapped behind its own pawns.',
+        body: [
+          'When a castled king has no escape square, a rook or queen landing on the back rank can be checkmate. The king’s own pawns become its prison.',
+          'Check your own back rank as often as your opponent’s. A single pawn move, called luft, gives your king air.'
+        ],
+        keys: ['Spot a king with no air', 'Control the back rank with a heavy piece', 'Give your own king luft'],
+        drills: [
+          { fen: '6k1/5ppp/8/8/8/8/5PPP/4R1K1 w - - 0 1', mate: true, prompt: 'Checkmate in one.', rating: 800 },
+          { fen: '4r1k1/5ppp/8/8/8/8/4QPPP/4R1K1 w - - 0 1', mate: true, prompt: 'Checkmate in one. Your rooks and queen are doubled.', rating: 950 }
+        ],
+        practice: { goal: 'Deliver back-rank checkmate in a full game.', need: 1 }
+      },
+      {
+        id: 'queenmate', name: 'Queen and King Mate', tech: 'queenmate', icon: 'q',
+        summary: 'The fundamental checkmate every player must own.',
+        body: [
+          'With a queen and king against a lone king, push the enemy king to the edge. Keep your queen a knight’s move away from it to shrink its box, then bring your own king close.',
+          'Beware stalemate: always leave the enemy king a legal move until the final blow.'
+        ],
+        keys: ['Shrink the box with the queen', 'March your king up to help', 'Avoid stalemate'],
+        drills: [
+          { fen: '7k/Q7/6K1/8/8/8/8/8 w - - 0 1', mate: true, prompt: 'Checkmate in one.', rating: 750 },
+          { fen: '8/8/3Q4/8/8/8/2K5/k7 w - - 0 1', mate: true, prompt: 'Checkmate in one. One queen move here is stalemate. Avoid it.', rating: 850 }
+        ],
+        practice: { goal: 'Checkmate the lone king within fifty moves.', need: 2, fen: '8/8/8/4k3/8/8/8/3QK3 w - - 0 1' }
+      }
+    ]
+  }
+];
+if (typeof module !== 'undefined') module.exports = CURRICULUM;
+var WHY = {
+  'center:0': 'A central pawn claims space and opens lines for your bishop and queen.',
+  'center:1': 'c4 attacks d5 from the side. If Black takes, you can rebuild the center with e4.',
+  'center:2': 'Nf3 develops toward the center and attacks e5 at once: two goals, one move.',
+  'develop:0': 'The bishop now eyes f7 (Bc4) or pressures the knight that guards e5 (Bb5).',
+  'develop:1': 'Knights reach central squares in a single move and support d5 and e5.',
+  'castle:0': 'Your king is tucked behind pawns and your rook joins the center files.',
+  'fork:0': 'Nc7+ checks the king and attacks the a8 rook. After the king moves, the rook falls.',
+  'fork:1': 'd5 attacks the knight and bishop, and the knight on c3 guards the pawn.',
+  'fork:2': 'Qd5+ checks along the diagonal and hits the a8 rook. Check first, rook next.',
+  'pin:0': 'Bb5 pins the knight: it cannot move without exposing the king.',
+  'pin:1': 'Re1 pins the queen to the king. The best Black can do is give up the queen for the rook.',
+  'skewer:0': 'Ra4+ drives the king off the fourth rank and the h4 rook is left behind.',
+  'skewer:1': 'Bc4+ forces the king aside and the bishop takes the queen on g8.',
+  'discovered:0': 'The knight jump uncovers check from b2 and the knight attacks the queen.',
+  'discovered:1': 'Bxh7+ is check, and the d1 rook now attacks the queen on d7.',
+  'backrank:0': 'Re8# : the king’s own pawns block every escape.',
+  'backrank:1': 'Qxe8# : the rook behind the queen guards e8, so the king cannot capture.',
+  'queenmate:0': 'Your king guards the escape squares while the queen delivers mate.',
+  'queenmate:1': 'The king on c2 covers b1 and b2, the queen covers the a-file. Mate.'
+};
+if (typeof module !== 'undefined') module.exports.WHY = WHY;
+
+</script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  function h(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ================= Data ================= */
+  var LESSONS = [];
+  CURRICULUM.forEach(function (c) { c.lessons.forEach(function (l) { l.chapter = c.chapter; l.chapterTitle = c.title; LESSONS.push(l); }); });
+  var LBY = {}; LESSONS.forEach(function (l) { LBY[l.id] = l; });
+  var TECH = {
+    center: 'Center control', develop: 'Development', castle: 'King safety', fork: 'Fork', pin: 'Pin',
+    skewer: 'Skewer', discovered: 'Discovered attack', backrank: 'Back-rank mate', queenmate: 'Queen mate'
+  };
+  var TACTICS = ['fork', 'pin', 'skewer', 'discovered', 'backrank'];
+  var TIERS = [
+    { n: 'Pawn', r: 0, p: 'p' }, { n: 'Knight', r: 700, p: 'n' }, { n: 'Bishop', r: 900, p: 'b' },
+    { n: 'Rook', r: 1100, p: 'r' }, { n: 'Queen', r: 1300, p: 'q' }, { n: 'King', r: 1500, p: 'k' }
+  ];
+  var LV = ENG.LEVELS;
+  var ROMAN = ['I', 'II', 'III', 'IV'];
+  var PNAME = { p: 'pawn', n: 'knight', b: 'bishop', r: 'rook', q: 'queen', k: 'king' };
+
+  function tierOf(r) { var t = TIERS[0]; TIERS.forEach(function (x) { if (r >= x.r) t = x; }); return t; }
+  function nextTier(r) { for (var i = 0; i < TIERS.length; i++) if (TIERS[i].r > r) return TIERS[i]; return null; }
+  function pieceSvg(p, cls) {
+    var w = p === p.toUpperCase();
+    return '<svg viewBox="0 0 45 45" class="pc ' + (w ? 'pw' : 'pb') + (cls ? ' ' + cls : '') + '"><use href="#p-' + p.toLowerCase() + '"/></svg>';
+  }
+  function icon(n) { return '<svg><use href="#i-' + n + '"/></svg>'; }
+
+  /* ================= Persistence ================= */
+  var LS = 'tempo.progress.v1';
+  function fresh() {
+    var t = {}; Object.keys(TECH).forEach(function (k) { t[k] = { done: 0, missed: 0 }; });
+    return { v: 1, rating: 600, peak: 600, hist: [{ d: Date.now(), r: 600, s: 'start' }], games: [], drills: {}, tech: t,
+      settings: { level: 0, color: 'w', hints: true, focus: '' }, days: [], current: null, updated: 0 };
+  }
+  function adopt(o) {
+    var b = fresh();
+    if (o && typeof o === 'object') Object.keys(o).forEach(function (k) { b[k] = o[k]; });
+    Object.keys(TECH).forEach(function (k) { if (!b.tech[k]) b.tech[k] = { done: 0, missed: 0 }; });
+    b.settings = Object.assign(fresh().settings, b.settings || {});
+    return b;
+  }
+  var S = (function () { try { var raw = localStorage.getItem(LS); if (raw) return adopt(JSON.parse(raw)); } catch (e) {} return fresh(); })();
+  var dbRef = null, writing = false, again = false, saveT = null;
+  function today() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function save() {
+    S.updated = Date.now();
+    var t = today(); if (S.days[S.days.length - 1] !== t) { S.days.push(t); if (S.days.length > 120) S.days.shift(); }
+    if (S.games.length > 100) S.games = S.games.slice(-100);
+    if (S.hist.length > 400) S.hist = S.hist.slice(-400);
+    try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) {}
+    clearTimeout(saveT); saveT = setTimeout(push, 900);
+  }
+  function push() {
+    if (!dbRef) return;
+    if (writing) { again = true; return; }
+    writing = true;
+    dbRef.set(JSON.parse(JSON.stringify(S))).then(function () { setSync('Synced to your account'); }, function (e) {
+      if (e && e.code === 'unavailable') setTimeout(push, 1500 + Math.random() * 1500);
+      else if (e && e.code === 'invalid_argument') { dbRef = null; setSync('Saved on this device'); }
+    }).then(function () { writing = false; if (again) { again = false; push(); } });
+  }
+  function setSync(t) { $$('[data-bind=sync]').forEach(function (e) { e.textContent = t; }); }
+  function connect() {
+    if (!(window.claude && window.claude.use)) return;
+    Promise.all([window.claude.use('db'), window.claude.use('user')]).then(function (r) {
+      var db = r[0], user = r[1]; if (!db || !user) return null;
+      return user.id().then(function (id) {
+        if (!id) return null;
+        dbRef = db.doc('data/users/' + id + '/progress');
+        return dbRef.get();
+      });
+    }).then(function (snap) {
+      if (!snap) return;
+      var remote = snap.exists ? snap.data() : null;
+      if (remote && (remote.updated || 0) > (S.updated || 0)) {
+        S = adopt(JSON.parse(JSON.stringify(remote)));
+        try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) {}
+        G = null; route();
+      } else if (S.updated) push();
+      setSync('Synced to your account');
+    }).catch(function () {});
+  }
+
+  /* ================= Rating ================= */
+  function expected(r, o) { return 1 / (1 + Math.pow(10, (o - r) / 400)); }
+  function applyRating(delta, src) {
+    var before = S.rating;
+    S.rating = Math.max(100, Math.round(S.rating + delta));
+    if (S.rating > S.peak) S.peak = S.rating;
+    S.hist.push({ d: Date.now(), r: S.rating, s: src });
+    var bt = tierOf(before), at = tierOf(S.rating);
+    if (at.r > bt.r) setTimeout(function () { toast('Promoted to <b>' + at.n + '</b> tier'); }, 900);
+    bindHeader();
+    return S.rating - before;
+  }
+
+  /* ================= UI helpers ================= */
+  var toastT;
+  function toast(html) { var t = $('#toast'); t.innerHTML = html; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove('on'); }, 2600); }
+  function openModal(html, dismissable) {
+    $('#dialog').innerHTML = html; var m = $('#modal'); m.classList.add('on');
+    m.onclick = dismissable ? function (e) { if (e.target === m) closeModal(); } : null;
+  }
+  function closeModal() { $('#modal').classList.remove('on'); }
+  function confirmBox(title, text, yes, cb) {
+    openModal('<h3>' + title + '</h3><p class="muted" style="margin-top:10px">' + text + '</p><div class="acts"><button class="btn primary" id="cy">' + yes + '</button><button class="btn ghost" id="cn">Cancel</button></div>', true);
+    $('#cy').onclick = function () { closeModal(); cb(); };
+    $('#cn').onclick = closeModal;
+  }
+  function bindHeader() {
+    var t = tierOf(S.rating);
+    $$('[data-bind=rating]').forEach(function (e) { e.textContent = S.rating; });
+    $$('[data-bind=tier]').forEach(function (e) { e.textContent = t.n + ' tier'; });
+  }
+  function adsize() { $$('[data-bind=adsize]').forEach(function (e) { e.textContent = innerWidth <= 900 ? '320 × 50' : '728 × 90'; }); }
+
+  function mastery(l) {
+    var solved = l.drills.filter(function (d, i) { var r = S.drills[l.id + ':' + i]; return r && r.s; }).length;
+    var drillPart = solved / l.drills.length;
+    var gamePart = Math.min(S.tech[l.tech].done, l.practice.need) / l.practice.need;
+    return { pct: Math.round((drillPart * 0.5 + gamePart * 0.5) * 100), solved: solved, games: Math.min(S.tech[l.tech].done, l.practice.need) };
+  }
+  function vision(k) { var t = S.tech[k]; var n = t.done + t.missed; return n ? Math.round(100 * t.done / n) : null; }
+  function overallVision() { var d = 0, m = 0; TACTICS.forEach(function (k) { d += S.tech[k].done; m += S.tech[k].missed; }); return d + m ? Math.round(100 * d / (d + m)) : null; }
+  function record() { var w = 0, l = 0, dr = 0; S.games.forEach(function (g) { if (g.res === 'W') w++; else if (g.res === 'L') l++; else dr++; }); return { w: w, l: l, d: dr, n: S.games.length }; }
+  function streak() {
+    var set = {}; S.days.forEach(function (d) { set[d] = 1; });
+    var n = 0, d = new Date();
+    if (!set[today()]) d.setDate(d.getDate() - 1);
+    for (;;) {
+      var k = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      if (!set[k]) break; n++; d.setDate(d.getDate() - 1);
+    }
+    return n;
+  }
+  function drillTotals() { var a = 0, s = 0; LESSONS.forEach(function (l) { a += l.drills.length; s += mastery(l).solved; }); return { all: a, solved: s }; }
+
+  /* ================= Board ================= */
+  function Board(el, onSquare) {
+    this.el = el; this.flip = false; this.onSquare = onSquare;
+    el.classList.add('board');
+    var self = this;
+    el.addEventListener('click', function (e) {
+      var sq = e.target.closest('.sq'); if (!sq) return;
+      self.onSquare(+sq.dataset.sq);
+    });
+  }
+  Board.prototype.render = function (s, o) {
+    o = o || {};
+    var html = '', chk = -1;
+    if (s && ENG.inCheck(s)) chk = ENG.kingSq(s.b, s.t);
+    for (var i = 0; i < 64; i++) {
+      var sq = this.flip ? 63 - i : i, r = sq >> 3, f = sq & 7, light = (r + f) % 2 === 0;
+      var cls = 'sq ' + (light ? 'l' : 'd');
+      if (o.last && (o.last.from === sq || o.last.to === sq)) cls += ' last';
+      if (o.sel === sq) cls += ' sel';
+      if (sq === chk) cls += ' chk';
+      if (o.targets && o.targets.indexOf(sq) >= 0) cls += s.b[sq] ? ' cap' : ' dot';
+      if (o.hint === sq) cls += ' hint';
+      if (o.hint2 === sq) cls += ' hint2';
+      var p = s.b[sq], inner = p ? pieceSvg(p) : '';
+      var col = i % 8, row = i >> 3;
+      if (col === 0) inner += '<span class="cr rk">' + (8 - r) + '</span>';
+      if (row === 7) inner += '<span class="cr fl">' + 'abcdefgh'[f] + '</span>';
+      html += '<div class="' + cls + '" data-sq="' + sq + '">' + inner + '</div>';
+    }
+    this.el.innerHTML = html;
+  };
+
+  /* ================= Engine worker ================= */
+  var worker = null, wcb = {}, wid = 0;
+  try {
+    var src = $('#engine-src').textContent + '\nonmessage=function(e){postMessage({id:e.data.id,move:ENG.bestMove(e.data.fen,e.data.level)});};';
+    worker = new Worker(URL.createObjectURL(new Blob([src], { type: 'text/javascript' })));
+    worker.onmessage = function (e) { var cb = wcb[e.data.id]; delete wcb[e.data.id]; if (cb) cb(e.data.move); };
+    worker.onerror = function () { worker = null; };
+  } catch (e) { worker = null; }
+  function think(fen, level, cb) {
+    var t0 = Date.now(), done = function (m) { setTimeout(function () { cb(m); }, Math.max(0, 450 - (Date.now() - t0))); };
+    if (worker) { var id = ++wid; wcb[id] = done; worker.postMessage({ id: id, fen: fen, level: level }); }
+    else setTimeout(function () { done(ENG.bestMove(fen, level)); }, 30);
+  }
+
+  /* ================= Router ================= */
+  function route() {
+    var hash = (location.hash || '#home').slice(1), view = hash, arg = null;
+    if (hash.indexOf('lesson-') === 0) { view = 'lesson'; arg = hash.slice(7); }
+    if (['home', 'lessons', 'lesson', 'play', 'progress'].indexOf(view) < 0) view = 'home';
+    $$('.view').forEach(function (v) { v.classList.remove('on'); });
+    $$('[data-nav]').forEach(function (a) { a.classList.toggle('on', a.dataset.nav === view || (view === 'lesson' && a.dataset.nav === 'lessons')); });
+    var el = $('#view-' + view);
+    ({ home: renderHome, lessons: renderLessons, lesson: renderLesson, play: renderPlay, progress: renderProgress })[view](el, arg);
+    el.classList.add('on');
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', route);
+
+  /* ================= Home ================= */
+  function sparkPath(pts, w, hgt) {
+    if (pts.length < 2) pts = [pts[0], pts[0]];
+    var min = Math.min.apply(null, pts) - 10, max = Math.max.apply(null, pts) + 10;
+    return pts.map(function (v, i) { return (i ? 'L' : 'M') + (i / (pts.length - 1) * w).toFixed(1) + ' ' + (hgt - (v - min) / (max - min) * hgt).toFixed(1); }).join(' ');
+  }
+  function renderHome(el) {
+    var t = tierOf(S.rating), nt = nextTier(S.rating);
+    var floor = t.r || 400, prog = nt ? Math.max(0, Math.min(1, (S.rating - floor) / (nt.r - floor))) : 1;
+    var weekAgo = Date.now() - 7 * 864e5, base = S.hist[0].r;
+    S.hist.forEach(function (x) { if (x.d <= weekAgo) base = x.r; });
+    var d7 = S.rating - base;
+    var next = LESSONS.filter(function (l) { return mastery(l).pct < 100; })[0] || LESSONS[LESSONS.length - 1];
+    var nm = mastery(next), rec = record(), vis = overallVision(), dt = drillTotals();
+    var hr = new Date().getHours(), greet = hr < 12 ? 'Good morning' : hr < 18 ? 'Good afternoon' : 'Good evening';
+    var spark = sparkPath(S.hist.slice(-30).map(function (x) { return x.r; }), 300, 50);
+    el.innerHTML =
+      '<div class="section-h"><div><div class="eyebrow">' + greet + '</div><h1 class="display" style="margin-top:6px">Your next move.</h1></div></div>' +
+      '<div class="hero">' +
+        '<div class="card score"><div class="ghost">' + pieceSvg(t.p.toUpperCase()) + '</div>' +
+          '<div class="eyebrow brass">Overall rating</div>' +
+          '<div class="big num">' + S.rating + '</div>' +
+          '<div class="delta ' + (d7 < 0 ? 'neg' : '') + '">' + (d7 === 0 ? '<span class="muted">Play a rated game to move your rating</span>' : (d7 > 0 ? '+' : '') + d7 + ' this week') + '</div>' +
+          '<div class="tierline"><span><b>' + t.n + '</b> tier</span><span>' + (nt ? (nt.r - S.rating) + ' to ' + nt.n : 'Highest tier') + '</span></div>' +
+          '<div class="bar"><i style="width:' + Math.round(prog * 100) + '%"></i></div>' +
+          (S.hist.length > 2 ? '<svg class="spark" viewBox="0 0 300 50" preserveAspectRatio="none"><path d="' + spark + '" fill="none" stroke="#b89a62" stroke-width="1.4" vector-effect="non-scaling-stroke"/></svg>' : '') +
+        '</div>' +
+        '<div class="card next">' +
+          '<div class="eyebrow">' + (S.current && !S.current.over ? 'Game in progress' : 'Continue learning') + '</div>' +
+          (S.current && !S.current.over ?
+            '<h3>vs ' + LV[S.current.level].name + '</h3><p>' + (S.current.focus ? 'Practicing ' + h(LBY[S.current.focus].name) + '. ' : '') + 'Move ' + (Math.floor(S.current.moves.length / 2) + 1) + '. Your position is waiting.</p><div class="foot"><span class="muted" style="font-size:12px">' + (S.current.casual ? 'Unrated' : 'Rated') + '</span><a class="btn primary" href="#play">Resume</a></div>'
+            :
+            '<span class="num-roman">' + next.chapter + ' · ' + h(next.chapterTitle) + '</span><h3>' + h(next.name) + '</h3><p>' + h(next.summary) + '</p>' +
+            '<div class="foot"><div style="flex:1"><div class="mrow" style="margin-top:0"><span>Mastery</span><span>' + nm.pct + '%</span></div><div class="bar"><i style="width:' + nm.pct + '%"></i></div></div>' +
+            '<a class="btn primary" href="#lesson-' + next.id + '">' + (nm.pct ? 'Continue' : 'Begin') + '</a></div>') +
+        '</div>' +
+      '</div>' +
+      '<div class="grid g4">' +
+        statCard('Games', rec.n, rec.n ? rec.w + 'W ' + rec.d + 'D ' + rec.l + 'L' : '') +
+        statCard('Tactical vision', vis === null ? NONE : vis + '%', vis === null ? '' : 'spotted') +
+        statCard('Drills', dt.solved + '<small>/ ' + dt.all + '</small>', '') +
+        statCard('Streak', streak(), streak() === 1 ? 'day' : 'days') +
+      '</div>' +
+      '<div class="card" style="margin-top:20px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">' +
+        '<div><div class="eyebrow">Quick play</div><h3 style="margin-top:6px">Full game against ' + LV[S.settings.level].name + '</h3><p class="muted" style="font-size:13.5px;margin-top:4px">Your coach watches for every technique you have learned.</p></div>' +
+        '<a class="btn brass" href="#play" id="qp">Play now</a>' +
+      '</div>';
+    var qp = $('#qp', el); qp.onclick = function (e) { if (!(S.current && !S.current.over)) { e.preventDefault(); wantSetup = false; startGame({}); location.hash = 'play'; } };
+  }
+  var NONE = '<small style="margin:0">None yet</small>';
+  function statCard(lab, val, sub) { return '<div class="card stat"><div class="lab">' + lab + '</div><div class="val num">' + val + (sub && String(val).indexOf('<small>') < 0 ? '<small>' + sub + '</small>' : '') + '</div></div>'; }
+
+  /* ================= Lessons ================= */
+  function renderLessons(el) {
+    var html = '<div class="section-h"><div><div class="eyebrow">Curriculum</div><h1 class="display" style="margin-top:6px">Lessons</h1></div><p class="muted" style="max-width:340px;font-size:13.5px">Study the idea, solve the drills, then prove it in full games against the computer. Mastery needs both.</p></div>';
+    CURRICULUM.forEach(function (c, ci) {
+      html += '<div class="chapter"><div class="chapter-head"><span class="rn">' + c.chapter + '</span><h2 class="title">' + h(c.title) + '</h2></div>';
+      c.lessons.forEach(function (l) {
+        var m = mastery(l);
+        html += '<a class="lrow" href="#lesson-' + l.id + '"><span class="ico">' + pieceSvg(l.icon.toUpperCase()) + '</span>' +
+          '<div><div class="nm">' + h(l.name) + '</div><div class="sm">' + h(l.summary) + '</div></div>' +
+          '<div><div class="pct ' + (m.pct === 100 ? 'done' : '') + '">' + (m.pct === 100 ? 'Mastered' : m.pct + '%') + '</div><div class="bar"><i style="width:' + m.pct + '%"></i></div></div>' +
+          '<span class="chev">›</span></a>';
+      });
+      html += '</div>';
+      if (ci === 0) html += '<!-- AD SLOT: native in-feed unit --><div class="ad ad-native list-ad" data-ad-slot="lessons-native"><span class="thumb"></span><div><div class="t1">Sponsored placement</div><div class="t2">Native in-feed unit · matches lesson row styling</div></div></div>';
+    });
+    el.innerHTML = html;
+  }
+
+  var D = null; // drill state
+  function renderLesson(el, id) {
+    var l = LBY[id]; if (!l) { location.hash = 'lessons'; return; }
+    var m = mastery(l), idx = l.drills.findIndex(function (d, i) { var r = S.drills[l.id + ':' + i]; return !(r && r.s); });
+    if (idx < 0) idx = 0;
+    el.innerHTML =
+      '<a class="back" href="#lessons">‹ &nbsp;All lessons</a>' +
+      '<div class="lesson-grid"><div class="lesson-text">' +
+        '<div class="eyebrow brass">Chapter ' + l.chapter + ' · ' + h(l.chapterTitle) + '</div>' +
+        '<h1 class="display" style="margin:10px 0 16px">' + h(l.name) + '</h1>' +
+        '<p class="lead" style="margin-bottom:22px">' + h(l.summary) + '</p>' +
+        l.body.map(function (p) { return '<p>' + h(p) + '</p>'; }).join('') +
+        '<ul class="keys">' + l.keys.map(function (k) { return '<li>' + h(k) + '</li>'; }).join('') + '</ul>' +
+        '</div><div class="lesson-prac"><div class="card practice"><div class="eyebrow brass">Practice game</div><h3 style="margin:8px 0 6px">Prove it on the board</h3>' +
+          '<p class="muted" style="font-size:14px">' + h(l.practice.goal) + ' Your coach will flag every chance you get, and every chance you miss.</p>' +
+          '<div class="mrow"><span>Executed in games</span><span class="num">' + m.games + ' / ' + l.practice.need + '</span></div><div class="bar"><i style="width:' + (m.games / l.practice.need * 100) + '%"></i></div>' +
+          '<div style="margin-top:20px"><button class="btn brass" id="practice">Start practice game</button></div></div>' +
+        '<div class="mastery-box" id="mbox">' + masteryBox(l) + '</div>' +
+      '</div>' +
+      '<div class="lesson-board"><div class="drill-head"><div class="eyebrow">Drill <span id="dn"></span></div><div class="drill-dots" id="dd"></div></div>' +
+        '<div class="board-frame"><div id="dboard"></div></div>' +
+        '<div class="prompt" id="dprompt"></div><div class="feedback" id="dfb"></div>' +
+        '<div class="drill-actions"><button class="btn sm" id="dhint">Hint</button><button class="btn sm ghost" id="dreset">Reset</button><button class="btn sm primary" id="dnext" style="margin-left:auto">Next drill</button></div>' +
+      '</div></div>';
+    D = { l: l, idx: idx, board: new Board($('#dboard', el), drillClick) };
+    loadDrill(idx);
+    $('#dhint', el).onclick = drillHint;
+    $('#dreset', el).onclick = function () { loadDrill(D.idx); };
+    $('#dnext', el).onclick = function () { loadDrill((D.idx + 1) % l.drills.length); };
+    $('#practice', el).onclick = function () {
+      var go = function () { wantSetup = false; startGame({ focus: l.id, fen: l.practice.fen }); location.hash = 'play'; };
+      if (G && !G.over && G.hist.length > 1) confirmBox('Leave current game?', 'Your game in progress will be resigned.', 'Resign and start', function () { finishGame('L', 'resignation', true); go(); });
+      else go();
+    };
+  }
+  function masteryBox(l) { var m = mastery(l); return '<div class="mrow"><span class="eyebrow">Lesson mastery</span><span class="num">' + m.pct + '%</span></div><div class="bar"><i style="width:' + m.pct + '%"></i></div><p class="muted" style="font-size:12.5px;margin-top:10px">Half from drills (' + m.solved + '/' + l.drills.length + '), half from full games (' + m.games + '/' + l.practice.need + ').</p>'; }
+  function loadDrill(i) {
+    var d = D.l.drills[i];
+    D.idx = i; D.s = ENG.parse(d.fen); D.sel = null; D.done = false; D.last = null; D.hint = null; D.hint2 = null; D.wrong = false; D.usedHint = false;
+    D.board.flip = D.s.t === 'b';
+    $('#dn').textContent = (i + 1) + ' of ' + D.l.drills.length;
+    $('#dprompt').textContent = d.prompt;
+    var fb = $('#dfb'); fb.className = 'feedback'; fb.textContent = (D.s.t === 'w' ? 'White' : 'Black') + ' to move.';
+    $('#dd').innerHTML = D.l.drills.map(function (x, j) { var r = S.drills[D.l.id + ':' + j]; return '<i class="' + (j === i ? 'on ' : '') + (r && r.s ? 'ok' : '') + '"></i>'; }).join('');
+    drawDrill();
+  }
+  function drawDrill() {
+    var t = D.sel !== null ? ENG.legal(D.s).filter(function (m) { return m.from === D.sel; }).map(function (m) { return m.to; }) : null;
+    D.board.render(D.s, { sel: D.sel, targets: t, last: D.last, hint: D.hint, hint2: D.hint2 });
+  }
+  function drillSolutions() {
+    var d = D.l.drills[D.idx], s = ENG.parse(d.fen);
+    if (d.mate) return ENG.legal(s).filter(function (m) { return ENG.status(ENG.make(s, m)) === 'checkmate'; });
+    return d.moves.map(function (u) { return ENG.findMove(s, u); }).filter(Boolean);
+  }
+  function drillHint() {
+    if (D.done) return;
+    var sol = drillSolutions()[0]; if (!sol) return;
+    if (D.hint === sol.from) { D.hint2 = sol.to; } else D.hint = sol.from;
+    D.usedHint = true;
+    drawDrill();
+  }
+  function drillClick(sq) {
+    if (D.done) return;
+    var p = D.s.b[sq];
+    if (D.sel === null) { if (p && ENG.col(p) === D.s.t) { D.sel = sq; drawDrill(); } return; }
+    if (p && ENG.col(p) === D.s.t) { D.sel = sq === D.sel ? null : sq; drawDrill(); return; }
+    var cand = ENG.legal(D.s).filter(function (m) { return m.from === D.sel && m.to === sq; });
+    D.sel = null;
+    if (!cand.length) { drawDrill(); return; }
+    var m = cand.find(function (x) { return x.promo === 'q'; }) || cand[0];
+    var d = D.l.drills[D.idx], before = D.s, ok;
+    if (d.mate) ok = ENG.status(ENG.make(before, m)) === 'checkmate';
+    else ok = d.moves.indexOf(ENG.uci(m)) >= 0;
+    var key = D.l.id + ':' + D.idx, rec = S.drills[key] || { a: null, s: false };
+    var sanStr = ENG.san(before, m);
+    D.s = ENG.make(before, m); D.last = m; D.hint = D.hint2 = null;
+    drawDrill();
+    var fb = $('#dfb');
+    if (ok) {
+      D.done = true;
+      var first = rec.a === null, delta = 0;
+      if (first) { rec.a = D.usedHint ? 0 : 1; delta = applyRating(12 * ((D.usedHint ? 0.5 : 1) - expected(S.rating, d.rating)), 'drill'); }
+      rec.s = true; S.drills[key] = rec; save();
+      fb.className = 'feedback ok';
+      fb.innerHTML = '<b>' + h(sanStr) + '</b> · Correct. ' + h(WHY[key] || '') + (delta ? ' <span class="num" style="color:var(--brass)">' + (delta > 0 ? '+' : '') + delta + '</span>' : '');
+      $('#dd').children[D.idx].classList.add('ok'); $('#mbox').innerHTML = masteryBox(D.l);
+      D.usedHint = false;
+    } else {
+      if (rec.a === null) { rec.a = 0; applyRating(12 * (0 - expected(S.rating, d.rating)), 'drill'); S.drills[key] = rec; save(); }
+      fb.className = 'feedback no';
+      var st = ENG.status(D.s);
+      fb.textContent = sanStr + (st === 'stalemate' ? ' is stalemate. The win slips away. Try again.' : ' is not it. Look again.');
+      setTimeout(function () { if (!D.done && D.last === m) { D.s = before; D.last = null; drawDrill(); } }, 900);
+    }
+  }
+
+  /* ================= Game ================= */
+  var G = null, wantSetup = false, playBoard = null;
+  var CENTER = { w: [36, 35, 27, 28], b: [36, 35, 27, 28] };
+  var MINOR_HOME = { w: [57, 58, 61, 62], b: [1, 2, 5, 6] };
+
+  function startGame(o) {
+    var st = S.settings, focus = o.focus !== undefined ? o.focus : st.focus;
+    var color = o.color || st.color; if (color === 'r') color = Math.random() < 0.5 ? 'w' : 'b';
+    var lesson = focus ? LBY[focus] : null, fen0 = o.fen || (lesson && lesson.practice.fen) || ENG.START;
+    if (fen0 !== ENG.START) color = ENG.parse(fen0).t;
+    S.current = { fen0: fen0, moves: [], level: o.level !== undefined ? o.level : st.level, color: color, focus: focus || '',
+      hints: o.hints !== undefined ? o.hints : st.hints, casual: fen0 !== ENG.START, events: {}, flags: {}, dev: [], missedKeys: [], log: [], over: false, d: Date.now() };
+    if (focus) st.focus = focus;
+    save();
+    buildGame();
+    logMsg('note', 'Start', lesson ? 'Focus: ' + lesson.name + '. ' + lesson.practice.goal : 'Open game. Every technique you have studied counts.');
+    if (S.current.casual && fen0 !== ENG.START) logMsg('note', 'Note', 'Practice position. Unrated, but it counts toward mastery.');
+  }
+  function buildGame() {
+    var c = S.current;
+    G = { c: c, s: ENG.parse(c.fen0), hist: [], keys: {}, sel: null, over: c.over, thinking: false, opps: {}, hintSq: null, hintSq2: null };
+    G.hist.push({ s: G.s }); G.keys[ENG.posKey(G.s)] = 1;
+    c.moves.forEach(function (u) {
+      var m = ENG.findMove(G.s, u); if (!m) return;
+      var san = ENG.san(G.s, m); G.s = ENG.make(G.s, m); G.hist.push({ s: G.s, m: m, san: san });
+      var k = ENG.posKey(G.s); G.keys[k] = (G.keys[k] || 0) + 1;
+    });
+  }
+  function userColor() { return G.c.color; }
+  function lastMove() { var x = G.hist[G.hist.length - 1]; return x.m || null; }
+  function userMoveCount() { var n = 0; for (var i = 1; i < G.hist.length; i++) if (ENG.col(G.hist[i].m.p) === userColor()) n++; return n; }
+  function logMsg(kind, tag, text) {
+    G.c.log.unshift({ k: kind, t: tag, x: text }); if (G.c.log.length > 30) G.c.log.length = 30;
+    renderLog();
+  }
+  function countTech(k, delta, field) {
+    S.tech[k][field || 'done'] += delta;
+    G.c.events[k] = G.c.events[k] || { done: 0, missed: 0 };
+    G.c.events[k][field || 'done'] += delta;
+  }
+
+  function describe(k, r, s) {
+    var b = ENG.make(s, ENG.findMove(s, r.uci)).b;
+    function nm(sq) { return PNAME[ENG.typ(b[sq])]; }
+    if (k === 'fork') return 'Your ' + nm(r.piece) + ' attacks ' + r.targets.map(nm).join(' and ') + ' at once.';
+    if (k === 'pin') return 'The ' + nm(r.pinned) + ' is pinned to the ' + nm(r.behind) + '.';
+    if (k === 'skewer') return 'The ' + nm(r.front) + ' must move, exposing the ' + nm(r.behind) + '.';
+    if (k === 'discovered') return 'Your ' + nm(r.piece) + ' now strikes the ' + nm(r.target) + '.';
+    if (k === 'backrank') return 'The king is trapped behind its own pawns.';
+    return '';
+  }
+
+  function playUserMove(m) {
+    var s = G.s, us = userColor(), tech = ENG.techniques(s, m), uci = ENG.uci(m), focus = G.c.focus;
+    var san = ENG.san(s, m), n = userMoveCount() + 1, fromStart = G.c.fen0 === ENG.START;
+    // tactics executed
+    var raw = Object.assign({}, tech);
+    G.c.doneKeys = G.c.doneKeys || [];
+    Object.keys(tech).forEach(function (k) {
+      var r = tech[k], dk = k + ':' + (r.pinned !== undefined ? r.pinned : r.targets ? r.targets.slice().sort().join('.') : r.target !== undefined ? r.target : r.front !== undefined ? r.front : uci);
+      if (G.c.doneKeys.indexOf(dk) >= 0) { delete tech[k]; return; }
+      G.c.doneKeys.push(dk);
+    });
+    Object.keys(tech).forEach(function (k) {
+      tech[k].uci = uci;
+      countTech(k, 1);
+      logMsg('good', TECH[k], h(san) + '. ' + describe(k, tech[k], s));
+      toast('<b>' + TECH[k] + '</b> executed' + (focus && LBY[focus].tech === k ? ' · lesson progress' : ''));
+    });
+    // tactics missed
+    Object.keys(G.opps).forEach(function (k) {
+      if (raw[k]) return;
+      var o = G.opps[k], key = k + ':' + o.move;
+      if (G.c.missedKeys.indexOf(key) >= 0) return;
+      G.c.missedKeys.push(key);
+      countTech(k, 1, 'missed');
+      var om = ENG.findMove(s, o.move);
+      logMsg('miss', 'Missed', 'A ' + TECH[k].toLowerCase() + ' was available: <b>' + h(ENG.san(s, om)) + '</b>.');
+    });
+    // opening principles
+    if (fromStart) {
+      var f = G.c.flags;
+      if (!f.center && n <= 3 && ENG.typ(m.p) === 'p' && CENTER[us].indexOf(m.to) >= 0) { f.center = 1; countTech('center', 1); logMsg('good', 'Center', h(san) + ' stakes a claim in the center.'); }
+      if (!f.develop && MINOR_HOME[us].indexOf(m.from) >= 0 && 'nb'.indexOf(ENG.typ(m.p)) >= 0 && G.c.dev.indexOf(m.from) < 0) {
+        G.c.dev.push(m.from);
+        if (G.c.dev.length === 4 && n <= 10) { f.develop = 1; countTech('develop', 1); logMsg('good', 'Develop', 'All four minor pieces developed by move ' + n + '.'); }
+      }
+      if (!f.castle && m.castle && n <= 12) { f.castle = 1; countTech('castle', 1); logMsg('good', 'Castled', 'King secured on move ' + n + '.'); }
+      if (!f.lateCastle && !f.castle && n === 13 && !m.castle) { f.lateCastle = 1; logMsg('miss', 'King', 'Twelve moves in and your king is still in the center.'); }
+    }
+    applyMove(m, san);
+    if (!G.over) aiTurn();
+  }
+  function applyMove(m, san) {
+    G.s = ENG.make(G.s, m);
+    G.hist.push({ s: G.s, m: m, san: san });
+    G.c.moves.push(ENG.uci(m));
+    var k = ENG.posKey(G.s); G.keys[k] = (G.keys[k] || 0) + 1;
+    G.sel = null; G.hintSq = G.hintSq2 = null; G.opps = {};
+    save();
+    drawGame();
+    var st = ENG.status(G.s);
+    if (G.keys[k] >= 3) st = 'repetition';
+    if (st) {
+      var mover = ENG.col(m.p), uWin = mover === userColor();
+      if (st === 'checkmate') {
+        if (uWin && G.c.focus === 'queenmate' && G.c.fen0 !== ENG.START) { countTech('queenmate', 1); logMsg('good', 'Mate', 'Queen and king checkmate delivered.'); }
+        finishGame(uWin ? 'W' : 'L', 'checkmate');
+      } else finishGame('D', { stalemate: 'stalemate', fifty: 'fifty-move rule', insufficient: 'insufficient material', repetition: 'threefold repetition' }[st]);
+    } else if (G.c.fen0 !== ENG.START && userMoveCount() >= 50 && G.c.focus === 'queenmate') {
+      finishGame('D', 'fifty-move limit');
+    }
+  }
+  function aiTurn() {
+    if (G.over || G.s.t === userColor()) { userTurn(); return; }
+    if (G.thinking) { drawGame(); return; }
+    G.thinking = true; drawGame();
+    var gameRef = G;
+    think(ENG.fen(G.s), G.c.level, function (u) {
+      if (G !== gameRef || G.over) return;
+      G.thinking = false;
+      var m = ENG.findMove(G.s, u); if (!m) { drawGame(); return; }
+      var tech = ENG.techniques(G.s, m), san = ENG.san(G.s, m);
+      Object.keys(tech).forEach(function (k) { if (k !== 'backrank') logMsg('warn', 'Threat', 'The computer played a ' + TECH[k].toLowerCase() + ': <b>' + h(san) + '</b>.'); });
+      applyMove(m, san);
+      if (!G.over) userTurn();
+    });
+  }
+  function userTurn() {
+    G.opps = ENG.opportunities(G.s);
+    drawGame();
+  }
+  function finishGame(res, reason, silent) {
+    if (!G || G.over) return;
+    G.over = true; G.c.over = true;
+    var lvl = LV[G.c.level], delta = 0, rated = !G.c.casual;
+    if (rated) {
+      var K = S.games.length < 10 ? 40 : 24;
+      delta = applyRating(K * ((res === 'W' ? 1 : res === 'D' ? 0.5 : 0) - expected(S.rating, lvl.rating)), 'game');
+    }
+    var g = { d: Date.now(), lvl: G.c.level, color: G.c.color, res: res, why: reason, delta: delta, rated: rated, plies: G.hist.length - 1, focus: G.c.focus, ev: G.c.events };
+    S.games.push(g);
+    save();
+    drawGame();
+    if (!silent) setTimeout(function () { showResult(g); }, 600);
+  }
+  function showResult(g) {
+    var title = g.res === 'W' ? 'Victory' : g.res === 'L' ? 'Defeat' : 'Draw';
+    var ev = g.ev || {}, rows = '';
+    Object.keys(TECH).forEach(function (k) {
+      var e = ev[k]; if (!e || (!e.done && !e.missed)) return;
+      rows += '<li><span>' + TECH[k] + '</span><span class="num">' + (e.done ? '<span style="color:var(--brass)">' + e.done + ' executed</span>' : '') + (e.done && e.missed ? ' · ' : '') + (e.missed ? '<span class="muted">' + e.missed + ' missed</span>' : '') + '</span></li>';
+    });
+    var lesson = g.focus ? LBY[g.focus] : null, lm = lesson ? mastery(lesson) : null;
+    openModal(
+      '<div class="eyebrow">' + (g.why === 'resignation' ? 'By resignation' : 'By ' + h(g.why)) + ' · vs ' + LV[g.lvl].name + '</div>' +
+      '<div class="result" style="margin-top:10px">' + title + '</div>' +
+      (g.rated ? '<div class="rchange"><span class="big num">' + S.rating + '</span><span class="d num ' + (g.delta >= 0 ? 'pos' : 'neg') + '">' + (g.delta >= 0 ? '+' : '') + g.delta + '</span></div><div class="muted" style="font-size:12px">' + tierOf(S.rating).n + ' tier' + (nextTier(S.rating) ? ' · ' + (nextTier(S.rating).r - S.rating) + ' to ' + nextTier(S.rating).n : '') + '</div>'
+        : '<p class="muted" style="margin-top:14px">Unrated game. Techniques still count toward mastery.</p>') +
+      '<div class="eyebrow" style="margin-top:24px">Techniques this game</div>' +
+      (rows ? '<ul class="tl">' + rows + '</ul>' : '<p class="muted" style="font-size:13.5px;margin:10px 0 16px">No tactics appeared this game.</p>') +
+      (lesson ? '<div class="mrow"><span>' + h(lesson.name) + ' mastery</span><span class="num">' + lm.pct + '%</span></div><div class="bar"><i style="width:' + lm.pct + '%"></i></div>' : '') +
+      '<!-- AD SLOT: post-game medium rectangle 300x250 --><div class="ad ad-rect" data-ad-slot="postgame" style="margin-top:24px;height:200px"><span class="dim">300 × 250</span></div>' +
+      '<div class="acts"><button class="btn primary" id="again">Play again</button><a class="btn" href="#progress" id="toprog">Progress</a><button class="btn ghost" id="close">Review board</button></div>', true);
+    $('#again').onclick = function () { closeModal(); wantSetup = false; startGame({ focus: g.focus, fen: g.focus && LBY[g.focus].practice.fen }); renderPlay($('#view-play')); };
+    $('#toprog').onclick = closeModal;
+    $('#close').onclick = closeModal;
+    ['#again', '#toprog', '#close'].forEach(function (sel) { var b = $(sel); if (b) b.addEventListener('click', function () { if (window.AYHAds) window.AYHAds.gameOver(); }); });
+  }
+
+  /* ---------- Play view ---------- */
+  function renderPlay(el) {
+    if (!G && S.current) buildGame();
+    if (!G || wantSetup) { renderSetup(el); return; }
+    var opp = LV[G.c.level], lesson = G.c.focus ? LBY[G.c.focus] : null;
+    el.innerHTML =
+      '<div class="play-grid"><div>' +
+        '<div class="player" id="pTop"></div>' +
+        '<div class="board-frame"><div id="gboard"></div></div>' +
+        '<div class="player" id="pBot"></div>' +
+        '<div class="controls"><div class="grp">' +
+          '<button class="iconbtn" id="bFlip" title="Flip board">' + icon('flip') + '</button>' +
+          '<button class="iconbtn" id="bUndo" title="Take back">' + icon('undo') + '</button>' +
+          '<button class="iconbtn" id="bHint" title="Hint">' + icon('bulb') + '</button>' +
+        '</div><div class="grp"><button class="btn sm ghost" id="bResign">' + icon('flag').replace('<svg>', '<svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5">') + 'Resign</button><button class="btn sm" id="bNew">New game</button></div></div>' +
+      '</div>' +
+      '<div class="play-side">' +
+        '<div class="panel"><div class="panel-h"><div><div class="eyebrow">Coach</div><div class="focus-name" style="margin-top:2px">' + (lesson ? h(lesson.name) : 'Open game') + '</div></div>' +
+          '<span class="toggle ' + (G.c.hints ? 'on' : '') + '" id="tHints"><span>Hints</span><span class="sw"></span></span></div>' +
+          '<div class="panel-b"><div class="checks" id="checks"></div>' +
+          '<div class="opp" id="opp"><div class="t" id="oppT"></div><div class="a"><button class="btn sm brass" id="oppShow">Show piece</button></div></div>' +
+          '<ul class="log" id="log"></ul></div></div>' +
+        '<div class="panel"><div class="panel-h"><div class="eyebrow">Moves</div><div class="muted" style="font-size:12px">' + (G.c.casual ? 'Unrated' : 'Rated · ' + opp.rating) + '</div></div><div class="panel-b"><div class="moves" id="moves"></div></div></div>' +
+        '<!-- AD SLOT: play sidebar medium rectangle 300x250 --><div class="ad ad-rect side-ad" data-ad-slot="play-sidebar"><span class="dim">300 × 250</span></div>' +
+      '</div></div>';
+    playBoard = new Board($('#gboard', el), gameClick);
+    playBoard.flip = G.c.color === 'b';
+    $('#bFlip', el).onclick = function () { playBoard.flip = !playBoard.flip; drawGame(); };
+    $('#bUndo', el).onclick = takeback;
+    $('#bHint', el).onclick = function () { if (!G.c.hints) { G.c.hints = true; S.settings.hints = true; save(); $('#tHints').classList.add('on'); } showOpp(true); };
+    $('#bResign', el).onclick = function () { if (G.over) return; confirmBox('Resign this game?', G.c.casual ? 'This game is unrated.' : 'It counts as a loss against ' + opp.name + '.', 'Resign', function () { finishGame('L', 'resignation'); }); };
+    $('#bNew', el).onclick = function () {
+      if (!G.over && userMoveCount() > 0) confirmBox('Start a new game?', 'Your current game will be resigned.', 'Resign and continue', function () { finishGame('L', 'resignation', true); wantSetup = true; renderPlay(el); });
+      else { wantSetup = true; renderPlay(el); }
+    };
+    $('#tHints', el).onclick = function () { G.c.hints = !G.c.hints; S.settings.hints = G.c.hints; save(); this.classList.toggle('on', G.c.hints); G.hintSq = G.hintSq2 = null; drawGame(); };
+    $('#oppShow', el).onclick = function () { showOpp(true); };
+    renderLog();
+    if (!G.over) { if (G.s.t !== userColor()) aiTurn(); else userTurn(); } else drawGame();
+  }
+  function showOpp(force) {
+    var keys = Object.keys(G.opps);
+    if (!keys.length) { if (force) toast('No tactic on the board. Improve your worst piece.'); return; }
+    var focusT = G.c.focus && LBY[G.c.focus].tech, k = G.opps[focusT] ? focusT : keys[0], o = G.opps[k];
+    if (G.hintSq === o.from) G.hintSq2 = o.to; else G.hintSq = o.from;
+    drawGame();
+  }
+  function takeback() {
+    if (G.thinking || G.hist.length < 2) return;
+    if (G.over) return;
+    var n = G.s.t === userColor() ? 2 : 1;
+    if (G.hist.length - 1 < n) n = G.hist.length - 1;
+    for (var i = 0; i < n; i++) {
+      var k = ENG.posKey(G.s); G.keys[k]--;
+      G.hist.pop(); G.c.moves.pop(); G.s = G.hist[G.hist.length - 1].s;
+    }
+    if (G.s.t !== userColor()) { aiTurn(); return; }
+    if (!G.c.casual) { G.c.casual = true; logMsg('note', 'Takeback', 'Takebacks make this game unrated.'); }
+    G.sel = null; save(); userTurn();
+  }
+  function gameClick(sq) {
+    if (!G || G.over || G.thinking || G.s.t !== userColor()) return;
+    var p = G.s.b[sq];
+    if (G.sel === null || (p && ENG.col(p) === userColor())) {
+      G.sel = (p && ENG.col(p) === userColor() && G.sel !== sq) ? sq : null; drawGame(); return;
+    }
+    var cand = ENG.legal(G.s).filter(function (m) { return m.from === G.sel && m.to === sq; });
+    if (!cand.length) { G.sel = null; drawGame(); return; }
+    if (cand.length > 1) { promoPick(cand); return; }
+    playUserMove(cand[0]);
+  }
+  function promoPick(cand) {
+    var us = userColor();
+    openModal('<div class="eyebrow">Promote to</div><div class="promo">' + ['q', 'r', 'b', 'n'].map(function (t) {
+      return '<button data-p="' + t + '">' + pieceSvg(us === 'w' ? t.toUpperCase() : t) + '</button>'; }).join('') + '</div>');
+    $$('.promo button').forEach(function (b) { b.onclick = function () { closeModal(); playUserMove(cand.find(function (m) { return m.promo === b.dataset.p; })); }; });
+  }
+  function capturedBy(color) { // pieces captured by `color`
+    var start = { p: 8, n: 2, b: 2, r: 2, q: 1 }, cnt = { p: 0, n: 0, b: 0, r: 0, q: 0 }, them = color === 'w' ? 'b' : 'w';
+    G.s.b.forEach(function (p) { if (p && ENG.col(p) === them && cnt[ENG.typ(p)] !== undefined) cnt[ENG.typ(p)]++; });
+    if (G.c.fen0 !== ENG.START) return '';
+    var out = '';
+    ['q', 'r', 'b', 'n', 'p'].forEach(function (t) { for (var i = 0; i < Math.max(0, start[t] - cnt[t]); i++) out += pieceSvg(them === 'w' ? t.toUpperCase() : t); });
+    return out;
+  }
+  function drawGame() {
+    if (!playBoard || !$('#gboard')) return;
+    var us = userColor(), last = lastMove();
+    var t = G.sel !== null ? ENG.legal(G.s).filter(function (m) { return m.from === G.sel; }).map(function (m) { return m.to; }) : null;
+    playBoard.render(G.s, { last: last, sel: G.sel, targets: t, hint: G.hintSq, hint2: G.hintSq2 });
+    var opp = LV[G.c.level], them = us === 'w' ? 'b' : 'w';
+    var top = playBoard.flip === (us === 'b') ? 'opp' : 'me';
+    var oppHtml = '<div class="who"><span class="av">' + pieceSvg(them === 'w' ? 'K' : 'k') + '</span><div><div class="nm">' + opp.name + ' <span class="muted" style="font-size:12px">· Level ' + ROMAN[G.c.level] + '</span></div><div class="rt num">' + opp.rating + '</div></div></div><div style="text-align:right"><div class="thinking ' + (G.thinking ? 'on' : '') + '">Thinking<i></i><i></i><i></i></div><div class="capt">' + capturedBy(them) + '</div></div>';
+    var meHtml = '<div class="who"><span class="av">' + pieceSvg(us === 'w' ? 'K' : 'k') + '</span><div><div class="nm">You</div><div class="rt num">' + S.rating + '</div></div></div><div class="capt">' + capturedBy(us) + '</div>';
+    $('#pTop').innerHTML = top === 'opp' ? oppHtml : meHtml;
+    $('#pBot').innerHTML = top === 'opp' ? meHtml : oppHtml;
+    // moves
+    var mv = '', ms = G.hist.slice(1), startBlack = G.hist[0].s.t === 'b', moveNo = G.hist[0].s.n;
+    var list = startBlack ? [null].concat(ms) : ms;
+    for (var i = 0; i < list.length; i += 2) {
+      mv += '<span class="n">' + (moveNo + i / 2) + '.</span><span' + (list[i] && i === list.length - 1 ? ' class="cur"' : '') + '>' + (list[i] ? h(list[i].san) : '…') + '</span><span' + (i + 1 === list.length - 1 ? ' class="cur"' : '') + '>' + (list[i + 1] ? h(list[i + 1].san) : '') + '</span>';
+    }
+    var me = $('#moves'); me.innerHTML = mv || '<span class="n" style="grid-column:1/-1">No moves yet</span>'; me.scrollTop = me.scrollHeight;
+    // checklist
+    var ck = '';
+    if (G.c.fen0 === ENG.START) {
+      var f = G.c.flags;
+      ck = '<span class="' + (f.center ? 'ok' : '') + '">Center</span><span class="' + (f.develop ? 'ok' : '') + '">Development ' + Math.min(4, G.c.dev.length) + '/4</span><span class="' + (f.castle ? 'ok' : '') + '">Castled</span>';
+    } else ck = '<span>Goal: checkmate within 50 moves</span><span class="num">Move ' + (userMoveCount()) + '</span>';
+    $('#checks').innerHTML = ck;
+    // opportunity
+    var box = $('#opp'), keys = Object.keys(G.opps || {});
+    if (G.c.hints && keys.length && !G.over && G.s.t === us && !G.thinking) {
+      var focusT = G.c.focus && LBY[G.c.focus].tech, k = G.opps[focusT] ? focusT : keys[0];
+      $('#oppT').innerHTML = '<b style="color:var(--brass)">Opportunity.</b> ' + (k === 'backrank' ? 'There is a back-rank checkmate.' : 'A ' + TECH[k].toLowerCase() + ' is on the board.') + ' Find it.';
+      $('#oppShow').textContent = G.hintSq === G.opps[k].from ? 'Show square' : 'Show piece';
+      box.classList.add('on');
+    } else box.classList.remove('on');
+    $('#bUndo').disabled = G.over || G.hist.length < 2;
+  }
+  function renderLog() {
+    var l = $('#log'); if (!l || !G) return;
+    l.innerHTML = G.c.log.slice(0, 12).map(function (x) { return '<li class="' + x.k + '"><span class="tg">' + h(x.t) + '</span><span>' + x.x + '</span></li>'; }).join('');
+  }
+
+  function renderSetup(el) {
+    var st = S.settings, sel = { level: st.level, color: st.color, focus: st.focus, hints: st.hints };
+    el.innerHTML =
+      '<div class="setup"><div class="eyebrow">New game</div><h1 class="display" style="margin:6px 0 30px">Choose your opponent</h1>' +
+      '<div class="eyebrow">Opponent</div><div class="levels">' + LV.map(function (l, i) {
+        var e = expected(S.rating, l.rating), gain = Math.round((S.games.length < 10 ? 40 : 24) * (1 - e));
+        return '<button class="lvl" data-l="' + i + '"><div class="rn">' + ROMAN[i] + '</div><div class="nm">' + l.name + '</div><div class="rt num">' + l.rating + ' · win +' + gain + '</div></button>'; }).join('') + '</div>' +
+      '<div class="eyebrow">Play as</div><div class="seg" id="sc"><button data-c="w">White</button><button data-c="b">Black</button><button data-c="r">Random</button></div>' +
+      '<div class="eyebrow">Practice focus</div><select class="sel" id="sf"><option value="">Open game · all techniques</option>' +
+        LESSONS.map(function (l) { return '<option value="' + l.id + '">' + h(l.name) + (l.practice.fen ? ' · special position' : '') + '</option>'; }).join('') + '</select>' +
+      '<div><span class="toggle" id="sh"><span class="sw"></span><span>Coach hints during play</span></span></div>' +
+      '<div style="margin-top:34px;display:flex;gap:12px;flex-wrap:wrap"><button class="btn brass" id="go">Begin game</button>' + (G && !G.over ? '<button class="btn ghost" id="cancel">Back to game</button>' : (G ? '<button class="btn ghost" id="cancel">Review last game</button>' : '')) + '</div></div>';
+    function paint() {
+      $$('.lvl', el).forEach(function (b) { b.classList.toggle('on', +b.dataset.l === sel.level); });
+      $$('#sc button', el).forEach(function (b) { b.classList.toggle('on', b.dataset.c === sel.color); });
+      $('#sf', el).value = sel.focus; $('#sh', el).classList.toggle('on', sel.hints);
+    }
+    $$('.lvl', el).forEach(function (b) { b.onclick = function () { sel.level = +b.dataset.l; paint(); }; });
+    $$('#sc button', el).forEach(function (b) { b.onclick = function () { sel.color = b.dataset.c; paint(); }; });
+    $('#sf', el).onchange = function () { sel.focus = this.value; };
+    $('#sh', el).onclick = function () { sel.hints = !sel.hints; paint(); };
+    $('#go', el).onclick = function () {
+      S.settings.level = sel.level; S.settings.color = sel.color; S.settings.focus = sel.focus; S.settings.hints = sel.hints;
+      wantSetup = false; startGame({ level: sel.level, color: sel.color, focus: sel.focus, hints: sel.hints, fen: sel.focus && LBY[sel.focus].practice.fen });
+      renderPlay(el);
+    };
+    var c = $('#cancel', el); if (c) c.onclick = function () { wantSetup = false; renderPlay(el); };
+    paint();
+  }
+
+  /* ================= Progress ================= */
+  function chartSvg() {
+    var pts = S.hist.slice(-80), W = 720, H = 240, pl = 44, pr = 14, pt = 16, pb = 28;
+    var vals = pts.map(function (x) { return x.r; });
+    var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
+    min = Math.floor((min - 40) / 50) * 50; max = Math.ceil((max + 40) / 50) * 50;
+    var X = function (i) { return pl + (pts.length < 2 ? (W - pl - pr) / 2 : i / (pts.length - 1) * (W - pl - pr)); };
+    var Y = function (v) { return pt + (1 - (v - min) / (max - min)) * (H - pt - pb); };
+    var g = '';
+    var step = (max - min) / 4;
+    for (var i = 0; i <= 4; i++) { var v = Math.round(min + step * i), y = Y(v); g += '<line x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y + '" y2="' + y + '" stroke="#25252a"/><text x="' + (pl - 10) + '" y="' + (y + 3) + '" text-anchor="end">' + v + '</text>'; }
+    TIERS.forEach(function (t) { if (t.r > min && t.r < max) { var y = Y(t.r); g += '<line x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y + '" y2="' + y + '" stroke="#b89a62" stroke-opacity=".35" stroke-dasharray="3 5"/><text x="' + (W - pr) + '" y="' + (y - 5) + '" text-anchor="end" style="fill:#b89a62">' + t.n.toUpperCase() + '</text>'; } });
+    var line = pts.map(function (p, i) { return (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(p.r).toFixed(1); }).join(' ');
+    if (pts.length < 2) line = 'M' + pl + ' ' + Y(vals[0]) + ' L' + (W - pr) + ' ' + Y(vals[0]);
+    var area = line + ' L' + X(Math.max(pts.length - 1, 0)).toFixed(1) + ' ' + (H - pb) + ' L' + pl + ' ' + (H - pb) + ' Z';
+    var fmt = function (d) { var x = new Date(d); return (x.getMonth() + 1) + '/' + x.getDate(); };
+    var lx = X(pts.length - 1), ly = Y(vals[vals.length - 1]);
+    return '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '"><defs><linearGradient id="ga" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#b89a62" stop-opacity=".22"/><stop offset="1" stop-color="#b89a62" stop-opacity="0"/></linearGradient></defs>' + g +
+      (pts.length > 1 ? '<path d="' + area + '" fill="url(#ga)"/>' : '') + '<path d="' + line + '" fill="none" stroke="#d8bd86" stroke-width="1.6"/>' +
+      '<circle cx="' + lx + '" cy="' + ly + '" r="4" fill="#0b0b0c" stroke="#d8bd86" stroke-width="1.6"/>' +
+      '<text x="' + pl + '" y="' + (H - 8) + '">' + fmt(pts[0].d) + '</text><text x="' + (W - pr) + '" y="' + (H - 8) + '" text-anchor="end">' + (pts.length > 1 ? 'NOW' : '') + '</text></svg>';
+  }
+  function renderProgress(el) {
+    var rec = record(), vis = overallVision(), dt = drillTotals(), t = tierOf(S.rating), nt = nextTier(S.rating);
+    var winRate = rec.n ? Math.round(100 * (rec.w + rec.d / 2) / rec.n) : null;
+    var techRows = Object.keys(TECH).map(function (k) {
+      var x = S.tech[k], v = TACTICS.indexOf(k) >= 0 ? vision(k) : null;
+      return '<tr><td>' + TECH[k] + '</td><td class="r num">' + x.done + '</td><td class="r num hide-m">' + (TACTICS.indexOf(k) >= 0 ? x.missed : '·') + '</td><td class="r vis">' +
+        (v === null ? '<span class="muted" style="font-size:12px">' + (TACTICS.indexOf(k) >= 0 ? 'No data' : 'Tracked') + '</span>' : '<div class="mrow" style="margin:0 0 6px;justify-content:flex-end"><span class="num">' + v + '%</span></div><div class="bar"><i style="width:' + v + '%"></i></div>') + '</td></tr>';
+    }).join('');
+    var games = S.games.slice(-8).reverse().map(function (g) {
+      var dd = new Date(g.d);
+      return '<tr><td><span class="res ' + g.res + '">' + g.res + '</span></td><td>' + LV[g.lvl].name + '<div class="muted" style="font-size:12px">' + (g.focus ? h(LBY[g.focus].name) : 'Open game') + ' · ' + Math.ceil(g.plies / 2) + ' moves</div></td><td class="r muted hide-m" style="font-size:12px">' + (dd.getMonth() + 1) + '/' + dd.getDate() + '</td><td class="r num ' + (g.delta > 0 ? 'pos' : g.delta < 0 ? 'neg' : 'muted') + '">' + (g.rated ? (g.delta > 0 ? '+' : '') + g.delta : 'Unrated') + '</td></tr>';
+    }).join('');
+    var lessonRows = LESSONS.map(function (l) { var m = mastery(l); return '<div class="mrow"><span>' + h(l.name) + '</span><span class="num ' + (m.pct === 100 ? '' : 'muted') + '" style="' + (m.pct === 100 ? 'color:var(--brass)' : '') + '">' + (m.pct === 100 ? 'Mastered' : m.pct + '%') + '</span></div><div class="bar"><i style="width:' + m.pct + '%"></i></div>'; }).join('');
+    el.innerHTML =
+      '<div class="section-h"><div><div class="eyebrow">Progress</div><h1 class="display" style="margin-top:6px">The long game.</h1></div></div>' +
+      '<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:16px"><div><div class="eyebrow brass">Rating</div><div style="font-family:var(--serif);font-size:60px;line-height:1;margin-top:8px" class="num">' + S.rating + '</div></div>' +
+        '<div style="text-align:right"><div class="muted" style="font-size:12px;letter-spacing:.1em">PEAK <span class="num" style="color:var(--ink)">' + S.peak + '</span></div><div class="muted" style="font-size:12px;letter-spacing:.1em;margin-top:4px">' + (nt ? (nt.r - S.rating) + ' TO ' + nt.n.toUpperCase() : 'TOP TIER') + '</div></div></div>' +
+        chartSvg() +
+        '<div class="ladder">' + TIERS.map(function (x) { return '<div class="t ' + (x === t ? 'cur' : S.rating >= x.r ? 'got' : '') + '">' + pieceSvg(x.p.toUpperCase()) + '<div class="n">' + x.n + '</div><div class="r num">' + x.r + '+</div></div>'; }).join('') + '</div>' +
+      '</div>' +
+      '<div class="grid g4" style="margin-top:20px">' +
+        statCard('Win rate', winRate === null ? NONE : winRate + '%', rec.n ? rec.w + 'W ' + rec.d + 'D ' + rec.l + 'L' : '') +
+        statCard('Tactical vision', vis === null ? NONE : vis + '%', '') +
+        statCard('Drills', dt.solved + '<small>/ ' + dt.all + '</small>', '') +
+        statCard('Streak', streak(), streak() === 1 ? 'day' : 'days') +
+      '</div>' +
+      '<div class="grid g2" style="margin-top:20px">' +
+        '<div class="card"><div class="eyebrow" style="margin-bottom:6px">Techniques in games</div><p class="muted" style="font-size:12.5px;margin-bottom:16px">Vision is the share of tactical chances you took.</p><table class="tt"><thead><tr><th>Technique</th><th class="r">Done</th><th class="r hide-m">Missed</th><th class="r">Vision</th></tr></thead><tbody>' + techRows + '</tbody></table></div>' +
+        '<div class="card"><div class="eyebrow" style="margin-bottom:6px">Lesson mastery</div>' + lessonRows + '</div>' +
+      '</div>' +
+      '<div class="grid g2" style="margin-top:20px;align-items:start">' +
+        '<div class="card"><div class="eyebrow" style="margin-bottom:12px">Recent games</div>' + (games ? '<table class="tt"><tbody>' + games + '</tbody></table>' : '<div class="empty">No games yet. <a href="#play" style="color:var(--brass)">Play your first.</a></div>') + '</div>' +
+        '<div><!-- AD SLOT: progress page medium rectangle 300x250 --><div class="ad ad-rect" data-ad-slot="progress-rect"><span class="dim">300 × 250</span></div>' +
+        '<div style="text-align:center;margin-top:18px"><button class="btn sm ghost" id="reset">Reset progress</button></div></div>' +
+      '</div>';
+    $('#reset', el).onclick = function () { confirmBox('Reset all progress?', 'Your rating, games, drills and technique history will be erased.', 'Reset', function () { S = fresh(); G = null; save(); bindHeader(); route(); }); };
+  }
+
+  /* ================= Boot ================= */
+  bindHeader(); adsize();
+  window.addEventListener('resize', adsize);
+  if (!location.hash) location.hash = 'home';
+  route();
+  setTimeout(connect, 0);
+})();
+
+</script>
+<script src="ads.bundle.js"></script>
+</body>
+</html>
